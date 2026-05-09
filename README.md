@@ -17,7 +17,7 @@ English | [中文](./README_zh.md)
 
 ## Overview
 
-Questions are multiple-choice and scored by exact match against a ground-truth answer. The corpus is sourced from the annual **Global Fortune Teller Competition** ([全球算命师大赛](https://hkjfma.org)) for 2022–2025. Raw sheets live under [data/raw/](./data/raw/).
+Questions are multiple-choice and scored by exact match against a ground-truth answer. The corpus is sourced from the annual **Global Fortune Teller Competition** ([全球算命师大赛](https://hkjfma.org)) for 2022–2025. Raw sheets live under [data/raw/](./data/raw/). For Bazi-specific benchmarks, [BaziQA (Chen et al., 2025)](https://arxiv.org/pdf/2602.12889).
 
 | File | Description |
 |---|---|
