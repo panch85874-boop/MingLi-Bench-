@@ -202,6 +202,56 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* 預算輸入頁 + 粉專鉤子 */
+    .budget-overlay, .fb-overlay {
+      position: fixed; inset: 0; z-index: 320; display: none;
+      align-items: center; justify-content: center; padding: 20px;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    }
+    .fb-overlay { background: rgba(0,0,0,0.82); backdrop-filter: blur(4px); z-index: 340; }
+    .budget-overlay.show, .fb-overlay.show { display: flex; }
+    .budget-card, .fb-card {
+      max-width: 420px; width: 100%; text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(255,213,74,0.12), rgba(20,20,40,0.95));
+      border: 1px solid rgba(255,213,74,0.3); border-radius: 24px;
+      padding: clamp(24px, 6vw, 40px); box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      animation: card-pop 0.5s cubic-bezier(0.18, 1.4, 0.4, 1);
+    }
+    .budget-emoji, .fb-emoji { font-size: clamp(40px, 12vw, 64px); }
+    .budget-card h2, .fb-card h2 { margin: 8px 0; font-size: clamp(22px, 6vw, 30px); }
+    .budget-card p, .fb-card p { opacity: 0.9; line-height: 1.7; font-size: 14px; margin: 0 0 16px; }
+    .budget-input-row {
+      display: flex; align-items: center; gap: 8px; justify-content: center;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,213,74,0.4);
+      border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;
+    }
+    .budget-input-row span { font-size: 20px; font-weight: 800; color: var(--gold); }
+    #budgetInput { flex: 1; background: transparent; border: none; outline: none; color: #fff;
+      font-size: 22px; font-weight: 700; text-align: right; min-width: 0; }
+    .budget-quick { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
+    .budget-quick button {
+      flex: 1; min-width: 64px; padding: 8px; border-radius: 10px; cursor: pointer;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--ink); font-size: 14px;
+    }
+    .budget-quick button:hover { background: rgba(255,255,255,0.18); }
+    .fb-like-btn {
+      display: block; text-decoration: none; padding: 14px; border-radius: 999px; margin-bottom: 10px;
+      background: #1877f2; color: #fff; font-weight: 800; font-size: clamp(15px,4vw,18px);
+    }
+    .fb-like-btn:hover { background: #1466d6; }
+    .fb-later { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; text-decoration: underline; }
+    /* 中獎金額顯示 */
+    .reveal-cost { margin-top: 16px; font-size: clamp(16px, 4.5vw, 22px); }
+    .reveal-cost b { color: var(--gold); }
+    .reveal-total { margin-top: 8px; font-size: clamp(13px, 3.6vw, 16px); opacity: 0.9; }
+    .reveal-over { margin-top: 10px; color: #ff6b6b; font-weight: 800; font-size: clamp(14px, 4vw, 18px); }
+    .budget-status {
+      margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.6;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    }
+    .budget-status b { color: var(--gold); }
+    .budget-status .over { color: #ff6b6b; }
+
     @media (max-width: 720px) {
       .stage { flex-direction: column; }
       .panel { max-width: 540px; width: 100%; }
@@ -230,6 +280,37 @@
     </div>
   </div>
 
+  <!-- 預算輸入頁:確認後才開始射飛鏢 -->
+  <div class="budget-overlay" id="budget" aria-hidden="true">
+    <div class="budget-card">
+      <div class="budget-emoji">💰</div>
+      <h2>先設定你的預算</h2>
+      <p>輸入你「預估的購買金額」(新台幣),按確認後開始射飛鏢。<br>之後每次命中會以最新股價 × 建議股數累計,超過預算會提醒你。</p>
+      <div class="budget-input-row">
+        <span>NT$</span>
+        <input type="number" id="budgetInput" inputmode="numeric" min="1000" step="10000" placeholder="例如 100000" />
+      </div>
+      <div class="budget-quick">
+        <button data-amt="50000">5萬</button>
+        <button data-amt="100000">10萬</button>
+        <button data-amt="300000">30萬</button>
+        <button data-amt="500000">50萬</button>
+      </div>
+      <button class="start-hint" id="budgetConfirm">✅ 確認,開始射飛鏢</button>
+    </div>
+  </div>
+
+  <!-- 粉專鉤子:玩超過 5 次後才跳出 -->
+  <div class="fb-overlay" id="fbHook" aria-hidden="true">
+    <div class="fb-card">
+      <div class="fb-emoji">🐵❤️</div>
+      <h2>玩得開心嗎?</h2>
+      <p>你已經射了超過 5 次飛鏢!<br>如果喜歡這個遊戲,給粉絲專頁一個讚,支持我繼續做更多好玩的 🙏</p>
+      <a class="fb-like-btn" id="fbLikeBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">👍 前往粉絲專頁按讚</a>
+      <button class="fb-later" id="fbLater">稍後再說,繼續玩</button>
+    </div>
+  </div>
+
   <div class="app">
     <header class="topbar">
       <h1>🐵 台股千金俄羅斯輪盤</h1>
@@ -251,7 +332,9 @@
           <h2>🐵 換你當這隻猩猩</h2>
           <p class="closing">點中央按鈕射飛鏢,隨機選一檔台股千金股。記住:市場難測、分散勝過押注、謙虛才是優勢。</p>
         </div>
+        <div class="budget-status" id="budgetStatus"></div>
         <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
+        <a class="fb-like-btn" id="fbPanelBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener" style="margin-bottom:12px;">👍 加入粉絲專頁</a>
         <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
         <div class="history">
           <h3>🧾 歷史落點</h3>
@@ -273,6 +356,9 @@
         <span class="shares-num" id="revealShares">—</span>
         <span class="shares-unit">股</span>
       </div>
+      <div class="reveal-cost" id="revealCost"></div>
+      <div class="reveal-total" id="revealTotal"></div>
+      <div class="reveal-over" id="revealOver"></div>
       <div class="reveal-count" id="revealCount">5</div>
     </div>
   </div>
@@ -328,6 +414,20 @@
       { code: "3653", name: "健策",      color: "#D980FA" },
     ];
 
+    // ---------- 參考股價(示意值,非即時報價)----------
+    // 之後可改為自動更新;目前為參考價,僅供遊戲金額計算。
+    const PRICES_AS_OF = "參考價";
+    const PRICES = {
+      "5274": 4000, "6515": 950, "7556": 3000, "6223": 1100, "2308": 400,
+      "3665": 700, "8027": 200, "1519": 600, "5289": 350, "2338": 300,
+      "6669": 2500, "2360": 450, "3324": 500, "6805": 1000, "2059": 1200,
+      "2330": 1100, "4749": 700, "5536": 350, "5434": 250, "3443": 1500,
+      "3533": 1300, "1590": 1000, "2383": 700, "3017": 850, "8996": 400,
+      "5269": 1800, "3661": 3500, "2345": 700, "6515b": 700, "8210": 450,
+      "3529": 2800, "7750": 500, "6274": 250, "7777": 600, "8299": 600,
+      "5328": 400, "3131": 700, "3035": 900, "3653": 1300,
+    };
+
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
     const spinBtn = document.getElementById("spinBtn");
@@ -342,6 +442,24 @@
     const revealCount = document.getElementById("revealCount");
     const confetti = document.getElementById("confetti");
     const toast = document.getElementById("toast");
+    const revealCost = document.getElementById("revealCost");
+    const revealTotal = document.getElementById("revealTotal");
+    const revealOver = document.getElementById("revealOver");
+    const budgetStatus = document.getElementById("budgetStatus");
+
+    // ---------- 預算 / 累計 / 遊玩次數 ----------
+    let budget = 100000;          // 預估購買金額
+    let spentTotal = 0;           // 已累計購買金額
+    let playCount = parseInt(localStorage.getItem("monkeyDartPlays") || "0", 10);
+    const money = (n) => "NT$" + Math.round(n).toLocaleString();
+
+    function updateBudgetStatus() {
+      const over = spentTotal > budget;
+      budgetStatus.innerHTML =
+        `預算 <b>${money(budget)}</b> · 已使用 <b>${money(spentTotal)}</b>` +
+        (over ? `<br><span class="over">⚠️ 已超出 ${money(spentTotal - budget)}</span>` : "") +
+        `<br><span style="opacity:.6;font-size:12px;">股價為參考值(非即時報價)</span>`;
+    }
 
     const N = STOCKS.length;
     const SEG = (Math.PI * 2) / N;
@@ -442,18 +560,29 @@
     function finishSpin() {
       const stock = STOCKS[indexAtPointer()];
       const shares = 2 + Math.floor(Math.random() * 5);   // 2~6 股(千金股單價高,股數偏少)
+      const price = PRICES[stock.code] || 0;
+      const cost = price * shares;
+      spentTotal += cost;
+      playCount += 1;
+      localStorage.setItem("monkeyDartPlays", String(playCount));
       pointer.classList.add("hit");
       setTimeout(() => pointer.classList.remove("hit"), 400);
       fanfare();
-      showReveal(stock, shares);
+      showReveal(stock, shares, price, cost);
       addHistory(stock, shares);
+      updateBudgetStatus();
     }
 
     let revealTimer = null, countdownTimer = null;
-    function showReveal(stock, shares) {
+    function showReveal(stock, shares, price, cost) {
       revealName.textContent = stock.name;
       revealCode.textContent = stock.code.replace(/[a-z]/g, "");
       revealShares.textContent = shares;
+      revealCost.innerHTML = `💲 最新股價 ${money(price)} × ${shares} 股 = <b>${money(cost)}</b>`;
+      revealTotal.textContent = `本局累計 ${money(spentTotal)} ／ 預算 ${money(budget)}`;
+      revealOver.textContent = spentTotal > budget
+        ? `⚠️ 已超過預算 ${money(spentTotal - budget)}!但你還是可以繼續玩 🎯`
+        : "";
       reveal.classList.add("show"); reveal.setAttribute("aria-hidden", "false");
       launchConfetti();
       let left = 5; revealCount.textContent = left;
@@ -468,7 +597,23 @@
     function closeReveal() {
       reveal.classList.remove("show"); reveal.setAttribute("aria-hidden", "true");
       confetti.innerHTML = ""; spinBtn.disabled = false;
+      maybeShowFbHook();
     }
+
+    // 玩超過 5 次後,跳一次粉專邀請(用 localStorage 記住,不重複打擾)
+    const fbHook = document.getElementById("fbHook");
+    function maybeShowFbHook() {
+      if (playCount > 5 && !localStorage.getItem("monkeyDartFbHook")) {
+        localStorage.setItem("monkeyDartFbHook", "1");
+        fbHook.classList.add("show"); fbHook.setAttribute("aria-hidden", "false");
+      }
+    }
+    document.getElementById("fbLater").addEventListener("click", () => {
+      fbHook.classList.remove("show"); fbHook.setAttribute("aria-hidden", "true");
+    });
+    document.getElementById("fbLikeBtn").addEventListener("click", () => {
+      setTimeout(() => { fbHook.classList.remove("show"); fbHook.setAttribute("aria-hidden", "true"); }, 300);
+    });
 
     function launchConfetti() {
       confetti.innerHTML = "";
@@ -510,8 +655,10 @@
       }
     }
 
-    // 開場故事頁:點畫面任一處即進入遊戲(同時解鎖音效)
+    // 開場故事頁 → 預算輸入頁 → 遊戲(點開場頁同時解鎖音效)
     const intro = document.getElementById("intro");
+    const budgetOverlay = document.getElementById("budget");
+    const budgetInput = document.getElementById("budgetInput");
     let introDone = false;
     function startGame() {
       if (introDone) return;
@@ -519,12 +666,32 @@
       ac();                       // 使用者手勢解鎖 Web Audio
       whoosh();                   // 進場「咻」一聲,帶出遊戲感
       intro.classList.add("hide");
-      setTimeout(() => { intro.style.display = "none"; }, 500);
+      setTimeout(() => {
+        intro.style.display = "none";
+        budgetOverlay.classList.add("show");     // 接著顯示預算輸入頁
+        budgetOverlay.setAttribute("aria-hidden", "false");
+        budgetInput.focus();
+      }, 500);
     }
     intro.addEventListener("click", startGame);
     intro.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); startGame(); }
     });
+
+    // 預算快捷鍵 + 確認
+    document.querySelectorAll(".budget-quick button").forEach((b) => {
+      b.addEventListener("click", () => { budgetInput.value = b.dataset.amt; });
+    });
+    function confirmBudget() {
+      const v = parseInt(budgetInput.value, 10);
+      budget = (!v || v < 1000) ? 100000 : v;   // 未填或太小則預設 10 萬
+      spentTotal = 0;
+      updateBudgetStatus();
+      budgetOverlay.classList.remove("show");
+      budgetOverlay.setAttribute("aria-hidden", "true");
+    }
+    document.getElementById("budgetConfirm").addEventListener("click", confirmBudget);
+    budgetInput.addEventListener("keydown", (e) => { if (e.key === "Enter") confirmBudget(); });
 
     spinBtn.addEventListener("click", () => { ac(); spin(); });
     soundToggle.addEventListener("click", () => {
@@ -537,6 +704,7 @@
     });
 
     drawWheel();
+    updateBudgetStatus();
   })();
   </script>
 </body>
