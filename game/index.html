@@ -377,11 +377,13 @@
   <div class="fb-overlay" id="listModal" aria-hidden="true">
     <div class="fb-card list-card">
       <div id="listGate">
-        <div class="fb-emoji">🔒🐵</div>
-        <h2>解鎖「我的命中清單」</h2>
-        <p>追蹤粉絲專頁,即可解鎖你<b>所有射中股票的完整清單</b>(股名、代號、股價、股數、金額),還能<b>一鍵複製</b>分享給朋友!</p>
-        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">👍 追蹤粉絲專頁,解鎖清單</a>
-        <button class="fb-later" id="listGateClose">先不要</button>
+        <div class="fb-emoji">🎁🐵</div>
+        <h2>這份精選命中清單,送給你!</h2>
+        <p>你<b>所有射中股票的完整清單</b>(股名、代號、股價、股數、金額)+ <b>一鍵複製</b>,馬上打開給你 ✨<br>
+           只要順手幫這隻努力的黑猩猩到粉專點個讚就好——<br>
+           你的一個讚,就是我繼續做下去最大的動力 🙏</p>
+        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 我來點讚,打開清單</a>
+        <button class="fb-later" id="listGateClose">先看看就好</button>
       </div>
       <div id="listPanel" style="display:none;">
         <h2>📋 我的命中清單</h2>
@@ -811,7 +813,9 @@
     document.getElementById("listGateClose").addEventListener("click", closeList);
     document.getElementById("listClose").addEventListener("click", closeList);
     document.getElementById("listFollowBtn").addEventListener("click", () => {
-      markFollowed(); setTimeout(showListContent, 300);   // 點追蹤即解鎖
+      markFollowed();                       // 先大方解鎖(不強制驗證)
+      showToast("謝謝你的支持!清單解鎖囉 🎉");
+      setTimeout(showListContent, 300);
     });
     document.getElementById("listCopyBtn").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
