@@ -90,6 +90,7 @@
       box-shadow: 0 0 0 10px rgba(255,255,255,0.06), 0 0 0 18px rgba(0,0,0,0.35), 0 20px 60px rgba(0,0,0,0.55);
       transition: filter 0.2s;
     }
+    #wheel { cursor: pointer; }
     #wheel.spinning { filter: saturate(1.2) brightness(1.05); }
     .pointer {
       position: absolute; top: -14px; left: 50%;
@@ -138,8 +139,10 @@
     }
     .share-btn { border-color: var(--gold); background: rgba(255,213,74,0.14); font-weight: 700; }
     .sound-toggle:hover, .share-btn:hover { background: rgba(255,255,255,0.16); }
-    .history h3 { margin: 6px 0 8px; font-size: 15px; }
-    .history ul { list-style: none; margin: 0; padding: 0; max-height: 340px; overflow-y: auto; }
+    .history h3 { margin: 4px 0 10px; font-size: 17px; }
+    .history ul { list-style: none; margin: 0; padding: 0; max-height: 420px; overflow-y: auto; }
+    .panel-tools { display: flex; gap: 10px; margin-top: 14px; }
+    .panel-tools .sound-toggle { margin-bottom: 0; }
     .history li {
       display: flex; justify-content: space-between; padding: 6px 10px; border-radius: 8px;
       background: rgba(255,255,255,0.04); margin-bottom: 6px; font-size: 14px;
@@ -328,9 +331,6 @@
       .shares-num { font-size: clamp(40px, 11vh, 80px); }
     }
   </style>
-  <!-- 產生招財紀錄 PDF 用(延遲載入,不阻塞遊戲;失敗則退回列印) -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <!-- 開場故事頁:短短一頁,點畫面任一處即進入遊戲 -->
@@ -378,18 +378,14 @@
       </div>
 
       <aside class="panel">
-        <div class="story">
-          <h2>🐵 換你當這隻猩猩</h2>
-          <p class="closing">點中央按鈕射飛鏢,隨機選一檔台股千金股。記住:市場難測、分散勝過押注、謙虛才是優勢。</p>
-        </div>
         <div class="budget-status" id="budgetStatus"></div>
-        <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
-        <button class="share-btn" id="listBtn">📋 我的命中清單</button>
-        <a class="fb-like-btn" id="fbPanelBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener" style="margin-bottom:12px;">👍 加入粉絲專頁</a>
-        <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
         <div class="history">
-          <h3>🧾 歷史落點</h3>
+          <h3>🎯 我射中了哪些股票</h3>
           <ul id="historyList"></ul>
+        </div>
+        <div class="panel-tools">
+          <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
+          <button class="sound-toggle" id="shareBtn">📤 分享</button>
         </div>
         <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
       </aside>
@@ -411,28 +407,6 @@
       <div class="reveal-total" id="revealTotal"></div>
       <div class="reveal-over" id="revealOver"></div>
       <div class="reveal-count" id="revealCount">5</div>
-    </div>
-  </div>
-
-  <!-- 我的命中清單(追蹤粉專解鎖 + 一鍵複製) -->
-  <div class="fb-overlay" id="listModal" aria-hidden="true">
-    <div class="fb-card list-card">
-      <div id="listGate">
-        <div class="fb-emoji">🧧🐵</div>
-        <h2>領取你的招財選股紀錄!</h2>
-        <p>幫這隻努力的黑猩猩到粉專點個讚,<br>
-           就<b>自動產生一張精美的「招財紀錄」PDF</b> 送你下載 🧧✨<br>
-           裡面包了你所有射中的股票數據,喜氣又招財,還能截圖炫耀!</p>
-        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 點讚,下載我的招財紀錄 PDF</a>
-        <button class="fb-later" id="listGateClose">先看看就好</button>
-      </div>
-      <div id="listPanel" style="display:none;">
-        <h2>🧧 我的招財選股紀錄</h2>
-        <pre id="listText" class="list-text"></pre>
-        <button class="fb-like-btn" id="listPdfBtn">📄 下載招財選股紀錄 PDF</button>
-        <button class="share-btn" id="listCopyBtn" style="margin-bottom:10px;">📋 一鍵複製文字清單</button>
-        <button class="fb-later" id="listClose">關閉</button>
-      </div>
     </div>
   </div>
 
@@ -805,6 +779,7 @@
     });
 
     spinBtn.addEventListener("click", () => { ac(); spin(); });
+    canvas.addEventListener("click", () => { ac(); spin(); });   // 點圓盤任一處都能射飛鏢
     soundToggle.addEventListener("click", () => {
       soundOn = !soundOn;
       soundToggle.textContent = soundOn ? "🔊 音效:開" : "🔇 音效:關";
@@ -814,118 +789,99 @@
       clearTimeout(revealTimer); clearInterval(countdownTimer); closeReveal();
     });
 
-    // ---------- 我的命中清單(追蹤粉專解鎖 + 一鍵複製) ----------
-    const listModal = document.getElementById("listModal");
-    const listGate = document.getElementById("listGate");
-    const listPanel = document.getElementById("listPanel");
-    const listText = document.getElementById("listText");
-    const listBtn = document.getElementById("listBtn");
-    function markFollowed() {
-      followed = true;
-      localStorage.setItem("monkeyDartFollowed", "1");
-      refreshListBtn();
-    }
-    function refreshListBtn() { listBtn.textContent = followed ? "📋 我的命中清單" : "📋 我的命中清單 🔒"; }
-    function buildListText() {
-      if (!records.length) return "尚未射中任何股票,先去轉幾把吧 🐵🎯";
-      const lines = records.map((r, i) =>
-        `${String(i + 1).padStart(2, " ")}. ${r.name}(${r.code})  ${money(r.price)} × ${r.shares}股 = ${money(r.cost)}`);
-      const sub = priceAsOf ? `(${priceAsOf} 收盤價,純娛樂非投資建議)` : `(參考價,純娛樂非投資建議)`;
-      return `🐵 台股千金俄羅斯輪盤 — 我的命中清單\n${sub}\n\n${lines.join("\n")}\n\n———\n命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`;
-    }
+    // 招財選股紀錄(離開挽留彈窗使用)
+    function markFollowed() { followed = true; localStorage.setItem("monkeyDartFollowed", "1"); }
 
-    // ----- 招財紀錄 PDF -----
-    function buildCertificate() {
-      const wrap = document.createElement("div");
-      wrap.className = "cert-capture";
-      const rows = records.map((r, i) => `
-        <tr><td class="c-no">${i + 1}</td>
-        <td class="c-name">${r.name} <span>${r.code}</span></td>
-        <td class="c-num">${money(r.price)}</td>
-        <td class="c-num">${r.shares}</td>
-        <td class="c-num c-gold">${money(r.cost)}</td></tr>`).join("");
-      const dateStr = priceAsOf || new Date().toISOString().slice(0, 10);
-      wrap.innerHTML = `
-        <div class="cert">
-          <div class="cert-corner tl">🪙</div><div class="cert-corner tr">🪙</div>
-          <div class="cert-corner bl">💰</div><div class="cert-corner br">💰</div>
-          <div class="cert-head">
-            <div class="cert-sub">🐵 黑猩猩射飛鏢 · 台股千金俄羅斯輪盤</div>
-            <div class="cert-title">招 財 選 股 紀 錄</div>
-            <div class="cert-bless">🧧 恭 喜 發 財 · 黃 金 萬 兩 🧧</div>
-          </div>
-          <table class="cert-table">
-            <thead><tr><th>#</th><th>股票</th><th>股價</th><th>股數</th><th>金額</th></tr></thead>
-            <tbody>${rows || '<tr><td colspan="5" style="text-align:center;padding:20px">尚未射中任何股票</td></tr>'}</tbody>
-          </table>
-          <div class="cert-total">命中 <b>${records.length}</b> 檔 · 合計 <b>${money(spentTotal)}</b> ／ 預算 ${money(budget)}</div>
-          <div class="cert-foot">
-            <div class="cert-seal">招財<br>進寶</div>
-            <div class="cert-lucky">願君選股如有神助,黑猩猩祝你<b>滿載而歸、財源滾滾</b> 🧧<br>
-              <span>資料日期 ${dateStr}(收盤價)· 純屬娛樂模擬,不構成投資建議</span></div>
-          </div>
-        </div>`;
-      document.body.appendChild(wrap);
-      return wrap;
-    }
-    function printCertificate(wrap) {
-      const styles = [...document.querySelectorAll("style")].map((s) => s.outerHTML).join("");
-      const w = window.open("", "_blank");
-      if (!w) { showToast("請允許彈出視窗,才能存成 PDF"); return; }
-      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>招財紀錄</title>${styles}
-        <style>.cert-capture{position:static!important;left:auto!important}body{margin:0;background:#6a0000}</style></head>
-        <body>${wrap.innerHTML}<script>onload=()=>setTimeout(()=>print(),400)<\/script></body></html>`);
-      w.document.close();
-    }
-    async function downloadRecordPDF() {
+    // ----- 招財選股紀錄(原生 canvas 畫 9:16 紅金小卡,下載 PNG)-----
+    function downloadRecordPDF() {
       if (!records.length) { showToast("先去射幾把,再來領招財紀錄 🐵🎯"); return; }
-      showToast("招財紀錄產生中… 🧧");
-      const wrap = buildCertificate();
-      const el = wrap.querySelector(".cert");
-      try {
-        if (window.html2canvas && window.jspdf) {
-          const canvas = await window.html2canvas(el, { scale: 2, backgroundColor: "#6a0000", useCORS: true });
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF({ orientation: "p", unit: "px", format: [canvas.width, canvas.height] });
-          pdf.addImage(canvas.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, canvas.width, canvas.height);
-          pdf.save("黑猩猩射飛鏢_招財紀錄.pdf");
-          showToast("招財紀錄 PDF 已下載 🧧✨");
-        } else {
-          printCertificate(wrap);
-        }
-      } catch (e) {
-        printCertificate(wrap);
-      } finally {
-        setTimeout(() => wrap.remove(), 1500);
-      }
+      const FB = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
+      const FS = '"Noto Serif TC","Microsoft JhengHei",serif';
+      const W = 1080, H = 1920;
+      const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      const x = cv.getContext("2d");
+      const dateStr = priceAsOf || new Date().toISOString().slice(0, 10);
+      const t = (s, px, py, font, color, align = "left", base = "alphabetic", glow) => {
+        x.save(); x.font = font; x.fillStyle = color; x.textAlign = align; x.textBaseline = base;
+        if (glow) { x.shadowColor = glow; x.shadowBlur = 14; }
+        x.fillText(s, px, py); x.restore();
+      };
+
+      // 紅底
+      const bg = x.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, "#c11616"); bg.addColorStop(0.5, "#9c0c0c"); bg.addColorStop(1, "#7c0707");
+      x.fillStyle = bg; x.fillRect(0, 0, W, H);
+      // 金框
+      x.lineWidth = 10; x.strokeStyle = "#ffcf3f"; x.strokeRect(22, 22, W - 44, H - 44);
+      x.lineWidth = 2; x.strokeStyle = "rgba(255,207,63,0.55)"; x.strokeRect(40, 40, W - 80, H - 80);
+      // 角落金圓徽 + 金錢袋
+      [[95, 110], [W - 95, 110]].forEach(([cx, cy]) => {
+        x.beginPath(); x.arc(cx, cy, 42, 0, Math.PI * 2); x.fillStyle = "#7c0707"; x.fill();
+        x.lineWidth = 3; x.strokeStyle = "#ffcf3f"; x.stroke();
+        t("財", cx, cy + 1, "bold 40px " + FS, "#ffd700", "center", "middle");
+      });
+      t("💰", 92, H - 92, "56px " + FB, "#fff", "center", "middle");
+      t("💰", W - 92, H - 92, "56px " + FB, "#fff", "center", "middle");
+
+      // 抬頭
+      t("🐵 黑猩猩射飛鏢 · 台股千金俄羅斯輪盤", W / 2, 150, "30px " + FB, "#ffd9a0", "center");
+      t("招  財  選  股  紀  錄", W / 2, 262, "900 92px " + FS, "#ffd700", "center", "alphabetic", "#7a3b00");
+      t("🧧 恭喜發財 · 黃金萬兩 🧧", W / 2, 332, "bold 36px " + FS, "#ff9a3d", "center");
+      const dg = x.createLinearGradient(80, 0, W - 80, 0);
+      dg.addColorStop(0, "rgba(255,207,63,0)"); dg.addColorStop(0.5, "#ffcf3f"); dg.addColorStop(1, "rgba(255,207,63,0)");
+      x.fillStyle = dg; x.fillRect(80, 366, W - 160, 3);
+
+      // 表格
+      const pad = 60, tx = pad, tw = W - 2 * pad, hy = 410, hRowH = 78;
+      const cNo = tx + 44, cName = tx + 92, cP = 596, cS = 766, cC = tx + tw - 22;
+      x.fillStyle = "#ffd24a"; x.fillRect(tx, hy, tw, hRowH);
+      const hb = hy + hRowH / 2 + 2;
+      t("#", cNo, hb, "bold 32px " + FB, "#7a0000", "center", "middle");
+      t("股票", cName, hb, "bold 32px " + FB, "#7a0000", "left", "middle");
+      t("股價", cP, hb, "bold 32px " + FB, "#7a0000", "right", "middle");
+      t("股數", cS, hb, "bold 32px " + FB, "#7a0000", "right", "middle");
+      t("金額", cC, hb, "bold 32px " + FB, "#7a0000", "right", "middle");
+      const rowsTop = hy + hRowH, rowsBottom = 1560;
+      const rowH = Math.min(82, (rowsBottom - rowsTop) / records.length);
+      const fs = Math.max(22, Math.min(36, Math.floor(rowH * 0.44)));
+      const nfs = Math.max(20, fs - 2);
+      records.forEach((r, i) => {
+        const ry = rowsTop + i * rowH, cy = ry + rowH / 2;
+        if (i % 2) { x.fillStyle = "rgba(255,207,63,0.09)"; x.fillRect(tx, ry, tw, rowH); }
+        x.strokeStyle = "rgba(255,207,63,0.25)"; x.lineWidth = 1;
+        x.beginPath(); x.moveTo(tx, ry + rowH); x.lineTo(tx + tw, ry + rowH); x.stroke();
+        t(String(i + 1), cNo, cy, "bold " + fs + "px " + FB, "#ffd700", "center", "middle");
+        x.save(); x.textAlign = "left"; x.textBaseline = "middle";
+        x.font = "bold " + fs + "px " + FB; x.fillStyle = "#fff"; x.fillText(r.name, cName, cy);
+        const nw = x.measureText(r.name).width;
+        x.font = Math.round(fs * 0.66) + "px " + FB; x.fillStyle = "#ffd9a0"; x.fillText(r.code, cName + nw + 12, cy + 2);
+        x.restore();
+        t(money(r.price), cP, cy, nfs + "px " + FB, "#ffffff", "right", "middle");
+        t(r.shares + "", cS, cy, nfs + "px " + FB, "#ffffff", "right", "middle");
+        t(money(r.cost), cC, cy, "bold " + nfs + "px " + FB, "#ffd24a", "right", "middle");
+      });
+
+      // 結算
+      t(`命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`,
+        W / 2, 1632, "bold 34px " + FB, "#ffd24a", "center");
+
+      // 印章 + 祝福
+      x.save(); x.translate(150, 1748); x.rotate(-0.14);
+      x.lineWidth = 4; x.strokeStyle = "#ffcf3f"; x.strokeRect(-66, -66, 132, 132);
+      t("招財", 0, -16, "900 40px " + FS, "#ffd700", "center", "middle");
+      t("進寶", 0, 30, "900 40px " + FS, "#ffd700", "center", "middle");
+      x.restore();
+      t("願君選股如有神助,黑猩猩祝你", 270, 1716, "26px " + FS, "#ffe9bf", "left");
+      t("滿載而歸、財源滾滾 🧧", 270, 1756, "bold 30px " + FS, "#ffd700", "left");
+      t(`資料日期 ${dateStr}(收盤價)· 純屬娛樂模擬,不構成投資建議`, 270, 1800, "20px " + FB, "#e7c98a", "left");
+
+      const a = document.createElement("a");
+      a.href = cv.toDataURL("image/png");
+      a.download = "黑猩猩射飛鏢_招財選股紀錄.png";
+      a.click();
+      showToast("招財選股紀錄已下載 🧧✨");
     }
 
-    function showListContent() {
-      listGate.style.display = "none"; listPanel.style.display = "block";
-      listText.textContent = buildListText();
-    }
-    function openList() {
-      if (followed) { showListContent(); }
-      else { listGate.style.display = "block"; listPanel.style.display = "none"; }
-      listModal.classList.add("show"); listModal.setAttribute("aria-hidden", "false");
-    }
-    function closeList() { listModal.classList.remove("show"); listModal.setAttribute("aria-hidden", "true"); }
-    listBtn.addEventListener("click", openList);
-    document.getElementById("listGateClose").addEventListener("click", closeList);
-    document.getElementById("listClose").addEventListener("click", closeList);
-    document.getElementById("listFollowBtn").addEventListener("click", () => {
-      markFollowed();                       // 先大方解鎖(不強制驗證)
-      setTimeout(showListContent, 300);
-      downloadRecordPDF();                  // 點讚同時自動產生招財紀錄 PDF
-    });
-    document.getElementById("listPdfBtn").addEventListener("click", downloadRecordPDF);
-    document.getElementById("listCopyBtn").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
-      catch (e) { showToast("複製失敗,請長按清單手動複製"); }
-    });
-    // 點任一個粉專按鈕都視為已追蹤(信任制解鎖)
-    document.getElementById("fbPanelBtn").addEventListener("click", markFollowed);
-    refreshListBtn();
 
     // 離開意圖時的挽留彈窗(每次開啟只跳一次,且需已進入遊戲)
     const farewell = document.getElementById("farewell");
