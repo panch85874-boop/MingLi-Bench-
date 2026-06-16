@@ -432,6 +432,7 @@
         <h2>🧧 我的招財選股紀錄</h2>
         <pre id="listText" class="list-text"></pre>
         <button class="fb-like-btn" id="listPdfBtn">📄 下載招財紀錄 PDF</button>
+        <button class="fb-like-btn" id="listCyberBtn" style="background:#00cec9;color:#04212a;">🤖 下載賽博龐克戰績圖</button>
         <button class="share-btn" id="listCopyBtn" style="margin-bottom:10px;">📋 一鍵複製文字清單</button>
         <button class="fb-later" id="listClose">關閉</button>
       </div>
@@ -909,6 +910,91 @@
         setTimeout(() => wrap.remove(), 1500);
       }
     }
+
+    // ----- 賽博龐克戰績梗圖(原生 canvas,直接下載 PNG)-----
+    function downloadCyberCard() {
+      if (!records.length) { showToast("先去射幾把,再來產生戰績圖 🐵🎯"); return; }
+      const F = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
+      const W = 1080, pad = 56, headerH = 470, rowH = 66, footH = 180;
+      const rows = records.length;
+      const H = headerH + rows * rowH + footH;
+      const cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      const x = cv.getContext("2d");
+      const dateStr = priceAsOf || new Date().toISOString().slice(0, 10);
+
+      function neon(text, px, py, font, color, blur, align = "left") {
+        x.save(); x.font = font; x.textAlign = align; x.textBaseline = "alphabetic";
+        x.shadowColor = color; x.shadowBlur = blur; x.fillStyle = color;
+        x.fillText(text, px, py); x.shadowBlur = 0; x.fillText(text, px, py); x.restore();
+      }
+
+      // 背景 + 霓虹網格
+      const bg = x.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, "#0a0420"); bg.addColorStop(0.5, "#0d0a2b"); bg.addColorStop(1, "#140733");
+      x.fillStyle = bg; x.fillRect(0, 0, W, H);
+      x.strokeStyle = "rgba(0,240,255,0.07)"; x.lineWidth = 1;
+      for (let gx = 0; gx <= W; gx += 54) { x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, H); x.stroke(); }
+      for (let gy = 0; gy <= H; gy += 54) { x.beginPath(); x.moveTo(0, gy); x.lineTo(W, gy); x.stroke(); }
+      x.save(); x.strokeStyle = "#00f0ff"; x.lineWidth = 3; x.shadowColor = "#00f0ff"; x.shadowBlur = 16;
+      x.strokeRect(16, 16, W - 32, H - 32); x.restore();
+
+      // 標題
+      neon("📈 我的選股戰績", W / 2, 100, "900 56px " + F, "#00f0ff", 24, "center");
+      neon("CYBER MONKEY // TO THE MOON 🚀", W / 2, 150, "bold 26px " + F, "#ff4fd8", 16, "center");
+
+      // 上升走勢線
+      const cx0 = pad + 10, cx1 = W - pad - 10, cyB = 430, cyT = 200, n = 14, pts = [];
+      for (let i = 0; i < n; i++) {
+        const t = i / (n - 1);
+        const yy = cyB + (cyT - cyB) * Math.pow(t, 0.9) + Math.sin(i * 1.6) * 10 - Math.random() * 8;
+        pts.push([cx0 + (cx1 - cx0) * t, yy]);
+      }
+      const area = x.createLinearGradient(0, cyT, 0, cyB);
+      area.addColorStop(0, "rgba(0,240,255,0.35)"); area.addColorStop(1, "rgba(0,240,255,0)");
+      x.beginPath(); x.moveTo(pts[0][0], cyB); pts.forEach((p) => x.lineTo(p[0], p[1]));
+      x.lineTo(pts[n - 1][0], cyB); x.closePath(); x.fillStyle = area; x.fill();
+      x.save(); x.shadowColor = "#00f0ff"; x.shadowBlur = 18; x.lineWidth = 5;
+      const lg = x.createLinearGradient(cx0, 0, cx1, 0);
+      lg.addColorStop(0, "#00f0ff"); lg.addColorStop(1, "#ff4fd8");
+      x.strokeStyle = lg; x.beginPath();
+      pts.forEach((p, i) => (i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1]))); x.stroke(); x.restore();
+      x.save(); x.font = "44px " + F; x.textAlign = "center";
+      x.fillText("🚀", pts[n - 1][0], pts[n - 1][1] - 12); x.restore();
+
+      // 表格
+      const colP = W * 0.60, colS = W * 0.74, colC = W - pad - 12, top = headerH;
+      x.fillStyle = "rgba(0,240,255,0.12)"; x.fillRect(pad, top, W - 2 * pad, 56);
+      neon("#", pad + 26, top + 38, "bold 24px " + F, "#7CFCFF", 6, "center");
+      neon("股票", pad + 56, top + 38, "bold 24px " + F, "#7CFCFF", 6, "left");
+      neon("股價", colP, top + 38, "bold 24px " + F, "#7CFCFF", 6, "right");
+      neon("股數", colS, top + 38, "bold 24px " + F, "#7CFCFF", 6, "right");
+      neon("金額", colC, top + 38, "bold 24px " + F, "#7CFCFF", 6, "right");
+      records.forEach((r, i) => {
+        const ry = top + 56 + i * rowH, ty = ry + rowH / 2 + 9;
+        if (i % 2) { x.fillStyle = "rgba(255,255,255,0.035)"; x.fillRect(pad, ry, W - 2 * pad, rowH); }
+        neon(String(i + 1), pad + 26, ty, "bold 26px " + F, "#ff4fd8", 6, "center");
+        neon(r.name, pad + 56, ty, "bold 30px " + F, "#eafcff", 4, "left");
+        x.save(); x.font = "bold 30px " + F; const nw = x.measureText(r.name).width; x.restore();
+        neon("(" + r.code + ")", pad + 64 + nw, ty, "18px " + F, "#7aa0c8", 0, "left");
+        neon(money(r.price), colP, ty, "26px " + F, "#9be7ff", 4, "right");
+        neon(r.shares + "股", colS, ty, "26px " + F, "#eafcff", 4, "right");
+        neon(money(r.cost), colC, ty, "bold 26px " + F, "#39ff14", 8, "right");
+      });
+
+      // 結算 + footer
+      const fy = top + 56 + rows * rowH + 56;
+      neon(`命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`,
+        W / 2, fy, "bold 30px " + F, "#39ff14", 10, "center");
+      neon(`📅 ${dateStr} 收盤價 · 🐵 黑猩猩射飛鏢 · 純娛樂非投資建議`,
+        W / 2, fy + 46, "20px " + F, "#86a0bd", 0, "center");
+
+      const a = document.createElement("a");
+      a.href = cv.toDataURL("image/png");
+      a.download = "黑猩猩射飛鏢_賽博龐克戰績.png";
+      a.click();
+      showToast("賽博龐克戰績圖已下載 🤖📈");
+    }
     function showListContent() {
       listGate.style.display = "none"; listPanel.style.display = "block";
       listText.textContent = buildListText();
@@ -928,6 +1014,7 @@
       downloadRecordPDF();                  // 點讚同時自動產生招財紀錄 PDF
     });
     document.getElementById("listPdfBtn").addEventListener("click", downloadRecordPDF);
+    document.getElementById("listCyberBtn").addEventListener("click", downloadCyberCard);
     document.getElementById("listCopyBtn").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
       catch (e) { showToast("複製失敗,請長按清單手動複製"); }
