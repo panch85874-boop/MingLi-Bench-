@@ -365,6 +365,20 @@
     </div>
   </div>
 
+  <!-- 離開時的挽留:誠懇邀請按讚(每次開啟只跳一次) -->
+  <div class="fb-overlay" id="farewell" aria-hidden="true">
+    <div class="fb-card">
+      <div class="fb-emoji">🐵🙏</div>
+      <h2>等等…先別走嘛 🥺</h2>
+      <p>謝謝你陪這隻黑猩猩射了好幾次飛鏢 ❤️<br>
+         這個小遊戲是我一個人默默做的,沒有廣告、不收費,只想帶給大家一點樂趣。<br>
+         如果你今天玩得開心,能不能<b>花 3 秒、幫我的粉絲專頁按個讚</b>?<br>
+         你的一個讚,就是我繼續做下去最大的動力 🙏</p>
+      <a class="fb-like-btn" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 好,我來幫你按個讚</a>
+      <button class="fb-later" id="farewellLater">下次再說…</button>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -377,7 +391,7 @@
     const STOCKS = [
       { code: "5274", name: "信驊",      color: "#2f6f4e" },
       { code: "6515", name: "穎崴",      color: "#3aa76d" },
-      { code: "7556", name: "鴻勁",      color: "#e0533d" },
+      { code: "7769", name: "鴻勁",      color: "#e0533d" },
       { code: "6223", name: "旺矽",      color: "#f0a500" },
       { code: "2308", name: "台達電",    color: "#48b07a" },
       { code: "3665", name: "貿聯-KY",   color: "#7b4fb0" },
@@ -408,9 +422,9 @@
       { code: "3529", name: "力旺",      color: "#fdcb6e" },
       { code: "7750", name: "新代",      color: "#00cec9" },
       { code: "6274", name: "台燿",      color: "#e84393" },
-      { code: "7777", name: "印能科技",  color: "#0652DD" },
+      { code: "7734", name: "印能科技",  color: "#0652DD" },
       { code: "8299", name: "群聯",      color: "#6F1E51" },
-      { code: "5328", name: "竹陞科技",  color: "#009432" },
+      { code: "6739", name: "竹陞科技",  color: "#009432" },
       { code: "3131", name: "弘塑",      color: "#EE5A24" },
       { code: "6510", name: "精測",      color: "#1289A7" },
       { code: "3653", name: "健策",      color: "#D980FA" },
@@ -723,6 +737,32 @@
     shareBtn.addEventListener("click", share);
     reveal.addEventListener("click", () => {
       clearTimeout(revealTimer); clearInterval(countdownTimer); closeReveal();
+    });
+
+    // 離開意圖時的挽留彈窗(每次開啟只跳一次,且需已進入遊戲)
+    const farewell = document.getElementById("farewell");
+    let farewellShown = false;
+    function showFarewell() {
+      if (farewellShown || !introDone) return;
+      farewellShown = true;
+      farewell.classList.add("show"); farewell.setAttribute("aria-hidden", "false");
+    }
+    function hideFarewell() {
+      farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
+    }
+    document.getElementById("farewellLater").addEventListener("click", hideFarewell);
+    document.getElementById("farewellLike").addEventListener("click", () => setTimeout(hideFarewell, 300));
+    // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
+    document.addEventListener("mouseout", (e) => {
+      if (e.clientY <= 0 && !e.relatedTarget) showFarewell();
+    });
+    // 手機/通用:按「返回鍵」時先挽留一次
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", () => {
+      if (introDone && !farewellShown) {
+        showFarewell();
+        history.pushState(null, "", location.href);
+      }
     });
 
     drawWheel();
