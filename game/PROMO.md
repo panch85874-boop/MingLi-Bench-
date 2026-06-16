@@ -26,7 +26,7 @@
 (純屬娛樂,不構成投資建議喔!)
 
 👉 立即試玩:【你的遊戲連結】
-🏢 by iPrinter ｜ 官網:https://iprinter.com.tw
+🐵 by iPrinter
 
 #台股 #iPrinter #千金股 #黑猩猩射飛鏢 #漫步華爾街 #隨機選股 #小遊戲 #理財 #台積電 #投資理財 #解壓小遊戲
 
