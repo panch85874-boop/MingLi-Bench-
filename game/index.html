@@ -419,17 +419,15 @@
     <div class="fb-card">
       <div id="farewellAsk">
         <div class="fb-emoji">🧧🐵</div>
-        <h2>先別走!送你招財小卡 🥺</h2>
-        <p>幫粉專按個讚,<b>免費送你「招財選股紀錄」小卡</b> 🧧</p>
-        <p class="farewell-note">📌 按完讚後<b>記得回來</b>領小卡!<br>回來方式:點手機左下/左上角的「返回」鍵,<br>或切回這個分頁,就能領取 🔙</p>
+        <h2>按讚送招財小卡</h2>
+        <p class="farewell-note">📌 按完讚 →「返回」或切回本頁,即可領取 🔙</p>
         <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 去粉專按讚</a>
-        <button class="fb-later" id="farewellLater">下次再說…</button>
+        <button class="fb-later" id="farewellLater">下次再說</button>
       </div>
       <div id="farewellBack" style="display:none;">
         <div class="fb-emoji">👍🧧</div>
-        <h2>歡迎回來!領取招財小卡</h2>
-        <p>謝謝你的支持 ❤️ 點下面領取你的招財選股紀錄小卡!</p>
-        <button class="fb-like-btn hl" id="farewellClaim">🧧 領取我的招財小卡</button>
+        <h2>歡迎回來!</h2>
+        <button class="fb-like-btn hl" id="farewellClaim">🧧 領取招財小卡</button>
         <button class="fb-later" id="farewellLater2">先不用了</button>
       </div>
     </div>
@@ -928,10 +926,10 @@
     });
     // 回到分頁時自動奉上招財小卡
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && awaitingReturn) { showToast("歡迎回來!招財小卡來囉 🧧"); claimCard(); }
+      if (!document.hidden && awaitingReturn) { claimCard(); }
     });
     window.addEventListener("focus", () => {
-      if (awaitingReturn) { showToast("歡迎回來!招財小卡來囉 🧧"); claimCard(); }
+      if (awaitingReturn) { claimCard(); }
     });
     // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
     document.addEventListener("mouseout", (e) => {
