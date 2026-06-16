@@ -151,9 +151,8 @@
     .history li .h-name { font-weight: 700; }
     .history li .h-shares { color: var(--gold); }
     .disclaimer { margin: 16px 0 0; font-size: 12px; opacity: 0.6; }
-    .brand-logo { margin-top: 12px; text-align: center; font-size: 22px; font-weight: 900;
-      letter-spacing: 1px; color: var(--gold); }
-    .brand-logo img { max-height: 40px; max-width: 70%; vertical-align: middle; }
+    .brand-logo { margin-top: 14px; text-align: center; }
+    .brand-logo img { width: 78%; max-width: 260px; border-radius: 10px; display: inline-block; }
 
     .reveal-overlay {
       position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
@@ -396,7 +395,7 @@
           <button class="sound-toggle" id="shareBtn">📤 分享</button>
         </div>
         <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
-        <div class="brand-logo" id="brandLogo">iPrinter</div>
+        <div class="brand-logo" id="brandLogo"><img src="https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/assets/iprint-logo.png" alt="愛印 iPrint" /></div>
       </aside>
     </main>
   </div>
@@ -531,6 +530,9 @@
     const records = [];          // 本次所有命中紀錄(供完整清單匯出)
     let followed = localStorage.getItem("monkeyDartFollowed") === "1";
     const money = (n) => "NT$" + Math.round(n).toLocaleString();
+    // 預載 愛印 iPrint 商標(供招財卡使用)
+    const brandImg = new Image(); brandImg.crossOrigin = "anonymous";
+    brandImg.src = "https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/assets/iprint-logo.png";
 
     function updateBudgetStatus() {
       const over = spentTotal > budget;
@@ -890,8 +892,16 @@
       x.restore();
       t("願君選股如有神助,黑猩猩祝你", 270, 1716, "26px " + FS, "#ffe9bf", "left");
       t("滿載而歸、財源滾滾 🧧", 270, 1756, "bold 30px " + FS, "#ffd700", "left");
-      t(`資料日期 ${dateStr}(收盤價)· 純屬娛樂模擬,不構成投資建議`, 270, 1800, "20px " + FB, "#e7c98a", "left");
-      t("iPrinter", W / 2, 1858, "900 30px " + FB, "#ffd700", "center");
+      t(`資料 ${dateStr} · 純娛樂,非投資建議`, 270, 1798, "20px " + FB, "#e7c98a", "left");
+      // 愛印 iPrint 商標(右下,白底襯托)
+      if (brandImg.complete && brandImg.naturalWidth) {
+        const lw = 206, lh = Math.round(lw * brandImg.naturalHeight / brandImg.naturalWidth);
+        const lx = W - 56 - lw, ly = 1742;
+        x.fillStyle = "#ffffff"; x.fillRect(lx - 8, ly - 8, lw + 16, lh + 16);
+        x.drawImage(brandImg, lx, ly, lw, lh);
+      } else {
+        t("愛印 iPrint", W - 160, 1800, "900 28px " + FB, "#ffd700", "center");
+      }
 
       const a = document.createElement("a");
       a.href = cv.toDataURL("image/png");
