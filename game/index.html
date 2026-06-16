@@ -235,10 +235,17 @@
     }
     .budget-quick button:hover { background: rgba(255,255,255,0.18); }
     .fb-like-btn {
-      display: block; text-decoration: none; padding: 14px; border-radius: 999px; margin-bottom: 10px;
+      display: block; text-decoration: none; padding: 15px; border-radius: 999px; margin-bottom: 10px;
       background: #1877f2; color: #fff; font-weight: 800; font-size: clamp(15px,4vw,18px);
+      box-shadow: 0 6px 18px rgba(24,119,242,0.5);
     }
     .fb-like-btn:hover { background: #1466d6; }
+    .fb-like-btn.hl { animation: fb-pulse 1.3s ease-in-out infinite; }
+    @keyframes fb-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(24,119,242,0.5); }
+      50% { transform: scale(1.06); box-shadow: 0 0 32px 6px rgba(56,150,255,0.95); }
+    }
+    #farewellLike { padding: 20px; font-size: clamp(18px,5.2vw,24px); margin-top: 4px; }
     .fb-later { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; text-decoration: underline; }
     .list-card { max-width: 480px; }
     .list-text {
@@ -431,8 +438,7 @@
       <div id="listPanel" style="display:none;">
         <h2>🧧 我的招財選股紀錄</h2>
         <pre id="listText" class="list-text"></pre>
-        <button class="fb-like-btn" id="listPdfBtn">📄 下載招財紀錄 PDF</button>
-        <button class="fb-like-btn" id="listCyberBtn" style="background:#ff2d2d;color:#fff;">🚀 下載「股票起飛中」戰績圖</button>
+        <button class="fb-like-btn" id="listPdfBtn">📄 下載招財選股紀錄 PDF</button>
         <button class="share-btn" id="listCopyBtn" style="margin-bottom:10px;">📋 一鍵複製文字清單</button>
         <button class="fb-later" id="listClose">關閉</button>
       </div>
@@ -442,13 +448,10 @@
   <!-- 離開時的挽留:誠懇邀請按讚(每次開啟只跳一次) -->
   <div class="fb-overlay" id="farewell" aria-hidden="true">
     <div class="fb-card">
-      <div class="fb-emoji">🐵🙏</div>
-      <h2>等等…先別走嘛 🥺</h2>
-      <p>謝謝你陪這隻黑猩猩射了好幾次飛鏢 ❤️<br>
-         這個小遊戲是我一個人默默做的,沒有廣告、不收費,只想帶給大家一點樂趣。<br>
-         如果你今天玩得開心,能不能<b>花 3 秒、幫我的粉絲專頁按個讚</b>?<br>
-         你的一個讚,就是我繼續做下去最大的動力 🙏</p>
-      <a class="fb-like-btn" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 好,我來幫你按個讚</a>
+      <div class="fb-emoji">🧧🐵</div>
+      <h2>先別走!送你招財紀錄 🥺</h2>
+      <p>幫粉專按個讚,<b>免費送你「招財選股紀錄」</b> 🧧</p>
+      <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 按讚,領取招財選股紀錄 🧧</a>
       <button class="fb-later" id="farewellLater">下次再說…</button>
     </div>
   </div>
@@ -911,148 +914,6 @@
       }
     }
 
-    // ----- 以原圖為底:把命中清單疊在「股票命中清單」框內,下載 PNG -----
-    const TEMPLATE_URL = "https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/assets/uptrend.png";
-    function downloadCyberCard() {
-      if (!records.length) { showToast("先去射幾把,再來產生戰績圖 🐵🎯"); return; }
-      showToast("戰績圖產生中… 🚀");
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        try {
-          const F = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
-          const cv = document.createElement("canvas");
-          cv.width = img.naturalWidth; cv.height = img.naturalHeight;
-          const x = cv.getContext("2d");
-          x.drawImage(img, 0, 0);
-          const neon = (t, px, py, font, color, blur, glow) => {
-            x.save(); x.font = font; x.textAlign = "center"; x.textBaseline = "middle";
-            x.shadowColor = glow || color; x.shadowBlur = blur; x.fillStyle = color;
-            x.fillText(t, px, py); if (blur) { x.shadowBlur = Math.round(blur / 2); x.fillText(t, px, py); }
-            x.shadowBlur = 0; x.fillText(t, px, py); x.restore();
-          };
-          // 蓋住原圖固定清單,保留霓虹外框
-          const x1 = 166, y1 = 884, x2 = 778, y2 = 1422, cxc = (x1 + x2) / 2;
-          const g = x.createLinearGradient(0, y1, 0, y2);
-          g.addColorStop(0, "rgba(12,2,4,0.96)"); g.addColorStop(1, "rgba(22,3,6,0.96)");
-          x.fillStyle = g; x.fillRect(x1, y1, x2 - x1, y2 - y1);
-          // 動態命中清單(超過11檔取金額前11名)
-          let list = records, extra = 0;
-          if (records.length > 11) { list = records.slice().sort((a, b) => b.cost - a.cost).slice(0, 11); extra = records.length - 11; }
-          const count = list.length + (extra > 0 ? 1 : 0);
-          const gap = Math.min(58, (y2 - y1 - 20) / count);
-          const fs = Math.min(40, Math.floor(gap * 0.6));
-          list.forEach((r, i) => {
-            const cy = y1 + 16 + gap * (i + 0.5);
-            neon(`${r.code}  ${r.name}`, cxc, cy, `bold ${fs}px ${F}`, "#ffffff", 6, "#ff2d2d");
-          });
-          if (extra > 0) {
-            const cy = y1 + 16 + gap * (list.length + 0.5);
-            neon(`… 還有 ${extra} 檔`, cxc, cy, `bold ${Math.floor(fs * 0.8)}px ${F}`, "#ff9a9a", 4, "#ff2d2d");
-          }
-          const a = document.createElement("a");
-          a.href = cv.toDataURL("image/png");
-          a.download = "股票起飛中_黑猩猩命中清單.png";
-          a.click();
-          showToast("『股票起飛中』戰績圖已下載 🚀🔴");
-        } catch (e) { downloadCyberCardNative(); }
-      };
-      img.onerror = () => { showToast("範本載入失敗,改用內建版型"); downloadCyberCardNative(); };
-      img.src = TEMPLATE_URL + "?v=" + Date.now();
-    }
-
-    // ----- 後備:純 canvas 繪製紅色「股票起飛中」(原圖載入失敗時使用)-----
-    function downloadCyberCardNative() {
-      if (!records.length) { showToast("先去射幾把,再來產生戰績圖 🐵🎯"); return; }
-      const F = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
-      const W = 1080, pad = 60, rowH = 72;
-      const topH = 760, listHeadH = 96, sloganH = 240;
-      const rows = records.length;
-      const listH = listHeadH + rows * rowH + 24;
-      const H = topH + listH + sloganH;
-      const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
-      const x = cv.getContext("2d");
-      const dateStr = priceAsOf || new Date().toISOString().slice(0, 10);
-      const gain = (88 + Math.random() * 700).toFixed(2);
-
-      function neon(t, px, py, font, color, blur, align = "left", glow) {
-        x.save(); x.font = font; x.textAlign = align; x.textBaseline = "alphabetic";
-        x.shadowColor = glow || color; x.shadowBlur = blur; x.fillStyle = color;
-        x.fillText(t, px, py);
-        if (blur) { x.shadowBlur = Math.round(blur / 2); x.fillText(t, px, py); }
-        x.shadowBlur = 0; x.fillText(t, px, py); x.restore();
-      }
-
-      // 暗紅都會背景 + 紅色網格
-      const bg = x.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, "#1c0306"); bg.addColorStop(0.5, "#240407"); bg.addColorStop(1, "#0f0203");
-      x.fillStyle = bg; x.fillRect(0, 0, W, H);
-      x.strokeStyle = "rgba(255,45,45,0.06)"; x.lineWidth = 1;
-      for (let gx = 0; gx <= W; gx += 54) { x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, H); x.stroke(); }
-      for (let gy = 0; gy <= H; gy += 54) { x.beginPath(); x.moveTo(0, gy); x.lineTo(W, gy); x.stroke(); }
-      x.save(); x.strokeStyle = "#ff2d2d"; x.lineWidth = 4; x.shadowColor = "#ff2d2d"; x.shadowBlur = 22;
-      x.strokeRect(20, 20, W - 40, H - 40); x.restore();
-
-      // 標題(斜體紅霓虹)
-      x.save(); x.transform(1, 0, -0.14, 1, 96, 0);
-      neon("股票起飛中", W / 2 - 50, 150, "900 104px " + F, "#ffe2e2", 32, "center", "#ff2d2d");
-      x.restore();
-      x.save(); x.fillStyle = "rgba(0,0,0,0.55)"; x.fillRect(pad, 182, W - 2 * pad, 62);
-      x.strokeStyle = "#ff2d2d"; x.lineWidth = 2; x.shadowColor = "#ff2d2d"; x.shadowBlur = 12;
-      x.strokeRect(pad, 182, W - 2 * pad, 62); x.restore();
-      neon("🐵 黑猩猩飛鏢命中清單 ◎", W / 2, 225, "bold 36px " + F, "#ffffff", 8, "center", "#ff2d2d");
-
-      // 徽章列
-      function badge(cx, cy, w, h, label, color) {
-        x.save(); x.strokeStyle = color; x.lineWidth = 2; x.shadowColor = color; x.shadowBlur = 12;
-        x.strokeRect(cx - w / 2, cy - h / 2, w, h); x.restore();
-        neon(label, cx, cy + 9, "bold 26px " + F, color, 8, "center");
-      }
-      badge(pad + 130, 300, 230, 52, "↑ UP ONLY", "#ff8a3d");
-      badge(W - pad - 160, 300, 280, 52, "🐂 BULL RUN", "#ff8a3d");
-      neon("GAIN", W / 2, 384, "bold 30px " + F, "#ff9a9a", 8, "center");
-      neon("+" + gain + "%", W / 2, 452, "900 80px " + F, "#ff3b3b", 28, "center", "#ff2d2d");
-      neon("⚡ ALL SYSTEMS GO ⚡", W / 2, 500, "bold 24px " + F, "#ffce54", 10, "center");
-
-      // 上升紅箭頭(鋸齒衝高)
-      const ax0 = pad + 30, ay0 = 720, ax1 = W - pad - 50, ay1 = 556;
-      x.save(); x.shadowColor = "#ff2d2d"; x.shadowBlur = 26; x.lineWidth = 11; x.lineJoin = "round"; x.lineCap = "round";
-      const ag = x.createLinearGradient(ax0, 0, ax1, 0); ag.addColorStop(0, "#ff2d2d"); ag.addColorStop(1, "#ff9a3d");
-      x.strokeStyle = ag; x.beginPath(); x.moveTo(ax0, ay0);
-      const seg = 8;
-      for (let i = 1; i <= seg; i++) { const t = i / seg; x.lineTo(ax0 + (ax1 - ax0) * t, ay0 + (ay1 - ay0) * t + (i % 2 ? -24 : 14)); }
-      x.stroke();
-      x.beginPath(); x.moveTo(ax1, ay1); x.lineTo(ax1 - 52, ay1 + 4); x.moveTo(ax1, ay1); x.lineTo(ax1 - 8, ay1 + 54); x.stroke();
-      x.restore();
-
-      // 命中清單框
-      const lx = pad, ly = topH, lw = W - 2 * pad, lh = listH;
-      x.save(); x.strokeStyle = "#ff2d2d"; x.lineWidth = 3; x.shadowColor = "#ff2d2d"; x.shadowBlur = 16;
-      x.strokeRect(lx, ly, lw, lh); x.restore();
-      neon("》 股票命中清單 《", W / 2, ly + 60, "900 42px " + F, "#ffffff", 12, "center", "#ff2d2d");
-      records.forEach((r, i) => {
-        const ry = ly + listHeadH + i * rowH, ty = ry + rowH / 2 + 11;
-        if (i % 2) { x.fillStyle = "rgba(255,45,45,0.07)"; x.fillRect(lx + 10, ry, lw - 20, rowH); }
-        neon("»", lx + 46, ty, "bold 32px " + F, "#ff6a6a", 6, "center");
-        neon(r.code + "  " + r.name, lx + 84, ty, "bold 38px " + F, "#ffecec", 6, "left", "#ff2d2d");
-        neon(money(r.cost), W - pad - 30, ty, "bold 30px " + F, "#ff9a3d", 8, "right");
-      });
-
-      // 結算 + 標語
-      neon(`命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`,
-        W / 2, ly + lh + 56, "bold 30px " + F, "#ffce54", 10, "center");
-      const sy = topH + listH + 150;
-      x.save(); x.transform(1, 0, -0.1, 1, 60, 0);
-      neon("不是不噴,只是還沒噴完", W / 2 - 30, sy, "900 60px " + F, "#ff3b3b", 28, "center", "#ff2d2d");
-      x.restore();
-      neon(`📅 ${dateStr} 收盤價 · 🐵 黑猩猩射飛鏢 · 純娛樂非投資建議`, W / 2, sy + 64, "20px " + F, "#c98a8a", 0, "center");
-
-      const a = document.createElement("a");
-      a.href = cv.toDataURL("image/png");
-      a.download = "股票起飛中_黑猩猩命中清單.png";
-      a.click();
-      showToast("『股票起飛中』戰績圖已下載 🚀🔴");
-    }
     function showListContent() {
       listGate.style.display = "none"; listPanel.style.display = "block";
       listText.textContent = buildListText();
@@ -1072,7 +933,6 @@
       downloadRecordPDF();                  // 點讚同時自動產生招財紀錄 PDF
     });
     document.getElementById("listPdfBtn").addEventListener("click", downloadRecordPDF);
-    document.getElementById("listCyberBtn").addEventListener("click", downloadCyberCard);
     document.getElementById("listCopyBtn").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
       catch (e) { showToast("複製失敗,請長按清單手動複製"); }
@@ -1093,7 +953,7 @@
       farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
     }
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
-    document.getElementById("farewellLike").addEventListener("click", () => { markFollowed(); setTimeout(hideFarewell, 300); });
+    document.getElementById("farewellLike").addEventListener("click", () => { markFollowed(); downloadRecordPDF(); setTimeout(hideFarewell, 300); });
     // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
     document.addEventListener("mouseout", (e) => {
       if (e.clientY <= 0 && !e.relatedTarget) showFarewell();
