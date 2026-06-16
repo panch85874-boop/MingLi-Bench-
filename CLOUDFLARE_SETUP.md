@@ -12,15 +12,25 @@
 - `www.iprinter.com.tw` A → 同上(Cloudflare anycast)
 - IPv6 → `2606:4700:3034::…`(Cloudflare)
 - 判定:**網域已掛在 Cloudflare,zone 應為 Active,apex 與 www 皆已 Proxied(橘雲)**
-- 未能從外部判定項目:實際部署(Pages / 傳統主機)、SSL 模式、www→apex 轉址、MX/SPF 等(需 Dashboard)
+## 🧱 已釐清的架構(2026-06-16)
+- **官網主站**:`iprinter.com.tw` / `www` → Cloudflare(橘雲)→ **DigitalOcean 新加坡 Droplet `152.42.167.42`(Nginx)**
+  - 網站根目錄:`/home/ai-agent/iprint_web_project/`(`index.html`、`assets/`…)
+  - SSL:**Cloudflare Origin 憑證** → Cloudflare 端應設 **Full (strict)**
+- **子網域**:`gw.iprinter.com.tw` / `line.iprinter.com.tw` → **Cloudflare Tunnel → 本機**(後台 / LINE Bot)
+- **Google Drive `愛印iPrint_備份/index.html`** = 備份,非線上來源
+- 結論:**不是 Cloudflare Pages**,是「Cloudflare 代理 → 傳統主機(DO 新加坡 Nginx)」
+
+## 🎮 把遊戲放上官網(iprinter.com.tw/game/)
+因為是 Nginx 傳統主機,做法 = 把遊戲檔放進網站根目錄的 `game/` 夾:
+1. SSH 進 DO 主機(由老潘 / 有 SSH 的代理執行)
+2. 建立資料夾:`/home/ai-agent/iprint_web_project/game/`
+3. 上傳遊戲 **`index.html`**(建議用「完全自包含版」)到該夾
+4. 開 `https://iprinter.com.tw/game/` 驗證
+> 自包含版不依賴任何外部資源(Logo 內嵌、股價烤進檔案),最適合丟上 Nginx。
 
 ## ✅ 待你在 Dashboard 確認 / 設定
 1. [ ] **Overview**:zone 顯示 **Active**;記下 Cloudflare 指派的 2 組 nameserver
-2. [ ] **Workers & Pages**:是否有官網的 **Pages 專案**?
-       - 有 → 這是 Pages 站;到該專案 **Custom domains** 確認 `iprinter.com.tw` 與 `www.iprinter.com.tw` 皆 **Active**
-       - 沒有 → 官網是「Proxied 到傳統主機/其他服務」
-3. [ ] **SSL/TLS → Overview**:設為 **Full (strict)**(origin 有有效憑證時;Pages 為自動)
-       - ⚠️ 不要用 Flexible
+2. [ ] **SSL/TLS → Overview**:確認為 **Full (strict)**(已用 Cloudflare Origin 憑證)— ⚠️ 不要用 Flexible
 4. [ ] **canonical(擇一,建議 apex)**:`www.iprinter.com.tw` **301 →** `https://iprinter.com.tw/`
        - Rules → **Redirect Rules** → Create:
          - When: `http.host eq "www.iprinter.com.tw"`
