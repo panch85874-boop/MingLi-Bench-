@@ -245,6 +245,10 @@
       50% { transform: scale(1.06); box-shadow: 0 0 32px 6px rgba(56,150,255,0.95); }
     }
     #farewellLike { padding: 20px; font-size: clamp(18px,5.2vw,24px); margin-top: 4px; }
+    .farewell-note { font-size: 14px; line-height: 1.7; text-align: left;
+      background: rgba(255,213,74,0.1); border: 1px solid rgba(255,213,74,0.3);
+      border-radius: 10px; padding: 10px 14px; margin: 6px 0 14px; }
+    .farewell-note b { color: var(--gold); }
     .fb-later { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; text-decoration: underline; }
     .list-card { max-width: 480px; }
     .list-text {
@@ -413,11 +417,21 @@
   <!-- 離開時的挽留:誠懇邀請按讚(每次開啟只跳一次) -->
   <div class="fb-overlay" id="farewell" aria-hidden="true">
     <div class="fb-card">
-      <div class="fb-emoji">🧧🐵</div>
-      <h2>先別走!送你招財紀錄 🥺</h2>
-      <p>幫粉專按個讚,<b>免費送你「招財選股紀錄」</b> 🧧</p>
-      <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 按讚,領取招財選股紀錄 🧧</a>
-      <button class="fb-later" id="farewellLater">下次再說…</button>
+      <div id="farewellAsk">
+        <div class="fb-emoji">🧧🐵</div>
+        <h2>先別走!送你招財小卡 🥺</h2>
+        <p>幫粉專按個讚,<b>免費送你「招財選股紀錄」小卡</b> 🧧</p>
+        <p class="farewell-note">📌 按完讚後<b>記得回來</b>領小卡!<br>回來方式:點手機左下/左上角的「返回」鍵,<br>或切回這個分頁,就能領取 🔙</p>
+        <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 去粉專按讚</a>
+        <button class="fb-later" id="farewellLater">下次再說…</button>
+      </div>
+      <div id="farewellBack" style="display:none;">
+        <div class="fb-emoji">👍🧧</div>
+        <h2>歡迎回來!領取招財小卡</h2>
+        <p>謝謝你的支持 ❤️ 點下面領取你的招財選股紀錄小卡!</p>
+        <button class="fb-like-btn hl" id="farewellClaim">🧧 領取我的招財小卡</button>
+        <button class="fb-later" id="farewellLater2">先不用了</button>
+      </div>
     </div>
   </div>
 
@@ -885,17 +899,40 @@
 
     // 離開意圖時的挽留彈窗(每次開啟只跳一次,且需已進入遊戲)
     const farewell = document.getElementById("farewell");
-    let farewellShown = false;
+    const farewellAsk = document.getElementById("farewellAsk");
+    const farewellBack = document.getElementById("farewellBack");
+    let farewellShown = false, awaitingReturn = false;
     function showFarewell() {
       if (farewellShown || !introDone) return;
       farewellShown = true;
+      farewellAsk.style.display = "block"; farewellBack.style.display = "none";
       farewell.classList.add("show"); farewell.setAttribute("aria-hidden", "false");
     }
     function hideFarewell() {
       farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
+      awaitingReturn = false;
+    }
+    function claimCard() {
+      awaitingReturn = false;
+      downloadRecordPDF();
+      setTimeout(hideFarewell, 500);
     }
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
-    document.getElementById("farewellLike").addEventListener("click", () => { markFollowed(); downloadRecordPDF(); setTimeout(hideFarewell, 300); });
+    document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
+    document.getElementById("farewellClaim").addEventListener("click", claimCard);
+    // 去粉專按讚:標記、開 FB,並切到「回來領取」畫面(離開前已先說明怎麼回來)
+    document.getElementById("farewellLike").addEventListener("click", () => {
+      markFollowed();
+      awaitingReturn = true;
+      farewellAsk.style.display = "none"; farewellBack.style.display = "block";
+    });
+    // 回到分頁時自動奉上招財小卡
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && awaitingReturn) { showToast("歡迎回來!招財小卡來囉 🧧"); claimCard(); }
+    });
+    window.addEventListener("focus", () => {
+      if (awaitingReturn) { showToast("歡迎回來!招財小卡來囉 🧧"); claimCard(); }
+    });
     // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
     document.addEventListener("mouseout", (e) => {
       if (e.clientY <= 0 && !e.relatedTarget) showFarewell();
