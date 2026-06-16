@@ -220,20 +220,16 @@
     .budget-emoji, .fb-emoji { font-size: clamp(40px, 12vw, 64px); }
     .budget-card h2, .fb-card h2 { margin: 8px 0; font-size: clamp(22px, 6vw, 30px); }
     .budget-card p, .fb-card p { opacity: 0.9; line-height: 1.7; font-size: 14px; margin: 0 0 16px; }
-    .budget-input-row {
-      display: flex; align-items: center; gap: 8px; justify-content: center;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,213,74,0.4);
-      border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;
-    }
-    .budget-input-row span { font-size: 20px; font-weight: 800; color: var(--gold); }
-    #budgetInput { flex: 1; background: transparent; border: none; outline: none; color: #fff;
-      font-size: 22px; font-weight: 700; text-align: right; min-width: 0; }
-    .budget-quick { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
+    .budget-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 4px; }
     .budget-quick button {
-      flex: 1; min-width: 64px; padding: 8px; border-radius: 10px; cursor: pointer;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--ink); font-size: 14px;
+      padding: 26px 8px; border-radius: 16px; cursor: pointer; font-size: 24px; font-weight: 900;
+      color: #5a3d00; border: none;
+      background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4), inset 0 2px 6px rgba(255,255,255,0.6);
+      transition: transform 0.12s;
     }
-    .budget-quick button:hover { background: rgba(255,255,255,0.18); }
+    .budget-quick button:hover { transform: scale(1.04); }
+    .budget-quick button:active { transform: scale(0.96); }
     .fb-like-btn {
       display: block; text-decoration: none; padding: 15px; border-radius: 999px; margin-bottom: 10px;
       background: #1877f2; color: #fff; font-weight: 800; font-size: clamp(15px,4vw,18px);
@@ -354,19 +350,14 @@
   <div class="budget-overlay" id="budget" aria-hidden="true">
     <div class="budget-card">
       <div class="budget-emoji">💰</div>
-      <h2>先設定你的預算</h2>
-      <p>輸入你「預估的購買金額」(新台幣),按確認後開始射飛鏢。<br>之後每次命中會以最新股價 × 建議股數累計,超過預算會提醒你。</p>
-      <div class="budget-input-row">
-        <span>NT$</span>
-        <input type="number" id="budgetInput" inputmode="numeric" min="1000" step="10000" placeholder="例如 100000" />
-      </div>
+      <h2>選擇你的預算</h2>
+      <p>點一個金額,直接開始射飛鏢!</p>
       <div class="budget-quick">
-        <button data-amt="50000">5萬</button>
-        <button data-amt="100000">10萬</button>
-        <button data-amt="300000">30萬</button>
-        <button data-amt="500000">50萬</button>
+        <button data-amt="50000">5 萬</button>
+        <button data-amt="100000">10 萬</button>
+        <button data-amt="300000">30 萬</button>
+        <button data-amt="500000">50 萬</button>
       </div>
-      <button class="start-hint" id="budgetConfirm">✅ 確認,開始射飛鏢</button>
     </div>
   </div>
 
@@ -783,7 +774,6 @@
     // 開場故事頁 → 預算輸入頁 → 遊戲(點開場頁同時解鎖音效)
     const intro = document.getElementById("intro");
     const budgetOverlay = document.getElementById("budget");
-    const budgetInput = document.getElementById("budgetInput");
     let introDone = false;
     function startGame() {
       if (introDone) return;
@@ -793,9 +783,8 @@
       intro.classList.add("hide");
       setTimeout(() => {
         intro.style.display = "none";
-        budgetOverlay.classList.add("show");     // 接著顯示預算輸入頁
+        budgetOverlay.classList.add("show");     // 接著顯示預算選擇頁
         budgetOverlay.setAttribute("aria-hidden", "false");
-        budgetInput.focus();
       }, 500);
     }
     intro.addEventListener("click", startGame);
@@ -803,20 +792,17 @@
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); startGame(); }
     });
 
-    // 預算快捷鍵 + 確認
-    document.querySelectorAll(".budget-quick button").forEach((b) => {
-      b.addEventListener("click", () => { budgetInput.value = b.dataset.amt; });
-    });
-    function confirmBudget() {
-      const v = parseInt(budgetInput.value, 10);
-      budget = (!v || v < 1000) ? 100000 : v;   // 未填或太小則預設 10 萬
+    // 預算:點金額直接開始
+    function chooseBudget(amt) {
+      budget = amt;
       spentTotal = 0;
       updateBudgetStatus();
       budgetOverlay.classList.remove("show");
       budgetOverlay.setAttribute("aria-hidden", "true");
     }
-    document.getElementById("budgetConfirm").addEventListener("click", confirmBudget);
-    budgetInput.addEventListener("keydown", (e) => { if (e.key === "Enter") confirmBudget(); });
+    document.querySelectorAll(".budget-quick button").forEach((b) => {
+      b.addEventListener("click", () => chooseBudget(parseInt(b.dataset.amt, 10)));
+    });
 
     spinBtn.addEventListener("click", () => { ac(); spin(); });
     soundToggle.addEventListener("click", () => {
