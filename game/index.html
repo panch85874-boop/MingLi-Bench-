@@ -401,7 +401,7 @@
       { code: "5269", name: "祥碩",      color: "#00b894" },
       { code: "3661", name: "世芯-KY",   color: "#0984e3" },
       { code: "2345", name: "智邦",      color: "#2d3436" },
-      { code: "6515b", name: "愛普*",    color: "#a29bfe" },
+      { code: "6531", name: "愛普*",    color: "#a29bfe" },
       { code: "8210", name: "勤誠",      color: "#e17055" },
       { code: "3529", name: "力旺",      color: "#fdcb6e" },
       { code: "7750", name: "新代",      color: "#00cec9" },
@@ -423,7 +423,7 @@
       "6669": 2500, "2360": 450, "3324": 500, "6805": 1000, "2059": 1200,
       "2330": 1100, "4749": 700, "5536": 350, "5434": 250, "3443": 1500,
       "3533": 1300, "1590": 1000, "2383": 700, "3017": 850, "8996": 400,
-      "5269": 1800, "3661": 3500, "2345": 700, "6515b": 700, "8210": 450,
+      "5269": 1800, "3661": 3500, "2345": 700, "6531": 700, "8210": 450,
       "3529": 2800, "7750": 500, "6274": 250, "7777": 600, "8299": 600,
       "5328": 400, "3131": 700, "3035": 900, "3653": 1300,
     };
@@ -450,16 +450,31 @@
     // ---------- 預算 / 累計 / 遊玩次數 ----------
     let budget = 100000;          // 預估購買金額
     let spentTotal = 0;           // 已累計購買金額
+    let priceAsOf = "";           // 股價更新日期(讀到 prices.json 時填入)
     let playCount = parseInt(localStorage.getItem("monkeyDartPlays") || "0", 10);
     const money = (n) => "NT$" + Math.round(n).toLocaleString();
 
     function updateBudgetStatus() {
       const over = spentTotal > budget;
+      const note = priceAsOf
+        ? `股價更新於 ${priceAsOf}(收盤價)`
+        : `股價為參考值(非即時報價)`;
       budgetStatus.innerHTML =
         `預算 <b>${money(budget)}</b> · 已使用 <b>${money(spentTotal)}</b>` +
         (over ? `<br><span class="over">⚠️ 已超出 ${money(spentTotal - budget)}</span>` : "") +
-        `<br><span style="opacity:.6;font-size:12px;">股價為參考值(非即時報價)</span>`;
+        `<br><span style="opacity:.6;font-size:12px;">${note}</span>`;
     }
+
+    // 載入每日自動更新的股價(部署後由排程更新 prices.json);失敗則用內建參考價
+    fetch("prices.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data) return;
+        if (data.prices) { Object.assign(PRICES, data.prices); priceAsOf = data.asOf || ""; }
+        else { Object.assign(PRICES, data); }
+        updateBudgetStatus();
+      })
+      .catch(() => { /* file:// 或離線時略過,用內建參考價 */ });
 
     const N = STOCKS.length;
     const SEG = (Math.PI * 2) / N;

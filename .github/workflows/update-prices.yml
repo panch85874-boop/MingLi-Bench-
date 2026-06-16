@@ -1,0 +1,42 @@
+name: Update Taiwan stock prices
+
+# 每個交易日台股收盤後抓收盤價,更新 game/prices.json
+on:
+  schedule:
+    # 06:30 UTC = 台北 14:30(收盤後);週一到週五
+    - cron: "30 6 * * 1-5"
+  workflow_dispatch:        # 也可手動觸發
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "update-prices"
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch closing prices
+        run: python scripts/update_prices.py
+
+      - name: Commit if changed
+        run: |
+          if [[ -n "$(git status --porcelain game/prices.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add game/prices.json
+            git commit -m "chore: 更新台股收盤價 $(date -u +%Y-%m-%d)"
+            git push
+          else
+            echo "股價無變動,略過提交。"
+          fi
