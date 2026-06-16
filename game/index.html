@@ -240,6 +240,13 @@
     }
     .fb-like-btn:hover { background: #1466d6; }
     .fb-later { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; text-decoration: underline; }
+    .list-card { max-width: 480px; }
+    .list-text {
+      text-align: left; white-space: pre-wrap; word-break: break-all; margin: 0 0 14px;
+      max-height: 42vh; overflow: auto; background: rgba(0,0,0,0.3);
+      padding: 12px 14px; border-radius: 10px; font-size: 13px; line-height: 1.7;
+      font-family: "Menlo","Consolas",monospace; color: #f5f5f5;
+    }
     /* 中獎金額顯示 */
     .reveal-cost { margin-top: 16px; font-size: clamp(16px, 4.5vw, 22px); }
     .reveal-cost b { color: var(--gold); }
@@ -336,6 +343,7 @@
         </div>
         <div class="budget-status" id="budgetStatus"></div>
         <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
+        <button class="share-btn" id="listBtn">📋 我的命中清單</button>
         <a class="fb-like-btn" id="fbPanelBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener" style="margin-bottom:12px;">👍 加入粉絲專頁</a>
         <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
         <div class="history">
@@ -362,6 +370,25 @@
       <div class="reveal-total" id="revealTotal"></div>
       <div class="reveal-over" id="revealOver"></div>
       <div class="reveal-count" id="revealCount">5</div>
+    </div>
+  </div>
+
+  <!-- 我的命中清單(追蹤粉專解鎖 + 一鍵複製) -->
+  <div class="fb-overlay" id="listModal" aria-hidden="true">
+    <div class="fb-card list-card">
+      <div id="listGate">
+        <div class="fb-emoji">🔒🐵</div>
+        <h2>解鎖「我的命中清單」</h2>
+        <p>追蹤粉絲專頁,即可解鎖你<b>所有射中股票的完整清單</b>(股名、代號、股價、股數、金額),還能<b>一鍵複製</b>分享給朋友!</p>
+        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">👍 追蹤粉絲專頁,解鎖清單</a>
+        <button class="fb-later" id="listGateClose">先不要</button>
+      </div>
+      <div id="listPanel" style="display:none;">
+        <h2>📋 我的命中清單</h2>
+        <pre id="listText" class="list-text"></pre>
+        <button class="fb-like-btn" id="listCopyBtn">📋 一鍵複製清單</button>
+        <button class="fb-later" id="listClose">關閉</button>
+      </div>
     </div>
   </div>
 
@@ -469,6 +496,8 @@
     let spentTotal = 0;           // 已累計購買金額
     let priceAsOf = "";           // 股價更新日期(讀到 prices.json 時填入)
     let playCount = parseInt(localStorage.getItem("monkeyDartPlays") || "0", 10);
+    const records = [];          // 本次所有命中紀錄(供完整清單匯出)
+    let followed = localStorage.getItem("monkeyDartFollowed") === "1";
     const money = (n) => "NT$" + Math.round(n).toLocaleString();
 
     function updateBudgetStatus() {
@@ -610,6 +639,7 @@
       spentTotal += cost;
       playCount += 1;
       localStorage.setItem("monkeyDartPlays", String(playCount));
+      records.push({ name: stock.name, code: stock.code.replace(/[a-z]/g, ""), price, shares, cost });
       pointer.classList.add("hit");
       setTimeout(() => pointer.classList.remove("hit"), 400);
       fanfare();
@@ -739,6 +769,49 @@
       clearTimeout(revealTimer); clearInterval(countdownTimer); closeReveal();
     });
 
+    // ---------- 我的命中清單(追蹤粉專解鎖 + 一鍵複製) ----------
+    const listModal = document.getElementById("listModal");
+    const listGate = document.getElementById("listGate");
+    const listPanel = document.getElementById("listPanel");
+    const listText = document.getElementById("listText");
+    const listBtn = document.getElementById("listBtn");
+    function markFollowed() {
+      followed = true;
+      localStorage.setItem("monkeyDartFollowed", "1");
+      refreshListBtn();
+    }
+    function refreshListBtn() { listBtn.textContent = followed ? "📋 我的命中清單" : "📋 我的命中清單 🔒"; }
+    function buildListText() {
+      if (!records.length) return "尚未射中任何股票,先去轉幾把吧 🐵🎯";
+      const lines = records.map((r, i) =>
+        `${String(i + 1).padStart(2, " ")}. ${r.name}(${r.code})  ${money(r.price)} × ${r.shares}股 = ${money(r.cost)}`);
+      const sub = priceAsOf ? `(${priceAsOf} 收盤價,純娛樂非投資建議)` : `(參考價,純娛樂非投資建議)`;
+      return `🐵 台股千金俄羅斯輪盤 — 我的命中清單\n${sub}\n\n${lines.join("\n")}\n\n———\n命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`;
+    }
+    function showListContent() {
+      listGate.style.display = "none"; listPanel.style.display = "block";
+      listText.textContent = buildListText();
+    }
+    function openList() {
+      if (followed) { showListContent(); }
+      else { listGate.style.display = "block"; listPanel.style.display = "none"; }
+      listModal.classList.add("show"); listModal.setAttribute("aria-hidden", "false");
+    }
+    function closeList() { listModal.classList.remove("show"); listModal.setAttribute("aria-hidden", "true"); }
+    listBtn.addEventListener("click", openList);
+    document.getElementById("listGateClose").addEventListener("click", closeList);
+    document.getElementById("listClose").addEventListener("click", closeList);
+    document.getElementById("listFollowBtn").addEventListener("click", () => {
+      markFollowed(); setTimeout(showListContent, 300);   // 點追蹤即解鎖
+    });
+    document.getElementById("listCopyBtn").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
+      catch (e) { showToast("複製失敗,請長按清單手動複製"); }
+    });
+    // 點任一個粉專按鈕都視為已追蹤(信任制解鎖)
+    document.getElementById("fbPanelBtn").addEventListener("click", markFollowed);
+    refreshListBtn();
+
     // 離開意圖時的挽留彈窗(每次開啟只跳一次,且需已進入遊戲)
     const farewell = document.getElementById("farewell");
     let farewellShown = false;
@@ -751,7 +824,7 @@
       farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
     }
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
-    document.getElementById("farewellLike").addEventListener("click", () => setTimeout(hideFarewell, 300));
+    document.getElementById("farewellLike").addEventListener("click", () => { markFollowed(); setTimeout(hideFarewell, 300); });
     // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
     document.addEventListener("mouseout", (e) => {
       if (e.clientY <= 0 && !e.relatedTarget) showFarewell();
