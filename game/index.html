@@ -32,6 +32,57 @@
       -webkit-tap-highlight-color: transparent;
     }
     .app { max-width: 1100px; margin: 0 auto; padding: max(16px, env(safe-area-inset-top)) 16px 48px; }
+
+    /* 開場故事頁 */
+    .intro-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; overflow: auto;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      transition: opacity 0.5s ease;
+    }
+    .intro-overlay.hide { opacity: 0; pointer-events: none; }
+    .intro-card {
+      max-width: 560px; width: 100%; text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(255,213,74,0.12), rgba(20,20,40,0.9));
+      border: 1px solid rgba(255,213,74,0.3); border-radius: 24px;
+      padding: clamp(24px, 5vw, 44px); box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      animation: card-pop 0.5s cubic-bezier(0.18, 1.4, 0.4, 1);
+    }
+    .intro-emoji { font-size: clamp(44px, 12vw, 72px); }
+    .intro-title {
+      margin: 8px 0 2px; font-size: clamp(30px, 8vw, 52px); font-weight: 900;
+      background: linear-gradient(90deg, var(--gold), #fff, var(--gold-deep));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .intro-sub { margin: 0 0 16px; letter-spacing: 3px; opacity: 0.85; }
+    .intro-card .quote {
+      font-style: italic; color: #fff; text-align: left; line-height: 1.8;
+      border-left: 3px solid var(--gold); padding-left: 14px; margin: 8px 0;
+    }
+    .intro-card .quote-src { text-align: right; font-size: 13px; opacity: 0.65; margin: -2px 0 12px; }
+    .intro-card .essence {
+      list-style: none; text-align: left; margin: 12px 0; padding: 16px;
+      border-radius: 12px; background: rgba(255,213,74,0.08); border: 1px solid rgba(255,213,74,0.25);
+    }
+    .intro-card .essence li { font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+    .intro-card .essence li:last-child { margin-bottom: 0; }
+    .intro-card .essence li b { color: var(--gold); }
+    .intro-closing { font-weight: 700; margin: 14px 0 18px; }
+    .start-btn {
+      display: inline-block; width: 100%; padding: 16px; font-size: clamp(16px, 4vw, 20px);
+      font-weight: 800; color: #5a3d00; cursor: pointer; border: none; border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
+      box-shadow: 0 8px 24px rgba(255,213,74,0.4), inset 0 2px 6px rgba(255,255,255,0.6);
+      transition: transform 0.12s; animation: btn-pulse 1.8s ease-in-out infinite;
+    }
+    .start-btn:hover { transform: scale(1.04); }
+    .start-btn:active { transform: scale(0.97); }
+    @keyframes btn-pulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(255,213,74,0.4), inset 0 2px 6px rgba(255,255,255,0.6); }
+      50% { box-shadow: 0 8px 36px rgba(255,213,74,0.8), inset 0 2px 6px rgba(255,255,255,0.6); }
+    }
+    .intro-card .disclaimer { margin-top: 16px; }
     .topbar { text-align: center; margin-bottom: 18px; }
     .topbar h1 {
       margin: 0; font-size: clamp(22px, 5vw, 40px);
@@ -176,6 +227,25 @@
   </style>
 </head>
 <body>
+  <!-- 開場故事頁:打開先看故事,點擊確認才進入遊戲 -->
+  <div class="intro-overlay" id="intro">
+    <div class="intro-card">
+      <div class="intro-emoji">🐵🎯</div>
+      <h1 class="intro-title">黑猩猩射飛鏢</h1>
+      <p class="intro-sub">台股千金俄羅斯輪盤</p>
+      <p class="quote">「找一隻矇眼黑猩猩,對著報紙股票版射飛鏢選股 —— 牠的投資組合,長期未必輸給領高薪的基金經理人。」</p>
+      <p class="quote-src">— 普林斯頓教授馬基爾《漫步華爾街》</p>
+      <ul class="essence">
+        <li><b>市場難測:</b>短期股價近乎隨機,再準的明牌也常敗給運氣。</li>
+        <li><b>分散勝過押注:</b>與其重押一檔、追高殺低,不如分散、長期參與。</li>
+        <li><b>謙虛才是優勢:</b>別以為你一定比市場聰明 —— 這才是猩猩的智慧。</li>
+      </ul>
+      <p class="intro-closing">準備好了嗎?換你當這隻猩猩,親手體會「隨機」的力量。</p>
+      <button class="start-btn" id="startBtn">🎯 我準備好了,開始射飛鏢</button>
+      <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
+    </div>
+  </div>
+
   <div class="app">
     <header class="topbar">
       <h1>🐵 台股千金俄羅斯輪盤</h1>
@@ -194,15 +264,8 @@
 
       <aside class="panel">
         <div class="story">
-          <h2>📖 黑猩猩射飛鏢的啟示</h2>
-          <p class="quote">「找一隻矇眼黑猩猩,對著報紙股票版射飛鏢選股 —— 牠的投資組合,長期未必輸給領高薪的基金經理人。」</p>
-          <p class="quote-src">— 普林斯頓教授馬基爾《漫步華爾街》</p>
-          <ul class="essence">
-            <li><b>市場難測:</b>短期股價近乎隨機,再準的明牌也常敗給運氣。</li>
-            <li><b>分散勝過押注:</b>與其重押一檔、追高殺低,不如分散、長期參與。</li>
-            <li><b>謙虛才是優勢:</b>別以為你一定比市場聰明 —— 這才是猩猩的智慧。</li>
-          </ul>
-          <p class="closing">今天,換你當這隻猩猩 🐵 轉一把,親手體會「隨機」的力量。</p>
+          <h2>🐵 換你當這隻猩猩</h2>
+          <p class="closing">點中央按鈕射飛鏢,隨機選一檔台股千金股。記住:市場難測、分散勝過押注、謙虛才是優勢。</p>
         </div>
         <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
         <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
@@ -394,7 +457,7 @@
 
     function finishSpin() {
       const stock = STOCKS[indexAtPointer()];
-      const shares = 1 + Math.floor(Math.random() * 10);
+      const shares = 2 + Math.floor(Math.random() * 5);   // 2~6 股(千金股單價高,股數偏少)
       pointer.classList.add("hit");
       setTimeout(() => pointer.classList.remove("hit"), 400);
       fanfare();
@@ -462,6 +525,15 @@
         showToast(url);
       }
     }
+
+    // 開場故事頁:點擊確認後進入遊戲(同時解鎖音效)
+    const intro = document.getElementById("intro");
+    document.getElementById("startBtn").addEventListener("click", () => {
+      ac();                       // 使用者手勢解鎖 Web Audio
+      whoosh();                   // 進場「咻」一聲,帶出遊戲感
+      intro.classList.add("hide");
+      setTimeout(() => { intro.style.display = "none"; }, 500);
+    });
 
     spinBtn.addEventListener("click", () => { ac(); spin(); });
     soundToggle.addEventListener("click", () => {
