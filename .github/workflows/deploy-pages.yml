@@ -30,6 +30,8 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       # 只發布 game 資料夾,網站根目錄即為遊戲
       - name: Upload artifact
