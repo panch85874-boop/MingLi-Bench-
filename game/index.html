@@ -81,8 +81,16 @@
       background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 18px; padding: 20px; backdrop-filter: blur(6px);
     }
-    .story h2 { margin: 0 0 8px; font-size: 18px; }
-    .story p { margin: 0 0 14px; line-height: 1.7; opacity: 0.9; font-size: 14px; }
+    .story h2 { margin: 0 0 10px; font-size: 18px; }
+    .story p { margin: 0 0 10px; line-height: 1.7; opacity: 0.9; font-size: 14px; }
+    .story .quote { font-style: italic; color: #fff; border-left: 3px solid var(--gold); padding-left: 12px; opacity: 1; }
+    .story .quote-src { text-align: right; font-size: 12px; opacity: 0.65; margin-top: -4px; }
+    .essence { list-style: none; margin: 12px 0; padding: 14px; border-radius: 12px;
+      background: rgba(255,213,74,0.08); border: 1px solid rgba(255,213,74,0.25); }
+    .essence li { font-size: 13.5px; line-height: 1.65; margin-bottom: 8px; opacity: 0.95; }
+    .essence li:last-child { margin-bottom: 0; }
+    .essence li b { color: var(--gold); }
+    .story .closing { font-weight: 700; opacity: 1; }
     .sound-toggle, .share-btn {
       width: 100%; padding: 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.08); color: var(--ink); cursor: pointer; font-size: 14px; margin-bottom: 12px;
@@ -110,6 +118,7 @@
       border: 2px solid var(--gold);
       box-shadow: 0 0 80px rgba(255,213,74,0.35), 0 30px 80px rgba(0,0,0,0.6);
       animation: card-pop 0.5s cubic-bezier(0.18, 1.4, 0.4, 1); z-index: 2;
+      max-width: 94vw; max-height: 92vh; overflow: auto;
     }
     @keyframes card-pop {
       0% { transform: scale(0.3) rotate(-8deg); opacity: 0; }
@@ -156,6 +165,14 @@
       .stage { flex-direction: column; }
       .panel { max-width: 540px; width: 100%; }
     }
+    /* 矮螢幕(橫向手機/小視窗)避免放大卡內容被裁切 */
+    @media (max-height: 700px) {
+      .reveal-card { padding: 22px clamp(20px, 6vw, 56px); }
+      .reveal-name { font-size: clamp(40px, 12vh, 92px); margin: 6px 0; }
+      .reveal-code { margin-bottom: 12px; }
+      .reveal-shares { padding: 10px 24px; }
+      .shares-num { font-size: clamp(40px, 11vh, 80px); }
+    }
   </style>
 </head>
 <body>
@@ -177,8 +194,15 @@
 
       <aside class="panel">
         <div class="story">
-          <h2>📖 黑猩猩射飛鏢</h2>
-          <p>華爾街流傳一則故事:讓一隻矇眼的黑猩猩對著股票版面射飛鏢來選股,績效未必輸給專業經理人。今天,由你來當這隻猩猩 🐵</p>
+          <h2>📖 黑猩猩射飛鏢的啟示</h2>
+          <p class="quote">「找一隻矇眼黑猩猩,對著報紙股票版射飛鏢選股 —— 牠的投資組合,長期未必輸給領高薪的基金經理人。」</p>
+          <p class="quote-src">— 普林斯頓教授馬基爾《漫步華爾街》</p>
+          <ul class="essence">
+            <li><b>市場難測:</b>短期股價近乎隨機,再準的明牌也常敗給運氣。</li>
+            <li><b>分散勝過押注:</b>與其重押一檔、追高殺低,不如分散、長期參與。</li>
+            <li><b>謙虛才是優勢:</b>別以為你一定比市場聰明 —— 這才是猩猩的智慧。</li>
+          </ul>
+          <p class="closing">今天,換你當這隻猩猩 🐵 轉一把,親手體會「隨機」的力量。</p>
         </div>
         <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
         <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
