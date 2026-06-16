@@ -911,8 +911,58 @@
       }
     }
 
-    // ----- 「股票起飛中」紅色霓虹戰績梗圖(原生 canvas,下載 PNG)-----
+    // ----- 以原圖為底:把命中清單疊在「股票命中清單」框內,下載 PNG -----
+    const TEMPLATE_URL = "https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/assets/uptrend.png";
     function downloadCyberCard() {
+      if (!records.length) { showToast("先去射幾把,再來產生戰績圖 🐵🎯"); return; }
+      showToast("戰績圖產生中… 🚀");
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        try {
+          const F = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
+          const cv = document.createElement("canvas");
+          cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+          const x = cv.getContext("2d");
+          x.drawImage(img, 0, 0);
+          const neon = (t, px, py, font, color, blur, glow) => {
+            x.save(); x.font = font; x.textAlign = "center"; x.textBaseline = "middle";
+            x.shadowColor = glow || color; x.shadowBlur = blur; x.fillStyle = color;
+            x.fillText(t, px, py); if (blur) { x.shadowBlur = Math.round(blur / 2); x.fillText(t, px, py); }
+            x.shadowBlur = 0; x.fillText(t, px, py); x.restore();
+          };
+          // 蓋住原圖固定清單,保留霓虹外框
+          const x1 = 166, y1 = 884, x2 = 778, y2 = 1422, cxc = (x1 + x2) / 2;
+          const g = x.createLinearGradient(0, y1, 0, y2);
+          g.addColorStop(0, "rgba(12,2,4,0.96)"); g.addColorStop(1, "rgba(22,3,6,0.96)");
+          x.fillStyle = g; x.fillRect(x1, y1, x2 - x1, y2 - y1);
+          // 動態命中清單(超過11檔取金額前11名)
+          let list = records, extra = 0;
+          if (records.length > 11) { list = records.slice().sort((a, b) => b.cost - a.cost).slice(0, 11); extra = records.length - 11; }
+          const count = list.length + (extra > 0 ? 1 : 0);
+          const gap = Math.min(58, (y2 - y1 - 20) / count);
+          const fs = Math.min(40, Math.floor(gap * 0.6));
+          list.forEach((r, i) => {
+            const cy = y1 + 16 + gap * (i + 0.5);
+            neon(`${r.code}  ${r.name}`, cxc, cy, `bold ${fs}px ${F}`, "#ffffff", 6, "#ff2d2d");
+          });
+          if (extra > 0) {
+            const cy = y1 + 16 + gap * (list.length + 0.5);
+            neon(`… 還有 ${extra} 檔`, cxc, cy, `bold ${Math.floor(fs * 0.8)}px ${F}`, "#ff9a9a", 4, "#ff2d2d");
+          }
+          const a = document.createElement("a");
+          a.href = cv.toDataURL("image/png");
+          a.download = "股票起飛中_黑猩猩命中清單.png";
+          a.click();
+          showToast("『股票起飛中』戰績圖已下載 🚀🔴");
+        } catch (e) { downloadCyberCardNative(); }
+      };
+      img.onerror = () => { showToast("範本載入失敗,改用內建版型"); downloadCyberCardNative(); };
+      img.src = TEMPLATE_URL + "?v=" + Date.now();
+    }
+
+    // ----- 後備:純 canvas 繪製紅色「股票起飛中」(原圖載入失敗時使用)-----
+    function downloadCyberCardNative() {
       if (!records.length) { showToast("先去射幾把,再來產生戰績圖 🐵🎯"); return; }
       const F = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
       const W = 1080, pad = 60, rowH = 72;
