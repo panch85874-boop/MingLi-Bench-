@@ -139,7 +139,7 @@
     .share-btn { border-color: var(--gold); background: rgba(255,213,74,0.14); font-weight: 700; }
     .sound-toggle:hover, .share-btn:hover { background: rgba(255,255,255,0.16); }
     .history h3 { margin: 6px 0 8px; font-size: 15px; }
-    .history ul { list-style: none; margin: 0; padding: 0; max-height: 180px; overflow-y: auto; }
+    .history ul { list-style: none; margin: 0; padding: 0; max-height: 340px; overflow-y: auto; }
     .history li {
       display: flex; justify-content: space-between; padding: 6px 10px; border-radius: 8px;
       background: rgba(255,255,255,0.04); margin-bottom: 6px; font-size: 14px;
@@ -244,7 +244,20 @@
     .reveal-cost { margin-top: 16px; font-size: clamp(16px, 4.5vw, 22px); }
     .reveal-cost b { color: var(--gold); }
     .reveal-total { margin-top: 8px; font-size: clamp(13px, 3.6vw, 16px); opacity: 0.9; }
-    .reveal-over { margin-top: 10px; color: #ff6b6b; font-weight: 800; font-size: clamp(14px, 4vw, 18px); }
+    .reveal-total.over b { color: #ff5252; }
+    /* 超出預算:強烈紅色閃爍提示 */
+    .reveal-over { display: none; }
+    .reveal-over.show {
+      display: block; margin: 14px auto 0; max-width: 92%;
+      color: #fff; font-weight: 900; font-size: clamp(16px, 5vw, 24px);
+      background: #e53935; padding: 12px 18px; border-radius: 14px;
+      animation: over-flash 0.7s ease-in-out infinite;
+    }
+    @keyframes over-flash {
+      0%, 100% { box-shadow: 0 0 0 rgba(229,57,53,0); transform: scale(1); }
+      50% { box-shadow: 0 0 28px rgba(229,57,53,0.95); transform: scale(1.04); }
+    }
+    .reveal-card.over { border-color: #e53935; box-shadow: 0 0 80px rgba(229,57,53,0.5), 0 30px 80px rgba(0,0,0,0.6); }
     .budget-status {
       margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.6;
       background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
@@ -297,17 +310,6 @@
         <button data-amt="500000">50萬</button>
       </div>
       <button class="start-hint" id="budgetConfirm">✅ 確認,開始射飛鏢</button>
-    </div>
-  </div>
-
-  <!-- 粉專鉤子:玩超過 5 次後才跳出 -->
-  <div class="fb-overlay" id="fbHook" aria-hidden="true">
-    <div class="fb-card">
-      <div class="fb-emoji">🐵❤️</div>
-      <h2>玩得開心嗎?</h2>
-      <p>你已經射了超過 5 次飛鏢!<br>如果喜歡這個遊戲,給粉絲專頁一個讚,支持我繼續做更多好玩的 🙏</p>
-      <a class="fb-like-btn" id="fbLikeBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">👍 前往粉絲專頁按讚</a>
-      <button class="fb-later" id="fbLater">稍後再說,繼續玩</button>
     </div>
   </div>
 
@@ -410,7 +412,7 @@
       { code: "8299", name: "群聯",      color: "#6F1E51" },
       { code: "5328", name: "竹陞科技",  color: "#009432" },
       { code: "3131", name: "弘塑",      color: "#EE5A24" },
-      { code: "3035", name: "精測",      color: "#1289A7" },
+      { code: "6510", name: "精測",      color: "#1289A7" },
       { code: "3653", name: "健策",      color: "#D980FA" },
     ];
 
@@ -442,6 +444,7 @@
     const revealCount = document.getElementById("revealCount");
     const confetti = document.getElementById("confetti");
     const toast = document.getElementById("toast");
+    const revealCard = document.getElementById("revealCard");
     const revealCost = document.getElementById("revealCost");
     const revealTotal = document.getElementById("revealTotal");
     const revealOver = document.getElementById("revealOver");
@@ -465,21 +468,34 @@
         `<br><span style="opacity:.6;font-size:12px;">${note}</span>`;
     }
 
-    // 載入每日自動更新的股價(部署後由排程更新 prices.json);失敗則用內建參考價
-    fetch("prices.json", { cache: "no-store" })
+    const R = canvas.width / 2;
+    const TAU = Math.PI * 2;
+    const MIN_PRICE = 1000;               // 千金股門檻:輪盤只顯示股價 ≥ 1000 的個股
+    let activeStocks = STOCKS.slice();    // 目前輪盤上的股票(依真實股價篩選)
+    let N = activeStocks.length;
+    let SEG = TAU / N;
+
+    // 依股價重建輪盤:只留 ≥ MIN_PRICE 的千金股,過濾掉便宜/代號標錯的個股
+    function rebuildWheel() {
+      const filtered = STOCKS.filter((s) => (PRICES[s.code] || 0) >= MIN_PRICE);
+      activeStocks = filtered.length >= 6 ? filtered : STOCKS.slice();
+      N = activeStocks.length;
+      SEG = TAU / N;
+      drawWheel();
+    }
+
+    // 載入每日自動更新的真實收盤價(從 GitHub 原始檔抓,跨網站皆可);失敗則用內建參考價
+    const RAW_PRICES_URL = "https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/prices.json";
+    fetch(RAW_PRICES_URL, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (!data) return;
-        if (data.prices) { Object.assign(PRICES, data.prices); priceAsOf = data.asOf || ""; }
-        else { Object.assign(PRICES, data); }
+        Object.assign(PRICES, data.prices || data);
+        priceAsOf = data.asOf || "";
+        rebuildWheel();
         updateBudgetStatus();
       })
-      .catch(() => { /* file:// 或離線時略過,用內建參考價 */ });
-
-    const N = STOCKS.length;
-    const SEG = (Math.PI * 2) / N;
-    const R = canvas.width / 2;
-    const TAU = Math.PI * 2;
+      .catch(() => { /* 離線時用內建參考價 */ });
 
     let rotation = 0, spinning = false, soundOn = true;
 
@@ -528,12 +544,12 @@
       for (let i = 0; i < N; i++) {
         const a0 = i * SEG, a1 = a0 + SEG;
         ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R - 6, a0, a1); ctx.closePath();
-        ctx.fillStyle = STOCKS[i].color; ctx.fill();
+        ctx.fillStyle = activeStocks[i].color; ctx.fill();
         ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(255,255,255,0.25)"; ctx.stroke();
         ctx.save(); ctx.rotate(a0 + SEG / 2);
         ctx.textAlign = "right"; ctx.textBaseline = "middle";
         ctx.fillStyle = "#fff"; ctx.shadowColor = "rgba(0,0,0,0.55)"; ctx.shadowBlur = 4;
-        const label = STOCKS[i].name;
+        const label = activeStocks[i].name;
         ctx.font = `700 ${label.length > 4 ? 14 : 17}px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
         ctx.fillText(label, R - 20, 0);
         ctx.restore();
@@ -573,7 +589,7 @@
     }
 
     function finishSpin() {
-      const stock = STOCKS[indexAtPointer()];
+      const stock = activeStocks[indexAtPointer()];
       const shares = 2 + Math.floor(Math.random() * 5);   // 2~6 股(千金股單價高,股數偏少)
       const price = PRICES[stock.code] || 0;
       const cost = price * shares;
@@ -594,10 +610,17 @@
       revealCode.textContent = stock.code.replace(/[a-z]/g, "");
       revealShares.textContent = shares;
       revealCost.innerHTML = `💲 最新股價 ${money(price)} × ${shares} 股 = <b>${money(cost)}</b>`;
-      revealTotal.textContent = `本局累計 ${money(spentTotal)} ／ 預算 ${money(budget)}`;
-      revealOver.textContent = spentTotal > budget
-        ? `⚠️ 已超過預算 ${money(spentTotal - budget)}!但你還是可以繼續玩 🎯`
-        : "";
+      const over = spentTotal > budget;
+      revealTotal.innerHTML = `本局累計 <b>${money(spentTotal)}</b> ／ 預算 ${money(budget)}`;
+      revealTotal.classList.toggle("over", over);
+      if (over) {
+        revealOver.textContent = `🚨 已超過預算 ${money(spentTotal - budget)}!冷靜一下,但你還是可以繼續玩 🎯`;
+        revealOver.classList.add("show");
+        revealCard.classList.add("over");
+      } else {
+        revealOver.classList.remove("show");
+        revealCard.classList.remove("over");
+      }
       reveal.classList.add("show"); reveal.setAttribute("aria-hidden", "false");
       launchConfetti();
       let left = 5; revealCount.textContent = left;
@@ -612,23 +635,7 @@
     function closeReveal() {
       reveal.classList.remove("show"); reveal.setAttribute("aria-hidden", "true");
       confetti.innerHTML = ""; spinBtn.disabled = false;
-      maybeShowFbHook();
     }
-
-    // 玩超過 5 次後,跳一次粉專邀請(用 localStorage 記住,不重複打擾)
-    const fbHook = document.getElementById("fbHook");
-    function maybeShowFbHook() {
-      if (playCount > 5 && !localStorage.getItem("monkeyDartFbHook")) {
-        localStorage.setItem("monkeyDartFbHook", "1");
-        fbHook.classList.add("show"); fbHook.setAttribute("aria-hidden", "false");
-      }
-    }
-    document.getElementById("fbLater").addEventListener("click", () => {
-      fbHook.classList.remove("show"); fbHook.setAttribute("aria-hidden", "true");
-    });
-    document.getElementById("fbLikeBtn").addEventListener("click", () => {
-      setTimeout(() => { fbHook.classList.remove("show"); fbHook.setAttribute("aria-hidden", "true"); }, 300);
-    });
 
     function launchConfetti() {
       confetti.innerHTML = "";
@@ -649,7 +656,7 @@
       li.innerHTML = `<span class="h-name">${stock.name} (${stock.code.replace(/[a-z]/g, "")})</span>` +
                      `<span class="h-shares">${shares} 股</span>`;
       historyList.prepend(li);
-      while (historyList.children.length > 12) historyList.lastChild.remove();
+      while (historyList.children.length > 15) historyList.lastChild.remove();
     }
 
     function showToast(msg) {
