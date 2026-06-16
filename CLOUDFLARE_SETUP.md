@@ -12,21 +12,32 @@
 - `www.iprinter.com.tw` A → 同上(Cloudflare anycast)
 - IPv6 → `2606:4700:3034::…`(Cloudflare)
 - 判定:**網域已掛在 Cloudflare,zone 應為 Active,apex 與 www 皆已 Proxied(橘雲)**
-## 🧱 已釐清的架構(2026-06-16)
-- **官網主站**:`iprinter.com.tw` / `www` → Cloudflare(橘雲)→ **DigitalOcean 新加坡 Droplet `152.42.167.42`(Nginx)**
-  - 網站根目錄:`/home/ai-agent/iprint_web_project/`(`index.html`、`assets/`…)
+## 🧱 已釐清的架構(2026-06-16,規格已確認)
+- **官網主站**:`iprinter.com.tw` / `www` → Cloudflare(橘雲)→ **DigitalOcean 新加坡 Droplet `152.42.167.42`(Nginx, Ubuntu 24.04)**
+  - **Nginx 服務根目錄:`/var/www/html/`**(真正在跑的 `index.html` + `assets/`)
+  - 開發專案目錄:`/root/iprint_web_project/`(非服務目錄)
   - SSL:**Cloudflare Origin 憑證** → Cloudflare 端應設 **Full (strict)**
-- **子網域**:`gw.iprinter.com.tw` / `line.iprinter.com.tw` → **Cloudflare Tunnel → 本機**(後台 / LINE Bot)
-- **Google Drive `愛印iPrint_備份/index.html`** = 備份,非線上來源
+  - 部署:檔案直接放進 `/var/www/html/`,**Nginx 立即生效,不需重啟**
+- **子網域**:`gw.` / `line.iprinter.com.tw` → **Cloudflare Tunnel → 本機**(後台 / LINE Bot)
+- **Cloudflare Zone ID**:`fe7c4c5d45b027bacdcf324db8693431`(非機密;帳號 panch85874@gmail.com)
+- **Google Drive `愛印iPrint_備份/index.html`** = 備份(行動版,與線上不同)
 - 結論:**不是 Cloudflare Pages**,是「Cloudflare 代理 → 傳統主機(DO 新加坡 Nginx)」
 
-## 🎮 把遊戲放上官網(iprinter.com.tw/game/)
-因為是 Nginx 傳統主機,做法 = 把遊戲檔放進網站根目錄的 `game/` 夾:
-1. SSH 進 DO 主機(由老潘 / 有 SSH 的代理執行)
-2. 建立資料夾:`/home/ai-agent/iprint_web_project/game/`
-3. 上傳遊戲 **`index.html`**(建議用「完全自包含版」)到該夾
-4. 開 `https://iprinter.com.tw/game/` 驗證
-> 自包含版不依賴任何外部資源(Logo 內嵌、股價烤進檔案),最適合丟上 Nginx。
+## 🎮 把遊戲放上官網(https://iprinter.com.tw/game/)
+遊戲已是「完全自包含」單檔(Logo 內嵌、股價烤進檔案、零外部抓取),直接丟進 Nginx 即可。
+**由有 SSH 金鑰的本機代理執行**(老潘本機:`/home/ai-agent/.ssh/id_rsa_do`):
+```bash
+# 1) 取得最新檔(自包含遊戲 + 宣傳海報)
+curl -L -o index.html      https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/index.html
+curl -L -o promo-poster.png https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/assets/promo-poster.png
+# 2) 在主機建立 game 夾並上傳
+ssh -i /home/ai-agent/.ssh/id_rsa_do root@152.42.167.42 "mkdir -p /var/www/html/game"
+scp -i /home/ai-agent/.ssh/id_rsa_do index.html      root@152.42.167.42:/var/www/html/game/index.html
+scp -i /home/ai-agent/.ssh/id_rsa_do promo-poster.png root@152.42.167.42:/var/www/html/game/promo-poster.png
+# 3) 驗證
+curl -I https://iprinter.com.tw/game/        # 期望 200
+```
+完成後遊戲網址:**https://iprinter.com.tw/game/**(貼 FB 會顯示宣傳海報,因 og:image 已指向 `/game/promo-poster.png`)
 
 ## ✅ 待你在 Dashboard 確認 / 設定
 1. [ ] **Overview**:zone 顯示 **Active**;記下 Cloudflare 指派的 2 組 nameserver
