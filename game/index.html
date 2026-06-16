@@ -151,6 +151,9 @@
     .history li .h-name { font-weight: 700; }
     .history li .h-shares { color: var(--gold); }
     .disclaimer { margin: 16px 0 0; font-size: 12px; opacity: 0.6; }
+    .brand-link { display: block; margin-top: 10px; text-align: center; font-size: 13px;
+      font-weight: 700; color: var(--gold); text-decoration: none; opacity: 0.95; }
+    .brand-link:hover { text-decoration: underline; }
 
     .reveal-overlay {
       position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
@@ -393,6 +396,7 @@
           <button class="sound-toggle" id="shareBtn">📤 分享</button>
         </div>
         <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
+        <a class="brand-link" href="https://iprinter.com.tw/" target="_blank" rel="noopener">本遊戲由 iPrinter 提供 ｜ 官網 iprinter.com.tw →</a>
       </aside>
     </main>
   </div>
@@ -887,6 +891,7 @@
       t("願君選股如有神助,黑猩猩祝你", 270, 1716, "26px " + FS, "#ffe9bf", "left");
       t("滿載而歸、財源滾滾 🧧", 270, 1756, "bold 30px " + FS, "#ffd700", "left");
       t(`資料日期 ${dateStr}(收盤價)· 純屬娛樂模擬,不構成投資建議`, 270, 1800, "20px " + FB, "#e7c98a", "left");
+      t("iPrinter ｜ iprinter.com.tw", W / 2, 1858, "bold 24px " + FB, "#ffd700", "center");
 
       const a = document.createElement("a");
       a.href = cv.toDataURL("image/png");
