@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐵 台股千金俄羅斯輪盤 · 黑猩猩射飛鏢</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>🐵 台股千金俄羅斯輪盤</h1>
+      <p class="subtitle">黑猩猩射飛鏢 · 隨機選股模擬器</p>
+    </header>
+
+    <main class="stage">
+      <div class="wheel-wrap">
+        <!-- 飛鏢指針 -->
+        <div class="pointer" id="pointer">🎯</div>
+        <canvas id="wheel" width="640" height="640" aria-label="台股千金輪盤"></canvas>
+        <!-- 中心猩猩按鈕 -->
+        <button class="spin-btn" id="spinBtn" aria-label="射飛鏢">
+          <span class="spin-emoji">🐵</span>
+          <span class="spin-text">射飛鏢</span>
+        </button>
+      </div>
+
+      <aside class="panel">
+        <div class="story">
+          <h2>📖 黑猩猩射飛鏢</h2>
+          <p>
+            華爾街流傳一則故事：讓一隻矇眼的黑猩猩對著股票版面射飛鏢來選股，
+            績效未必輸給專業經理人。今天，由你來當這隻猩猩 🐵
+          </p>
+        </div>
+        <button class="sound-toggle" id="soundToggle">🔊 音效：開</button>
+        <div class="history">
+          <h3>🧾 歷史落點</h3>
+          <ul id="historyList"></ul>
+        </div>
+        <p class="disclaimer">⚠️ 純屬娛樂模擬，不構成任何投資建議。</p>
+      </aside>
+    </main>
+  </div>
+
+  <!-- 落點放大顯示（5 秒） -->
+  <div class="reveal-overlay" id="reveal" aria-hidden="true">
+    <div class="confetti" id="confetti"></div>
+    <div class="reveal-card" id="revealCard">
+      <div class="reveal-label">🎯 飛鏢命中！</div>
+      <div class="reveal-name" id="revealName">—</div>
+      <div class="reveal-code" id="revealCode">—</div>
+      <div class="reveal-shares">
+        <span class="shares-label">建議購買</span>
+        <span class="shares-num" id="revealShares">—</span>
+        <span class="shares-unit">股</span>
+      </div>
+      <div class="reveal-count" id="revealCount">5</div>
+    </div>
+  </div>
+
+  <script src="stocks.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
