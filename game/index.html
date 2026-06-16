@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>🐵 台股千金俄羅斯輪盤 · 黑猩猩射飛鏢</title>
+
+  <!-- 手機「加到主畫面」像 App 一樣 -->
+  <meta name="theme-color" content="#0f0c29" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="千金輪盤" />
+
+  <!-- 貼到 FB / LINE 時顯示的預覽卡 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="🐵 台股千金俄羅斯輪盤 · 黑猩猩射飛鏢" />
+  <meta property="og:description" content="當一隻矇眼黑猩猩,射飛鏢隨機選台股千金股!轉動輪盤、聽音效、看落點放大顯示股名與建議股數。純娛樂模擬。" />
+  <meta name="description" content="台股千金股隨機選股遊戲,黑猩猩射飛鏢模擬器。純屬娛樂,不構成投資建議。" />
+
+  <style>
+    :root {
+      --bg-1: #0f0c29; --bg-2: #302b63; --bg-3: #24243e;
+      --gold: #ffd54a; --gold-deep: #f0a500; --ink: #f5f5f5;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; min-height: 100%;
+      font-family: "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background-attachment: fixed;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .app { max-width: 1100px; margin: 0 auto; padding: max(16px, env(safe-area-inset-top)) 16px 48px; }
+    .topbar { text-align: center; margin-bottom: 18px; }
+    .topbar h1 {
+      margin: 0; font-size: clamp(22px, 5vw, 40px);
+      background: linear-gradient(90deg, var(--gold), #fff, var(--gold-deep));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 2px 20px rgba(255,213,74,0.25);
+    }
+    .subtitle { margin: 6px 0 0; opacity: 0.85; letter-spacing: 2px; }
+
+    .stage { display: flex; gap: 32px; align-items: center; justify-content: center; flex-wrap: wrap; }
+
+    .wheel-wrap { position: relative; width: min(86vw, 540px); height: min(86vw, 540px); flex: 0 0 auto; }
+    #wheel {
+      width: 100%; height: 100%; border-radius: 50%;
+      box-shadow: 0 0 0 10px rgba(255,255,255,0.06), 0 0 0 18px rgba(0,0,0,0.35), 0 20px 60px rgba(0,0,0,0.55);
+      transition: filter 0.2s;
+    }
+    #wheel.spinning { filter: saturate(1.2) brightness(1.05); }
+    .pointer {
+      position: absolute; top: -14px; left: 50%;
+      transform: translateX(-50%) rotate(180deg);
+      font-size: 46px; z-index: 5; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); transition: transform 0.08s;
+    }
+    .pointer.hit { animation: pointer-hit 0.4s ease; }
+    @keyframes pointer-hit {
+      0% { transform: translateX(-50%) rotate(180deg) scale(1); }
+      40% { transform: translateX(-50%) rotate(180deg) scale(1.5); }
+      100% { transform: translateX(-50%) rotate(180deg) scale(1); }
+    }
+    .spin-btn {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 26%; height: 26%; border-radius: 50%; border: 4px solid var(--gold);
+      background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
+      color: #5a3d00; font-weight: 800; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.6);
+      transition: transform 0.12s; z-index: 6;
+    }
+    .spin-btn:hover:not(:disabled) { transform: translate(-50%, -50%) scale(1.06); }
+    .spin-btn:active:not(:disabled) { transform: translate(-50%, -50%) scale(0.95); }
+    .spin-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .spin-emoji { font-size: clamp(20px, 5vw, 34px); }
+    .spin-text { font-size: clamp(11px, 2.4vw, 15px); }
+
+    .panel {
+      flex: 1 1 280px; max-width: 380px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px; padding: 20px; backdrop-filter: blur(6px);
+    }
+    .story h2 { margin: 0 0 8px; font-size: 18px; }
+    .story p { margin: 0 0 14px; line-height: 1.7; opacity: 0.9; font-size: 14px; }
+    .sound-toggle, .share-btn {
+      width: 100%; padding: 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); color: var(--ink); cursor: pointer; font-size: 14px; margin-bottom: 12px;
+    }
+    .share-btn { border-color: var(--gold); background: rgba(255,213,74,0.14); font-weight: 700; }
+    .sound-toggle:hover, .share-btn:hover { background: rgba(255,255,255,0.16); }
+    .history h3 { margin: 6px 0 8px; font-size: 15px; }
+    .history ul { list-style: none; margin: 0; padding: 0; max-height: 180px; overflow-y: auto; }
+    .history li {
+      display: flex; justify-content: space-between; padding: 6px 10px; border-radius: 8px;
+      background: rgba(255,255,255,0.04); margin-bottom: 6px; font-size: 14px;
+    }
+    .history li .h-name { font-weight: 700; }
+    .history li .h-shares { color: var(--gold); }
+    .disclaimer { margin: 16px 0 0; font-size: 12px; opacity: 0.6; }
+
+    .reveal-overlay {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.78); backdrop-filter: blur(4px); z-index: 100; overflow: hidden;
+    }
+    .reveal-overlay.show { display: flex; }
+    .reveal-card {
+      position: relative; text-align: center; padding: 40px clamp(28px, 8vw, 80px); border-radius: 28px;
+      background: radial-gradient(circle at 50% 0%, rgba(255,213,74,0.18), rgba(20,20,40,0.95));
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 80px rgba(255,213,74,0.35), 0 30px 80px rgba(0,0,0,0.6);
+      animation: card-pop 0.5s cubic-bezier(0.18, 1.4, 0.4, 1); z-index: 2;
+    }
+    @keyframes card-pop {
+      0% { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+    .reveal-label { font-size: clamp(16px, 4vw, 24px); color: var(--gold); letter-spacing: 4px; }
+    .reveal-name {
+      font-size: clamp(48px, 16vw, 130px); font-weight: 900; line-height: 1.05; margin: 10px 0;
+      background: linear-gradient(90deg, #fff, var(--gold), #fff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 4px 30px rgba(255,213,74,0.4);
+      animation: name-glow 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes name-glow {
+      from { filter: drop-shadow(0 0 8px rgba(255,213,74,0.3)); }
+      to { filter: drop-shadow(0 0 26px rgba(255,213,74,0.7)); }
+    }
+    .reveal-code { font-size: clamp(18px, 5vw, 30px); opacity: 0.8; letter-spacing: 6px; margin-bottom: 18px; }
+    .reveal-shares {
+      display: inline-flex; align-items: baseline; gap: 10px; padding: 14px 34px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); border: 1px dashed var(--gold);
+    }
+    .shares-label { font-size: clamp(16px, 4vw, 22px); opacity: 0.85; }
+    .shares-num { font-size: clamp(48px, 14vw, 96px); font-weight: 900; color: var(--gold); animation: shares-bounce 0.6s cubic-bezier(0.18, 1.6, 0.4, 1); }
+    @keyframes shares-bounce { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    .shares-unit { font-size: clamp(16px, 4vw, 22px); opacity: 0.85; }
+    .reveal-count {
+      position: absolute; top: 14px; right: 18px; width: 38px; height: 38px; line-height: 38px;
+      border-radius: 50%; background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.25);
+      font-size: 18px; font-weight: 700;
+    }
+    .confetti { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+    .confetti span { position: absolute; top: -10vh; width: 10px; height: 16px; opacity: 0.9; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(120vh) rotate(720deg); opacity: 0.2; } }
+    .toast {
+      position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+      background: rgba(0,0,0,0.85); border: 1px solid var(--gold); color: var(--ink);
+      padding: 12px 20px; border-radius: 999px; font-size: 14px; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s; z-index: 200; max-width: 90vw; text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 720px) {
+      .stage { flex-direction: column; }
+      .panel { max-width: 540px; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>🐵 台股千金俄羅斯輪盤</h1>
+      <p class="subtitle">黑猩猩射飛鏢 · 隨機選股模擬器</p>
+    </header>
+
+    <main class="stage">
+      <div class="wheel-wrap">
+        <div class="pointer" id="pointer">🎯</div>
+        <canvas id="wheel" width="640" height="640" aria-label="台股千金輪盤"></canvas>
+        <button class="spin-btn" id="spinBtn" aria-label="射飛鏢">
+          <span class="spin-emoji">🐵</span>
+          <span class="spin-text">射飛鏢</span>
+        </button>
+      </div>
+
+      <aside class="panel">
+        <div class="story">
+          <h2>📖 黑猩猩射飛鏢</h2>
+          <p>華爾街流傳一則故事:讓一隻矇眼的黑猩猩對著股票版面射飛鏢來選股,績效未必輸給專業經理人。今天,由你來當這隻猩猩 🐵</p>
+        </div>
+        <button class="share-btn" id="shareBtn">📤 分享給朋友</button>
+        <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
+        <div class="history">
+          <h3>🧾 歷史落點</h3>
+          <ul id="historyList"></ul>
+        </div>
+        <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
+      </aside>
+    </main>
+  </div>
+
+  <div class="reveal-overlay" id="reveal" aria-hidden="true">
+    <div class="confetti" id="confetti"></div>
+    <div class="reveal-card" id="revealCard">
+      <div class="reveal-label">🎯 飛鏢命中!</div>
+      <div class="reveal-name" id="revealName">—</div>
+      <div class="reveal-code" id="revealCode">—</div>
+      <div class="reveal-shares">
+        <span class="shares-label">建議購買</span>
+        <span class="shares-num" id="revealShares">—</span>
+        <span class="shares-unit">股</span>
+      </div>
+      <div class="reveal-count" id="revealCount">5</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  /* 台股千金俄羅斯輪盤 · 黑猩猩射飛鏢 — 單檔自帶版
+   * 純屬娛樂模擬,不構成投資建議。 */
+  (() => {
+    "use strict";
+
+    // ---------- 千金股清單(取材自輪盤圖) ----------
+    const STOCKS = [
+      { code: "5274", name: "信驊",      color: "#2f6f4e" },
+      { code: "6515", name: "穎崴",      color: "#3aa76d" },
+      { code: "7556", name: "鴻勁",      color: "#e0533d" },
+      { code: "6223", name: "旺矽",      color: "#f0a500" },
+      { code: "2308", name: "台達電",    color: "#48b07a" },
+      { code: "3665", name: "貿聯-KY",   color: "#7b4fb0" },
+      { code: "8027", name: "鈦昇",      color: "#c0392b" },
+      { code: "1519", name: "華城",      color: "#e8743b" },
+      { code: "5289", name: "宜鼎",      color: "#3a7bd5" },
+      { code: "2338", name: "光罩",      color: "#e84393" },
+      { code: "6669", name: "緯穎",      color: "#16a085" },
+      { code: "2360", name: "致茂",      color: "#27ae60" },
+      { code: "3324", name: "雙鴻",      color: "#2980b9" },
+      { code: "6805", name: "富世達",    color: "#d35400" },
+      { code: "2059", name: "川湖",      color: "#8e44ad" },
+      { code: "2330", name: "台積電",    color: "#e74c3c" },
+      { code: "4749", name: "新應材",    color: "#1abc9c" },
+      { code: "5536", name: "聖暉*",     color: "#9b59b6" },
+      { code: "5434", name: "崇越",      color: "#2ecc71" },
+      { code: "3443", name: "創意",      color: "#f39c12" },
+      { code: "3533", name: "嘉澤",      color: "#c0392b" },
+      { code: "1590", name: "亞德客-KY", color: "#34495e" },
+      { code: "2383", name: "台光電",    color: "#f1c40f" },
+      { code: "3017", name: "奇鋐",      color: "#d35400" },
+      { code: "8996", name: "高力",      color: "#6c5ce7" },
+      { code: "5269", name: "祥碩",      color: "#00b894" },
+      { code: "3661", name: "世芯-KY",   color: "#0984e3" },
+      { code: "2345", name: "智邦",      color: "#2d3436" },
+      { code: "6515b", name: "愛普*",    color: "#a29bfe" },
+      { code: "8210", name: "勤誠",      color: "#e17055" },
+      { code: "3529", name: "力旺",      color: "#fdcb6e" },
+      { code: "7750", name: "新代",      color: "#00cec9" },
+      { code: "6274", name: "台燿",      color: "#e84393" },
+      { code: "7777", name: "印能科技",  color: "#0652DD" },
+      { code: "8299", name: "群聯",      color: "#6F1E51" },
+      { code: "5328", name: "竹陞科技",  color: "#009432" },
+      { code: "3131", name: "弘塑",      color: "#EE5A24" },
+      { code: "3035", name: "精測",      color: "#1289A7" },
+      { code: "3653", name: "健策",      color: "#D980FA" },
+    ];
+
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const spinBtn = document.getElementById("spinBtn");
+    const pointer = document.getElementById("pointer");
+    const soundToggle = document.getElementById("soundToggle");
+    const shareBtn = document.getElementById("shareBtn");
+    const historyList = document.getElementById("historyList");
+    const reveal = document.getElementById("reveal");
+    const revealName = document.getElementById("revealName");
+    const revealCode = document.getElementById("revealCode");
+    const revealShares = document.getElementById("revealShares");
+    const revealCount = document.getElementById("revealCount");
+    const confetti = document.getElementById("confetti");
+    const toast = document.getElementById("toast");
+
+    const N = STOCKS.length;
+    const SEG = (Math.PI * 2) / N;
+    const R = canvas.width / 2;
+    const TAU = Math.PI * 2;
+
+    let rotation = 0, spinning = false, soundOn = true;
+
+    // ---------- 音效(Web Audio,免外部檔案) ----------
+    let audioCtx = null;
+    function ac() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+    function tone(freq, dur, type = "sine", gain = 0.2, delay = 0) {
+      if (!soundOn) return;
+      const c = ac(), t = c.currentTime + delay;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.type = type; osc.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(gain, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(g).connect(c.destination);
+      osc.start(t); osc.stop(t + dur + 0.02);
+    }
+    function tick() { if (soundOn) tone(880, 0.04, "square", 0.08); }
+    function whoosh() {
+      if (!soundOn) return;
+      const c = ac(), t = c.currentTime;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(1200, t);
+      osc.frequency.exponentialRampToValueAtTime(200, t + 0.35);
+      g.gain.setValueAtTime(0.18, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+      osc.connect(g).connect(c.destination);
+      osc.start(t); osc.stop(t + 0.37);
+    }
+    function fanfare() {
+      if (!soundOn) return;
+      const seq = [523.25, 659.25, 783.99, 1046.5];
+      seq.forEach((f, i) => tone(f, 0.28, "triangle", 0.22, i * 0.12));
+      tone(1318.5, 0.5, "sine", 0.18, seq.length * 0.12);
+    }
+
+    // ---------- 繪製輪盤 ----------
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.width);
+      ctx.save(); ctx.translate(R, R); ctx.rotate(rotation);
+      for (let i = 0; i < N; i++) {
+        const a0 = i * SEG, a1 = a0 + SEG;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R - 6, a0, a1); ctx.closePath();
+        ctx.fillStyle = STOCKS[i].color; ctx.fill();
+        ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(255,255,255,0.25)"; ctx.stroke();
+        ctx.save(); ctx.rotate(a0 + SEG / 2);
+        ctx.textAlign = "right"; ctx.textBaseline = "middle";
+        ctx.fillStyle = "#fff"; ctx.shadowColor = "rgba(0,0,0,0.55)"; ctx.shadowBlur = 4;
+        const label = STOCKS[i].name;
+        ctx.font = `700 ${label.length > 4 ? 14 : 17}px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
+        ctx.fillText(label, R - 20, 0);
+        ctx.restore();
+      }
+      ctx.beginPath(); ctx.arc(0, 0, R * 0.16, 0, TAU); ctx.fillStyle = "#1a1730"; ctx.fill();
+      ctx.restore();
+    }
+
+    function indexAtPointer() {
+      const pointerAngle = -Math.PI / 2;
+      let rel = (pointerAngle - rotation) % TAU;
+      if (rel < 0) rel += TAU;
+      return Math.floor(rel / SEG) % N;
+    }
+
+    function spin() {
+      if (spinning) return;
+      spinning = true; spinBtn.disabled = true; canvas.classList.add("spinning"); whoosh();
+      const targetIndex = Math.floor(Math.random() * N);
+      const extraTurns = 5 + Math.floor(Math.random() * 4);
+      const targetCenter = targetIndex * SEG + SEG / 2;
+      const finalRotation = extraTurns * TAU + (-Math.PI / 2 - targetCenter) - (rotation % TAU);
+      const startRotation = rotation, totalDelta = finalRotation;
+      const duration = 4200 + Math.random() * 1200, startTime = performance.now();
+      let lastTickIndex = indexAtPointer();
+      const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+      function frame(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        rotation = startRotation + totalDelta * easeOutQuart(t);
+        drawWheel();
+        const idx = indexAtPointer();
+        if (idx !== lastTickIndex) { tick(); lastTickIndex = idx; }
+        if (t < 1) requestAnimationFrame(frame);
+        else { spinning = false; canvas.classList.remove("spinning"); finishSpin(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function finishSpin() {
+      const stock = STOCKS[indexAtPointer()];
+      const shares = 1 + Math.floor(Math.random() * 10);
+      pointer.classList.add("hit");
+      setTimeout(() => pointer.classList.remove("hit"), 400);
+      fanfare();
+      showReveal(stock, shares);
+      addHistory(stock, shares);
+    }
+
+    let revealTimer = null, countdownTimer = null;
+    function showReveal(stock, shares) {
+      revealName.textContent = stock.name;
+      revealCode.textContent = stock.code.replace(/[a-z]/g, "");
+      revealShares.textContent = shares;
+      reveal.classList.add("show"); reveal.setAttribute("aria-hidden", "false");
+      launchConfetti();
+      let left = 5; revealCount.textContent = left;
+      clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        left -= 1; revealCount.textContent = left;
+        if (left <= 0) clearInterval(countdownTimer);
+      }, 1000);
+      clearTimeout(revealTimer);
+      revealTimer = setTimeout(closeReveal, 5000);
+    }
+    function closeReveal() {
+      reveal.classList.remove("show"); reveal.setAttribute("aria-hidden", "true");
+      confetti.innerHTML = ""; spinBtn.disabled = false;
+    }
+
+    function launchConfetti() {
+      confetti.innerHTML = "";
+      const colors = ["#ffd54a", "#ff6b6b", "#4ecdc4", "#a29bfe", "#1dd1a1", "#feca57"];
+      for (let i = 0; i < 80; i++) {
+        const s = document.createElement("span");
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.background = colors[i % colors.length];
+        s.style.animationDuration = 2 + Math.random() * 2 + "s";
+        s.style.animationDelay = Math.random() * 0.6 + "s";
+        s.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.appendChild(s);
+      }
+    }
+
+    function addHistory(stock, shares) {
+      const li = document.createElement("li");
+      li.innerHTML = `<span class="h-name">${stock.name} (${stock.code.replace(/[a-z]/g, "")})</span>` +
+                     `<span class="h-shares">${shares} 股</span>`;
+      historyList.prepend(li);
+      while (historyList.children.length > 12) historyList.lastChild.remove();
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg; toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+    async function share() {
+      const url = location.href;
+      const data = { title: "🐵 台股千金俄羅斯輪盤", text: "來當黑猩猩射飛鏢選台股千金股!", url };
+      try {
+        if (navigator.share) { await navigator.share(data); return; }
+      } catch (e) { /* 使用者取消分享 */ }
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast("已複製連結,貼到 FB / LINE 即可分享!");
+      } catch (e) {
+        showToast(url);
+      }
+    }
+
+    spinBtn.addEventListener("click", () => { ac(); spin(); });
+    soundToggle.addEventListener("click", () => {
+      soundOn = !soundOn;
+      soundToggle.textContent = soundOn ? "🔊 音效:開" : "🔇 音效:關";
+    });
+    shareBtn.addEventListener("click", share);
+    reveal.addEventListener("click", () => {
+      clearTimeout(revealTimer); clearInterval(countdownTimer); closeReveal();
+    });
+
+    drawWheel();
+  })();
+  </script>
+</body>
+</html>
