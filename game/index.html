@@ -513,29 +513,36 @@
 
     const R = canvas.width / 2;
     const TAU = Math.PI * 2;
-    const MIN_PRICE = 1000;               // 千金股門檻:輪盤只顯示股價 ≥ 1000 的個股
-    let activeStocks = STOCKS.slice();    // 目前輪盤上的股票(依真實股價篩選)
+    const MIN_PRICE = 1000;               // 千金股門檻
+    const PALETTE = ["#2f6f4e","#3aa76d","#e0533d","#f0a500","#48b07a","#7b4fb0","#c0392b","#e8743b","#3a7bd5","#e84393","#16a085","#27ae60","#2980b9","#d35400","#8e44ad","#e74c3c","#1abc9c","#9b59b6","#2ecc71","#f39c12","#34495e","#f1c40f","#6c5ce7","#00b894","#0984e3","#2d3436","#a29bfe","#e17055","#fdcb6e","#00cec9","#0652DD","#6F1E51","#009432","#EE5A24","#1289A7","#D980FA"];
+    const colorFor = (i) => PALETTE[i % PALETTE.length];
+
+    // 預設:用內建清單篩 ≥1000 當「載入前/離線」後備;載入真實資料後整個換成完整千金股清單
+    let activeStocks = STOCKS.filter((s) => (PRICES[s.code] || 0) >= MIN_PRICE);
+    if (activeStocks.length < 6) activeStocks = STOCKS.slice();
     let N = activeStocks.length;
     let SEG = TAU / N;
 
-    // 依股價重建輪盤:只留 ≥ MIN_PRICE 的千金股,過濾掉便宜/代號標錯的個股
-    function rebuildWheel() {
-      const filtered = STOCKS.filter((s) => (PRICES[s.code] || 0) >= MIN_PRICE);
-      activeStocks = filtered.length >= 6 ? filtered : STOCKS.slice();
-      N = activeStocks.length;
-      SEG = TAU / N;
-      drawWheel();
-    }
-
-    // 載入每日自動更新的真實收盤價(從 GitHub 原始檔抓,跨網站皆可);失敗則用內建參考價
+    // 從 GitHub 原始檔抓「每日全市場真實收盤價」挑出的完整千金股清單(跨網站皆可)
     const RAW_PRICES_URL = "https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/prices.json";
     fetch(RAW_PRICES_URL, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (!data) return;
-        Object.assign(PRICES, data.prices || data);
         priceAsOf = data.asOf || "";
-        rebuildWheel();
+        if (Array.isArray(data.stocks) && data.stocks.length >= 6) {
+          // 真實、完整的當日千金股清單(代號/股名/收盤價皆為官方資料)
+          activeStocks = data.stocks.map((s, i) => ({
+            code: String(s.code), name: s.name, price: s.price, color: colorFor(i),
+          }));
+          activeStocks.forEach((s) => { PRICES[s.code] = s.price; });
+        } else {
+          Object.assign(PRICES, data.prices || data);
+          activeStocks = STOCKS.filter((s) => (PRICES[s.code] || 0) >= MIN_PRICE);
+          if (activeStocks.length < 6) activeStocks = STOCKS.slice();
+        }
+        N = activeStocks.length; SEG = TAU / N;
+        drawWheel();
         updateBudgetStatus();
       })
       .catch(() => { /* 離線時用內建參考價 */ });
@@ -593,7 +600,9 @@
         ctx.textAlign = "right"; ctx.textBaseline = "middle";
         ctx.fillStyle = "#fff"; ctx.shadowColor = "rgba(0,0,0,0.55)"; ctx.shadowBlur = 4;
         const label = activeStocks[i].name;
-        ctx.font = `700 ${label.length > 4 ? 14 : 17}px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
+        const base = N > 48 ? 11 : N > 36 ? 12 : N > 24 ? 14 : 17;
+        const fs = label.length > 4 ? Math.max(10, base - 2) : base;
+        ctx.font = `700 ${fs}px "Noto Sans TC","Microsoft JhengHei",sans-serif`;
         ctx.fillText(label, R - 20, 0);
         ctx.restore();
       }
@@ -634,7 +643,7 @@
     function finishSpin() {
       const stock = activeStocks[indexAtPointer()];
       const shares = 2 + Math.floor(Math.random() * 5);   // 2~6 股(千金股單價高,股數偏少)
-      const price = PRICES[stock.code] || 0;
+      const price = stock.price != null ? stock.price : (PRICES[stock.code] || 0);
       const cost = price * shares;
       spentTotal += cost;
       playCount += 1;

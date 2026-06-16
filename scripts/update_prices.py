@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""每日抓取台股收盤價,更新 game/prices.json。
+"""每日抓取台股「全部上市櫃股票」收盤價,挑出所有股價 >= 門檻的千金股,
+更新 game/prices.json(含代號、股名、收盤價)。
 
 資料來源(皆為公開 OpenAPI,伺服器端抓取無 CORS 問題):
   - 上市(TWSE): https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL
   - 上櫃(TPEx): https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes
 
-抓不到的個股會沿用既有 prices.json 的舊值,確保資料不缺漏。
-僅供遊戲娛樂計算,非投資建議。
+只收錄「普通股」(4 位數字代號、非 0 開頭的 ETF),自動排除 ETF/權證/特別股。
+抓不到任何資料時保留舊檔。僅供遊戲娛樂計算,非投資建議。
 """
 import json
 import os
@@ -14,14 +15,7 @@ import sys
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
-# 與遊戲輪盤一致的股票代號
-CODES = [
-    "5274", "6515", "7769", "6223", "2308", "3665", "8027", "1519", "5289",
-    "2338", "6669", "2360", "3324", "6805", "2059", "2330", "4749", "5536",
-    "5434", "3443", "3533", "1590", "2383", "3017", "8996", "5269", "3661",
-    "2345", "6531", "8210", "3529", "7750", "6274", "7734", "8299", "6739",
-    "3131", "6510", "3653",
-]
+THRESHOLD = 1000.0   # 千金股門檻(>= 此價列入)
 
 TWSE_URL = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
 TPEX_URL = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
@@ -48,54 +42,55 @@ def pick(rec, *keys):
     return None
 
 
-def collect(records, code_key_opts, close_key_opts, wanted):
-    out = {}
+def is_common_stock(code):
+    """普通股:4 位數字,且非 0 開頭(排除 0050 等 ETF)。"""
+    return code.isdigit() and len(code) == 4 and code[0] != "0"
+
+
+def collect(records, code_keys, name_keys, close_keys, out):
     for rec in records or []:
-        code = pick(rec, *code_key_opts)
-        if code is None or str(code).strip() not in wanted:
+        code = pick(rec, *code_keys)
+        if code is None:
             continue
-        price = to_float(pick(rec, *close_key_opts))
-        if price and price > 0:
-            out[str(code).strip()] = price
-    return out
+        code = str(code).strip()
+        if not is_common_stock(code):
+            continue
+        price = to_float(pick(rec, *close_keys))
+        if not price or price < THRESHOLD:
+            continue
+        name = pick(rec, *name_keys)
+        out[code] = {"code": code, "name": (str(name).strip() if name else code), "price": price}
 
 
 def main():
-    wanted = set(CODES)
-    prices = {}
+    found = {}
 
-    for label, url, code_keys, close_keys in [
-        ("TWSE", TWSE_URL, ("Code",), ("ClosingPrice", "Close")),
-        ("TPEx", TPEX_URL, ("SecuritiesCompanyCode", "Code"), ("Close", "ClosingPrice")),
+    for label, url, code_keys, name_keys, close_keys in [
+        ("TWSE", TWSE_URL, ("Code",), ("Name",),
+         ("ClosingPrice", "Close")),
+        ("TPEx", TPEX_URL, ("SecuritiesCompanyCode", "Code"),
+         ("CompanyName", "SecuritiesCompanyName", "Name"), ("Close", "ClosingPrice")),
     ]:
         try:
             data = fetch_json(url)
-            got = collect(data, code_keys, close_keys, wanted)
-            prices.update(got)
-            print(f"{label}: 取得 {len(got)} 檔收盤價")
+            before = len(found)
+            collect(data, code_keys, name_keys, close_keys, found)
+            print(f"{label}: 新增 {len(found) - before} 檔(>= {THRESHOLD:.0f})")
         except Exception as e:  # noqa: BLE001
             print(f"{label} 抓取失敗: {e}", file=sys.stderr)
 
-    # 沿用舊值補齊缺漏的個股
-    if os.path.exists(OUT_PATH):
-        try:
-            with open(OUT_PATH, encoding="utf-8") as f:
-                old = json.load(f).get("prices", {})
-            for c in CODES:
-                if c not in prices and c in old:
-                    prices[c] = old[c]
-        except Exception:  # noqa: BLE001
-            pass
-
-    if not prices:
+    if not found:
         print("沒有取得任何股價,放棄更新(保留舊檔)。", file=sys.stderr)
         sys.exit(1)
 
+    stocks = sorted(found.values(), key=lambda s: -s["price"])
+    prices = {s["code"]: s["price"] for s in stocks}  # 向後相容
+
     as_of = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d")
-    payload = {"asOf": as_of, "prices": prices}
+    payload = {"asOf": as_of, "threshold": THRESHOLD, "stocks": stocks, "prices": prices}
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-    print(f"已更新 {len(prices)} 檔股價,日期 {as_of} → {os.path.normpath(OUT_PATH)}")
+    print(f"已收錄 {len(stocks)} 檔千金股(>= {THRESHOLD:.0f}),日期 {as_of}")
 
 
 if __name__ == "__main__":
