@@ -247,6 +247,46 @@
       padding: 12px 14px; border-radius: 10px; font-size: 13px; line-height: 1.7;
       font-family: "Menlo","Consolas",monospace; color: #f5f5f5;
     }
+    /* 招財紀錄 PDF 版型(離畫面外渲染,供 html2canvas 擷取) */
+    .cert-capture { position: fixed; left: -10000px; top: 0; }
+    .cert {
+      width: 760px; box-sizing: border-box; padding: 42px 46px; position: relative;
+      background: radial-gradient(circle at 50% -10%, #d12626, #8a0000 58%, #6a0000);
+      border: 8px solid #ffd700; border-radius: 18px; color: #fff3c4;
+      font-family: "Noto Serif TC","Microsoft JhengHei",serif; box-shadow: inset 0 0 0 3px #b8860b;
+    }
+    .cert-corner { position: absolute; font-size: 30px; }
+    .cert-corner.tl { top: 12px; left: 16px; } .cert-corner.tr { top: 12px; right: 16px; }
+    .cert-corner.bl { bottom: 12px; left: 16px; } .cert-corner.br { bottom: 12px; right: 16px; }
+    .cert-head { text-align: center; }
+    .cert-sub { color: #ffe9a8; font-size: 18px; letter-spacing: 1px; }
+    .cert-title {
+      font-size: 52px; font-weight: 900; color: #ffd700; letter-spacing: 12px; margin: 10px 0 6px;
+      text-shadow: 0 2px 0 #7a5200, 0 0 18px rgba(255,215,0,0.55);
+    }
+    .cert-bless { color: #ffd700; font-size: 20px; letter-spacing: 3px; margin-bottom: 18px; }
+    .cert-table { width: 100%; border-collapse: collapse; font-size: 18px; margin: 4px 0 14px;
+      background: rgba(0,0,0,0.18); border: 2px solid #ffd700; }
+    .cert-table th { background: #ffd700; color: #7a0000; padding: 10px; font-weight: 900; }
+    .cert-table td { padding: 9px 10px; border-bottom: 1px solid rgba(255,215,0,0.3); }
+    .cert-table tbody tr:nth-child(even) { background: rgba(255,215,0,0.08); }
+    .cert-table .c-no { text-align: center; color: #ffd700; width: 42px; }
+    .cert-table .c-name { font-weight: 700; color: #fff; }
+    .cert-table .c-name span { color: #ffd27f; font-size: 14px; }
+    .cert-table .c-num { text-align: right; }
+    .cert-table .c-gold { color: #ffd700; font-weight: 800; }
+    .cert-total { text-align: right; font-size: 20px; color: #fff3c4; margin-bottom: 18px; }
+    .cert-total b { color: #ffd700; }
+    .cert-foot { display: flex; align-items: center; gap: 18px; border-top: 2px dashed #ffd700; padding-top: 16px; }
+    .cert-seal {
+      flex: 0 0 auto; width: 86px; height: 86px; border-radius: 10px; border: 3px solid #ffd700;
+      display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.1;
+      color: #ffd700; font-weight: 900; font-size: 24px; transform: rotate(-8deg);
+      box-shadow: 0 0 14px rgba(255,215,0,0.5);
+    }
+    .cert-lucky { font-size: 16px; color: #ffe9a8; line-height: 1.7; }
+    .cert-lucky b { color: #ffd700; }
+    .cert-lucky span { font-size: 12px; color: #e7c98a; }
     /* 中獎金額顯示 */
     .reveal-cost { margin-top: 16px; font-size: clamp(16px, 4.5vw, 22px); }
     .reveal-cost b { color: var(--gold); }
@@ -285,6 +325,9 @@
       .shares-num { font-size: clamp(40px, 11vh, 80px); }
     }
   </style>
+  <!-- 產生招財紀錄 PDF 用(延遲載入,不阻塞遊戲;失敗則退回列印) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <!-- 開場故事頁:短短一頁,點畫面任一處即進入遊戲 -->
@@ -377,18 +420,19 @@
   <div class="fb-overlay" id="listModal" aria-hidden="true">
     <div class="fb-card list-card">
       <div id="listGate">
-        <div class="fb-emoji">🎁🐵</div>
-        <h2>這份精選命中清單,送給你!</h2>
-        <p>你<b>所有射中股票的完整清單</b>(股名、代號、股價、股數、金額)+ <b>一鍵複製</b>,馬上打開給你 ✨<br>
-           只要順手幫這隻努力的黑猩猩到粉專點個讚就好——<br>
-           你的一個讚,就是我繼續做下去最大的動力 🙏</p>
-        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 我來點讚,打開清單</a>
+        <div class="fb-emoji">🧧🐵</div>
+        <h2>領取你的招財選股紀錄!</h2>
+        <p>幫這隻努力的黑猩猩到粉專點個讚,<br>
+           就<b>自動產生一張精美的「招財紀錄」PDF</b> 送你下載 🧧✨<br>
+           裡面包了你所有射中的股票數據,喜氣又招財,還能截圖炫耀!</p>
+        <a class="fb-like-btn" id="listFollowBtn" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 點讚,下載我的招財紀錄 PDF</a>
         <button class="fb-later" id="listGateClose">先看看就好</button>
       </div>
       <div id="listPanel" style="display:none;">
-        <h2>📋 我的命中清單</h2>
+        <h2>🧧 我的招財選股紀錄</h2>
         <pre id="listText" class="list-text"></pre>
-        <button class="fb-like-btn" id="listCopyBtn">📋 一鍵複製清單</button>
+        <button class="fb-like-btn" id="listPdfBtn">📄 下載招財紀錄 PDF</button>
+        <button class="share-btn" id="listCopyBtn" style="margin-bottom:10px;">📋 一鍵複製文字清單</button>
         <button class="fb-later" id="listClose">關閉</button>
       </div>
     </div>
@@ -799,6 +843,72 @@
       const sub = priceAsOf ? `(${priceAsOf} 收盤價,純娛樂非投資建議)` : `(參考價,純娛樂非投資建議)`;
       return `🐵 台股千金俄羅斯輪盤 — 我的命中清單\n${sub}\n\n${lines.join("\n")}\n\n———\n命中 ${records.length} 檔 · 合計 ${money(spentTotal)} ／ 預算 ${money(budget)}`;
     }
+
+    // ----- 招財紀錄 PDF -----
+    function buildCertificate() {
+      const wrap = document.createElement("div");
+      wrap.className = "cert-capture";
+      const rows = records.map((r, i) => `
+        <tr><td class="c-no">${i + 1}</td>
+        <td class="c-name">${r.name} <span>${r.code}</span></td>
+        <td class="c-num">${money(r.price)}</td>
+        <td class="c-num">${r.shares}</td>
+        <td class="c-num c-gold">${money(r.cost)}</td></tr>`).join("");
+      const dateStr = priceAsOf || new Date().toISOString().slice(0, 10);
+      wrap.innerHTML = `
+        <div class="cert">
+          <div class="cert-corner tl">🪙</div><div class="cert-corner tr">🪙</div>
+          <div class="cert-corner bl">💰</div><div class="cert-corner br">💰</div>
+          <div class="cert-head">
+            <div class="cert-sub">🐵 黑猩猩射飛鏢 · 台股千金俄羅斯輪盤</div>
+            <div class="cert-title">招 財 選 股 紀 錄</div>
+            <div class="cert-bless">🧧 恭 喜 發 財 · 黃 金 萬 兩 🧧</div>
+          </div>
+          <table class="cert-table">
+            <thead><tr><th>#</th><th>股票</th><th>股價</th><th>股數</th><th>金額</th></tr></thead>
+            <tbody>${rows || '<tr><td colspan="5" style="text-align:center;padding:20px">尚未射中任何股票</td></tr>'}</tbody>
+          </table>
+          <div class="cert-total">命中 <b>${records.length}</b> 檔 · 合計 <b>${money(spentTotal)}</b> ／ 預算 ${money(budget)}</div>
+          <div class="cert-foot">
+            <div class="cert-seal">招財<br>進寶</div>
+            <div class="cert-lucky">願君選股如有神助,黑猩猩祝你<b>滿載而歸、財源滾滾</b> 🧧<br>
+              <span>資料日期 ${dateStr}(收盤價)· 純屬娛樂模擬,不構成投資建議</span></div>
+          </div>
+        </div>`;
+      document.body.appendChild(wrap);
+      return wrap;
+    }
+    function printCertificate(wrap) {
+      const styles = [...document.querySelectorAll("style")].map((s) => s.outerHTML).join("");
+      const w = window.open("", "_blank");
+      if (!w) { showToast("請允許彈出視窗,才能存成 PDF"); return; }
+      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>招財紀錄</title>${styles}
+        <style>.cert-capture{position:static!important;left:auto!important}body{margin:0;background:#6a0000}</style></head>
+        <body>${wrap.innerHTML}<script>onload=()=>setTimeout(()=>print(),400)<\/script></body></html>`);
+      w.document.close();
+    }
+    async function downloadRecordPDF() {
+      if (!records.length) { showToast("先去射幾把,再來領招財紀錄 🐵🎯"); return; }
+      showToast("招財紀錄產生中… 🧧");
+      const wrap = buildCertificate();
+      const el = wrap.querySelector(".cert");
+      try {
+        if (window.html2canvas && window.jspdf) {
+          const canvas = await window.html2canvas(el, { scale: 2, backgroundColor: "#6a0000", useCORS: true });
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({ orientation: "p", unit: "px", format: [canvas.width, canvas.height] });
+          pdf.addImage(canvas.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, canvas.width, canvas.height);
+          pdf.save("黑猩猩射飛鏢_招財紀錄.pdf");
+          showToast("招財紀錄 PDF 已下載 🧧✨");
+        } else {
+          printCertificate(wrap);
+        }
+      } catch (e) {
+        printCertificate(wrap);
+      } finally {
+        setTimeout(() => wrap.remove(), 1500);
+      }
+    }
     function showListContent() {
       listGate.style.display = "none"; listPanel.style.display = "block";
       listText.textContent = buildListText();
@@ -814,9 +924,10 @@
     document.getElementById("listClose").addEventListener("click", closeList);
     document.getElementById("listFollowBtn").addEventListener("click", () => {
       markFollowed();                       // 先大方解鎖(不強制驗證)
-      showToast("謝謝你的支持!清單解鎖囉 🎉");
       setTimeout(showListContent, 300);
+      downloadRecordPDF();                  // 點讚同時自動產生招財紀錄 PDF
     });
+    document.getElementById("listPdfBtn").addEventListener("click", downloadRecordPDF);
     document.getElementById("listCopyBtn").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(buildListText()); showToast("已複製清單,貼到 FB / LINE 即可分享!"); }
       catch (e) { showToast("複製失敗,請長按清單手動複製"); }
