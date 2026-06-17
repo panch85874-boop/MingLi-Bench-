@@ -381,8 +381,7 @@
       <div class="cardview-hint">📸 長按圖片選「儲存影像」,或直接截圖,即可收藏招財小卡</div>
       <img id="cardImg" class="cardview-img" alt="招財選股紀錄" />
       <div class="cardview-btns">
-        <button class="fb-like-btn" id="cardShare" style="margin:0">📤 分享 / 儲存</button>
-        <a class="fb-like-btn hl" id="cardLike" style="margin:0">👍 去粉專按讚</a>
+        <button class="fb-like-btn hl" id="cardShare" style="margin:0">📤 分享給朋友 / 儲存</button>
       </div>
       <button class="fb-later" id="cardClose">關閉</button>
     </div>
@@ -1028,7 +1027,6 @@
     function hideCard() { cardView.classList.remove("show"); cardView.setAttribute("aria-hidden", "true"); }
     document.getElementById("cardClose").addEventListener("click", hideCard);
     document.getElementById("cardShare").addEventListener("click", shareCard);
-    document.getElementById("cardLike").addEventListener("click", () => { markFollowed(); location.href = withExternal(FB_PAGE_URL); });
 
     // 切回分頁:自動顯示招財卡(長按/截圖拿卡)
     function autoDeliverOnReturn() {
@@ -1040,8 +1038,14 @@
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
     document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
     document.getElementById("farewellShare").addEventListener("click", () => { hideFarewell(); showCard(); });
-    // 結束遊戲 → 直接顯示招財卡(長按儲存/截圖),卡片內可再去粉專按讚
-    document.getElementById("endBtn").addEventListener("click", showCard);
+    // 結束遊戲 → 先跳「按讚送招財小卡」gate(去粉專 → 回來才顯示卡片)
+    function openLikeGate() {
+      if (!records.length) { showToast("先去射幾把,再來領招財小卡 🐵🎯"); return; }
+      farewellShown = true;
+      farewellAsk.style.display = "block"; farewellBack.style.display = "none";
+      farewell.classList.add("show"); farewell.setAttribute("aria-hidden", "false");
+    }
+    document.getElementById("endBtn").addEventListener("click", openLikeGate);
     // 去粉專按讚:標記、開 FB,並切到「回來分享」畫面(離開前已先說明怎麼回來)
     document.getElementById("farewellLike").addEventListener("click", () => {
       markFollowed();
