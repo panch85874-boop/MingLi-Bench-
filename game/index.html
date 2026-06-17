@@ -870,16 +870,16 @@
         x.fillText(s, px, py); x.restore();
       };
 
-      // 紅底
+      // 鮮豔粉紅底
       const bg = x.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, "#c11616"); bg.addColorStop(0.5, "#9c0c0c"); bg.addColorStop(1, "#7c0707");
+      bg.addColorStop(0, "#ff63b5"); bg.addColorStop(0.5, "#ee2a92"); bg.addColorStop(1, "#c41b6e");
       x.fillStyle = bg; x.fillRect(0, 0, W, H);
       // 金框
       x.lineWidth = 10; x.strokeStyle = "#ffcf3f"; x.strokeRect(22, 22, W - 44, H - 44);
       x.lineWidth = 2; x.strokeStyle = "rgba(255,207,63,0.55)"; x.strokeRect(40, 40, W - 80, H - 80);
       // 角落金圓徽 + 金錢袋
       [[95, 110], [W - 95, 110]].forEach(([cx, cy]) => {
-        x.beginPath(); x.arc(cx, cy, 42, 0, Math.PI * 2); x.fillStyle = "#7c0707"; x.fill();
+        x.beginPath(); x.arc(cx, cy, 42, 0, Math.PI * 2); x.fillStyle = "#9c1462"; x.fill();
         x.lineWidth = 3; x.strokeStyle = "#ffcf3f"; x.stroke();
         t("財", cx, cy + 1, "bold 40px " + FS, "#ffd700", "center", "middle");
       });
@@ -888,8 +888,8 @@
 
       // 抬頭
       t("🐵 黑猩猩射飛鏢 · 台股千金俄羅斯輪盤", W / 2, 150, "30px " + FB, "#ffd9a0", "center");
-      t("招  財  選  股  紀  錄", W / 2, 262, "900 92px " + FS, "#ffd700", "center", "alphabetic", "#7a3b00");
-      t("🧧 恭喜發財 · 黃金萬兩 🧧", W / 2, 332, "bold 36px " + FS, "#ff9a3d", "center");
+      t("招  財  選  股  紀  錄", W / 2, 262, "900 92px " + FS, "#fff200", "center", "alphabetic", "#7a0e44");
+      t("🧧 恭喜發財 · 黃金萬兩 🧧", W / 2, 332, "bold 36px " + FS, "#fff3c4", "center");
       const dg = x.createLinearGradient(80, 0, W - 80, 0);
       dg.addColorStop(0, "rgba(255,207,63,0)"); dg.addColorStop(0.5, "#ffcf3f"); dg.addColorStop(1, "rgba(255,207,63,0)");
       x.fillStyle = dg; x.fillRect(80, 366, W - 160, 3);
