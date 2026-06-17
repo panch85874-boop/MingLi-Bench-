@@ -361,7 +361,7 @@
 <body>
   <!-- App 內建瀏覽器(FB/Messenger/IG)提示:引導用外部瀏覽器開啟 -->
   <div class="iab-banner" id="iabBanner">
-    <span class="iab-msg">用瀏覽器開啟更完整 👉 右上「⋮」→ 在 Chrome 開啟</span>
+    <span class="iab-msg" id="iabMsg">用瀏覽器開啟更完整 👉 右上選單 → 用瀏覽器開啟</span>
     <a class="iab-btn" id="iabChrome">🌐 用 Chrome 開啟</a>
     <button class="iab-x" id="iabClose" aria-label="關閉">✕</button>
   </div>
@@ -493,18 +493,24 @@
     // 連結加上參數,讓 LINE 點開時用外部瀏覽器
     const withExternal = (u) => /openExternalBrowser=1/.test(u) ? u : u + (u.indexOf("?") >= 0 ? "&" : "?") + "openExternalBrowser=1";
 
-    // FB / Messenger / IG 內建瀏覽器:顯示「用瀏覽器開啟」提示(Meta 無法自動跳出)
+    // 會「卡住」的 App 內建瀏覽器(FB/Messenger/IG/Threads/WeChat/TikTok/X…):
+    // LINE 已用 openExternalBrowser=1 自動跳出;其餘無法自動 → 顯示引導(Android 另給一鍵跳 Chrome)
     (function () {
       var ua = navigator.userAgent || "";
-      if (!/FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram/i.test(ua)) return;
+      var inApp = /FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram|Threads|Barcelona|MicroMessenger|WeChat|musical_ly|Bytedance|TikTok|trill|Twitter|LinkedInApp/i.test(ua);
+      if (!inApp) return;                       // 真正的瀏覽器不顯示,不需優化
       var b = document.getElementById("iabBanner"); if (!b) return;
-      b.classList.add("show");
+      var msg = document.getElementById("iabMsg");
       if (/Android/i.test(ua)) {
+        msg.textContent = "用瀏覽器開啟更完整 👉 右上「⋮」→ 在 Chrome 開啟";
         var c = document.getElementById("iabChrome");
         c.href = "intent://" + location.host + location.pathname + location.search +
                  "#Intent;scheme=https;package=com.android.chrome;end";
         c.classList.add("show");
+      } else {
+        msg.textContent = "用瀏覽器開啟更完整 👉 右上「⋯」→ 用預設瀏覽器開啟";
       }
+      b.classList.add("show");
       document.getElementById("iabClose").addEventListener("click", function () { b.classList.remove("show"); });
     })();
 
