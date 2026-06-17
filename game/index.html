@@ -428,7 +428,7 @@
         <div class="fb-emoji">🧧🐵</div>
         <h2>按讚送招財小卡</h2>
         <p class="farewell-note">📌 按完讚 →「返回」或切回本頁,即可領取 🔙</p>
-        <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/" target="_blank" rel="noopener">💛 去粉專按讚</a>
+        <a class="fb-like-btn hl" id="farewellLike" href="https://www.facebook.com/share/1CBgxx4Hio/?openExternalBrowser=1" target="_blank" rel="noopener">💛 去粉專按讚</a>
         <button class="fb-later" id="farewellLater">下次再說</button>
       </div>
       <div id="farewellBack" style="display:none;">
@@ -448,6 +448,16 @@
    * 純屬娛樂模擬,不構成投資建議。 */
   (() => {
     "use strict";
+
+    // 在 LINE 內建瀏覽器中:自動跳出到手機預設瀏覽器(Chrome/Safari)
+    (function () {
+      var ua = navigator.userAgent || "";
+      if (/\bLine\//i.test(ua) && location.search.indexOf("openExternalBrowser=1") === -1) {
+        location.replace(location.href + (location.search ? "&" : "?") + "openExternalBrowser=1");
+      }
+    })();
+    // 連結加上參數,讓 LINE 點開時用外部瀏覽器
+    const withExternal = (u) => /openExternalBrowser=1/.test(u) ? u : u + (u.indexOf("?") >= 0 ? "&" : "?") + "openExternalBrowser=1";
 
     // ---------- 千金股清單(取材自輪盤圖) ----------
     const STOCKS = [
@@ -736,7 +746,7 @@
       setTimeout(() => toast.classList.remove("show"), 2200);
     }
     async function share() {
-      const url = location.href;
+      const url = withExternal(location.href);
       const data = { title: "🐵 台股千金俄羅斯輪盤", text: "來當黑猩猩射飛鏢選台股千金股!", url };
       try {
         if (navigator.share) { await navigator.share(data); return; }
@@ -912,7 +922,7 @@
         const file = new File([blob], "招財選股紀錄.png", { type: "image/png" });
         try {
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], text: SHARE_TEXT, url: FB_PAGE_URL });
+            await navigator.share({ files: [file], text: SHARE_TEXT, url: withExternal(FB_PAGE_URL) });
             return;
           }
         } catch (e) { /* 使用者取消或不支援 → 退回下載 */ }
@@ -920,7 +930,7 @@
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         a.download = "黑猩猩射飛鏢_招財選股紀錄.png"; a.click();
-        try { await navigator.clipboard.writeText(FB_PAGE_URL); showToast("已存圖 + 複製粉專連結,貼給朋友請他按讚 🙏"); }
+        try { await navigator.clipboard.writeText(withExternal(FB_PAGE_URL)); showToast("已存圖 + 複製粉專連結,貼給朋友請他按讚 🙏"); }
         catch (e) { showToast("已存圖!分享時附上粉專連結請朋友按讚 🙏"); }
       }, "image/png");
     }
