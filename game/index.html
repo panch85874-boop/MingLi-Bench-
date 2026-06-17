@@ -340,9 +340,26 @@
       .reveal-shares { padding: 10px 24px; }
       .shares-num { font-size: clamp(40px, 11vh, 80px); }
     }
+    /* App 內建瀏覽器提示條(FB/Messenger/IG) */
+    .iab-banner { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 400;
+      align-items: center; gap: 8px; padding: 9px 12px; font-size: 13px; color: #06283a;
+      background: #ffd54a; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .iab-banner.show { display: flex; }
+    .iab-msg { flex: 1; line-height: 1.4; }
+    .iab-btn { background: #1877f2; color: #fff; padding: 6px 10px; border-radius: 8px;
+      font-weight: 800; text-decoration: none; white-space: nowrap; display: none; }
+    .iab-btn.show { display: inline-block; }
+    .iab-x { background: transparent; border: none; color: #06283a; font-size: 16px; font-weight: 900; cursor: pointer; }
   </style>
 </head>
 <body>
+  <!-- App 內建瀏覽器(FB/Messenger/IG)提示:引導用外部瀏覽器開啟 -->
+  <div class="iab-banner" id="iabBanner">
+    <span class="iab-msg">用瀏覽器開啟更完整 👉 右上「⋮」→ 在 Chrome 開啟</span>
+    <a class="iab-btn" id="iabChrome">🌐 用 Chrome 開啟</a>
+    <button class="iab-x" id="iabClose" aria-label="關閉">✕</button>
+  </div>
+
   <!-- 開場故事頁:短短一頁,點畫面任一處即進入遊戲 -->
   <div class="intro-overlay" id="intro" role="button" tabindex="0" aria-label="點擊開始射飛鏢">
     <div class="intro-card">
@@ -458,6 +475,21 @@
     })();
     // 連結加上參數,讓 LINE 點開時用外部瀏覽器
     const withExternal = (u) => /openExternalBrowser=1/.test(u) ? u : u + (u.indexOf("?") >= 0 ? "&" : "?") + "openExternalBrowser=1";
+
+    // FB / Messenger / IG 內建瀏覽器:顯示「用瀏覽器開啟」提示(Meta 無法自動跳出)
+    (function () {
+      var ua = navigator.userAgent || "";
+      if (!/FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram/i.test(ua)) return;
+      var b = document.getElementById("iabBanner"); if (!b) return;
+      b.classList.add("show");
+      if (/Android/i.test(ua)) {
+        var c = document.getElementById("iabChrome");
+        c.href = "intent://" + location.host + location.pathname + location.search +
+                 "#Intent;scheme=https;package=com.android.chrome;end";
+        c.classList.add("show");
+      }
+      document.getElementById("iabClose").addEventListener("click", function () { b.classList.remove("show"); });
+    })();
 
     // ---------- 千金股清單(取材自輪盤圖) ----------
     const STOCKS = [
