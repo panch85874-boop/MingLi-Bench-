@@ -350,6 +350,12 @@
       font-weight: 800; text-decoration: none; white-space: nowrap; display: none; }
     .iab-btn.show { display: inline-block; }
     .iab-x { background: transparent; border: none; color: #06283a; font-size: 16px; font-weight: 900; cursor: pointer; }
+    /* 結束遊戲 CTA */
+    .cta-end { display: block; width: 100%; margin-top: 14px; padding: 16px; border: none; border-radius: 14px;
+      cursor: pointer; font-size: 17px; font-weight: 900; color: #5a3d00;
+      background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
+      box-shadow: 0 6px 18px rgba(255,213,74,0.45); animation: btn-pulse 1.8s ease-in-out infinite; }
+    .leaving-count { margin-top: 8px; font-size: 14px; opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -358,6 +364,16 @@
     <span class="iab-msg">用瀏覽器開啟更完整 👉 右上「⋮」→ 在 Chrome 開啟</span>
     <a class="iab-btn" id="iabChrome">🌐 用 Chrome 開啟</a>
     <button class="iab-x" id="iabClose" aria-label="關閉">✕</button>
+  </div>
+
+  <!-- 結束遊戲 → 下載小卡 → 2秒提醒 → 跳粉專 -->
+  <div class="fb-overlay" id="leaving" aria-hidden="true">
+    <div class="fb-card">
+      <div class="fb-emoji">🧧🐵</div>
+      <h2 id="leavingTitle">招財小卡已下載!</h2>
+      <p class="farewell-note">謝謝支持~ 即將前往粉專,<br>記得回來再玩,順手幫我按個讚 🙏</p>
+      <div class="leaving-count"><span id="leavingSec">2</span> 秒後前往粉專…</div>
+    </div>
   </div>
 
   <!-- 開場故事頁:短短一頁,點畫面任一處即進入遊戲 -->
@@ -410,6 +426,7 @@
           <h3>🎯 我射中了哪些股票</h3>
           <ul id="historyList"></ul>
         </div>
+        <button class="cta-end" id="endBtn">🏁 結束遊戲 · 領招財小卡 🧧</button>
         <div class="panel-tools">
           <button class="sound-toggle" id="soundToggle">🔊 音效:開</button>
           <button class="sound-toggle" id="shareBtn">📤 分享</button>
@@ -993,6 +1010,17 @@
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
     document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
     document.getElementById("farewellShare").addEventListener("click", shareCard);
+    // 結束遊戲:立刻下載招財小卡 → 顯示 2 秒提醒 → 跳粉專
+    const leaving = document.getElementById("leaving");
+    document.getElementById("endBtn").addEventListener("click", () => {
+      const got = records.length > 0;
+      if (got) downloadCardOnly();              // 當下立刻下載,避免直接關掉什麼都沒拿到
+      document.getElementById("leavingTitle").textContent = got ? "招財小卡已下載!🧧" : "謝謝你的支持!🙏";
+      leaving.classList.add("show"); leaving.setAttribute("aria-hidden", "false");
+      let s = 2; const sec = document.getElementById("leavingSec"); sec.textContent = s;
+      const iv = setInterval(() => { s -= 1; sec.textContent = Math.max(0, s); if (s <= 0) clearInterval(iv); }, 1000);
+      setTimeout(() => { location.href = withExternal(FB_PAGE_URL); }, 2000);
+    });
     // 去粉專按讚:標記、開 FB,並切到「回來分享」畫面(離開前已先說明怎麼回來)
     document.getElementById("farewellLike").addEventListener("click", () => {
       markFollowed();
