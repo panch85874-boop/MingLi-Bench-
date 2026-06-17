@@ -433,9 +433,10 @@
       </div>
       <div id="farewellBack" style="display:none;">
         <div class="fb-emoji">👍🧧</div>
-        <h2>歡迎回來!</h2>
-        <button class="fb-like-btn hl" id="farewellClaim">🧧 領取招財小卡</button>
-        <button class="fb-later" id="farewellLater2">先不用了</button>
+        <h2>招財小卡到手!</h2>
+        <p class="farewell-note">分享給朋友,邀他們也來按個讚 🙏</p>
+        <button class="fb-like-btn hl" id="farewellShare">📤 分享我的招財小卡</button>
+        <button class="fb-later" id="farewellLater2">關閉</button>
       </div>
     </div>
   </div>
@@ -796,8 +797,8 @@
     function markFollowed() { followed = true; localStorage.setItem("monkeyDartFollowed", "1"); }
 
     // ----- 招財選股紀錄(原生 canvas 畫 9:16 紅金小卡,下載 PNG)-----
-    function downloadRecordPDF() {
-      if (!records.length) { showToast("先去射幾把,再來領招財紀錄 🐵🎯"); return; }
+    function buildCardCanvas() {
+      if (!records.length) { showToast("先去射幾把,再來領招財紀錄 🐵🎯"); return null; }
       const FB = '"Noto Sans TC","Microsoft JhengHei",sans-serif';
       const FS = '"Noto Serif TC","Microsoft JhengHei",serif';
       const W = 1080, H = 1920;
@@ -887,11 +888,41 @@
         t("愛印 iPrint", W - 160, 1800, "900 28px " + FB, "#ffd700", "center");
       }
 
-      const a = document.createElement("a");
-      a.href = cv.toDataURL("image/png");
-      a.download = "黑猩猩射飛鏢_招財選股紀錄.png";
-      a.click();
-      showToast("招財選股紀錄已下載 🧧✨");
+      return cv;
+    }
+
+    const FB_PAGE_URL = "https://www.facebook.com/share/1CBgxx4Hio/";
+    const SHARE_TEXT = "🐵 我玩黑猩猩射飛鏢,射中了我的招財股!幫我按個讚 🙏 你也來玩👇";
+
+    // 只下載招財卡圖(無使用者手勢時用,例如切回分頁自動奉上)
+    function downloadCardOnly() {
+      const cv = buildCardCanvas(); if (!cv) return;
+      cv.toBlob((b) => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(b);
+        a.download = "黑猩猩射飛鏢_招財選股紀錄.png"; a.click();
+        showToast("招財小卡已下載 🧧✨");
+      }, "image/png");
+    }
+
+    // 分享招財卡:同時送出「卡片圖 + 可點的粉專連結」(需使用者點擊觸發)
+    async function shareCard() {
+      const cv = buildCardCanvas(); if (!cv) return;
+      cv.toBlob(async (blob) => {
+        const file = new File([blob], "招財選股紀錄.png", { type: "image/png" });
+        try {
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], text: SHARE_TEXT, url: FB_PAGE_URL });
+            return;
+          }
+        } catch (e) { /* 使用者取消或不支援 → 退回下載 */ }
+        // 後備:下載圖 + 複製粉專連結
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "黑猩猩射飛鏢_招財選股紀錄.png"; a.click();
+        try { await navigator.clipboard.writeText(FB_PAGE_URL); showToast("已存圖 + 複製粉專連結,貼給朋友請他按讚 🙏"); }
+        catch (e) { showToast("已存圖!分享時附上粉專連結請朋友按讚 🙏"); }
+      }, "image/png");
     }
 
 
@@ -910,27 +941,25 @@
       farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
       awaitingReturn = false;
     }
-    function claimCard() {
+    // 切回分頁:自動奉上招財小卡(無手勢只能下載),並停在「分享」畫面
+    function autoDeliverOnReturn() {
+      if (!awaitingReturn) return;
       awaitingReturn = false;
-      downloadRecordPDF();
-      setTimeout(hideFarewell, 500);
+      farewellAsk.style.display = "none"; farewellBack.style.display = "block";
+      downloadCardOnly();
     }
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
     document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
-    document.getElementById("farewellClaim").addEventListener("click", claimCard);
-    // 去粉專按讚:標記、開 FB,並切到「回來領取」畫面(離開前已先說明怎麼回來)
+    document.getElementById("farewellShare").addEventListener("click", shareCard);
+    // 去粉專按讚:標記、開 FB,並切到「回來分享」畫面(離開前已先說明怎麼回來)
     document.getElementById("farewellLike").addEventListener("click", () => {
       markFollowed();
       awaitingReturn = true;
       farewellAsk.style.display = "none"; farewellBack.style.display = "block";
     });
     // 回到分頁時自動奉上招財小卡
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && awaitingReturn) { claimCard(); }
-    });
-    window.addEventListener("focus", () => {
-      if (awaitingReturn) { claimCard(); }
-    });
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) autoDeliverOnReturn(); });
+    window.addEventListener("focus", autoDeliverOnReturn);
     // 桌機:滑鼠移出視窗上緣(常見的離開意圖)
     document.addEventListener("mouseout", (e) => {
       if (e.clientY <= 0 && !e.relatedTarget) showFarewell();
