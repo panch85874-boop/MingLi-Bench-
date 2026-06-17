@@ -356,6 +356,15 @@
       background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
       box-shadow: 0 6px 18px rgba(255,213,74,0.45); animation: btn-pulse 1.8s ease-in-out infinite; }
     .leaving-count { margin-top: 8px; font-size: 14px; opacity: 0.8; }
+    /* 萬用領卡:全螢幕卡片檢視 */
+    #cardView { align-items: flex-start; overflow-y: auto; }
+    .cardview-inner { width: 100%; max-width: 480px; margin: 0 auto; text-align: center; padding: 6px 0 24px; }
+    .cardview-hint { color: #fff; background: rgba(255,213,74,0.15); border: 1px solid rgba(255,213,74,0.4);
+      border-radius: 10px; padding: 10px 12px; margin: 0 12px 12px; font-size: 14px; line-height: 1.6; }
+    .cardview-img { width: 84%; max-width: 360px; border-radius: 14px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      -webkit-touch-callout: default; }
+    .cardview-btns { display: flex; gap: 10px; justify-content: center; margin: 14px 12px 0; }
+    .cardview-btns .fb-like-btn { flex: 1; }
   </style>
 </head>
 <body>
@@ -366,13 +375,16 @@
     <button class="iab-x" id="iabClose" aria-label="關閉">✕</button>
   </div>
 
-  <!-- 結束遊戲 → 下載小卡 → 2秒提醒 → 跳粉專 -->
-  <div class="fb-overlay" id="leaving" aria-hidden="true">
-    <div class="fb-card">
-      <div class="fb-emoji">🧧🐵</div>
-      <h2 id="leavingTitle">招財小卡已下載!</h2>
-      <p class="farewell-note">謝謝支持~ 即將前往粉專,<br>記得回來再玩,順手幫我按個讚 🙏</p>
-      <div class="leaving-count"><span id="leavingSec">2</span> 秒後前往粉專…</div>
+  <!-- 萬用領卡:全螢幕顯示招財卡,長按儲存/截圖,任何瀏覽器都拿得到 -->
+  <div class="fb-overlay" id="cardView" aria-hidden="true">
+    <div class="cardview-inner">
+      <div class="cardview-hint">📸 長按圖片選「儲存影像」,或直接截圖,即可收藏招財小卡</div>
+      <img id="cardImg" class="cardview-img" alt="招財選股紀錄" />
+      <div class="cardview-btns">
+        <button class="fb-like-btn" id="cardShare" style="margin:0">📤 分享 / 儲存</button>
+        <a class="fb-like-btn hl" id="cardLike" style="margin:0">👍 去粉專按讚</a>
+      </div>
+      <button class="fb-later" id="cardClose">關閉</button>
     </div>
   </div>
 
@@ -1006,26 +1018,35 @@
       farewell.classList.remove("show"); farewell.setAttribute("aria-hidden", "true");
       awaitingReturn = false;
     }
-    // 切回分頁:自動奉上招財小卡(無手勢只能下載),並停在「分享」畫面
+    // 萬用領卡:全螢幕顯示招財卡,長按儲存/截圖(任何瀏覽器都拿得到)
+    const cardView = document.getElementById("cardView");
+    function showCard() {
+      const cv = buildCardCanvas(); if (!cv) return;
+      document.getElementById("cardImg").src = cv.toDataURL("image/png");
+      cardView.classList.add("show"); cardView.setAttribute("aria-hidden", "false");
+    }
+    function hideCard() { cardView.classList.remove("show"); cardView.setAttribute("aria-hidden", "true"); }
+    document.getElementById("cardClose").addEventListener("click", hideCard);
+    document.getElementById("cardShare").addEventListener("click", shareCard);
+    document.getElementById("cardLike").addEventListener("click", () => { markFollowed(); location.href = withExternal(FB_PAGE_URL); });
+
+    // 切回分頁:自動顯示招財卡(長按/截圖拿卡)
     function autoDeliverOnReturn() {
       if (!awaitingReturn) return;
       awaitingReturn = false;
-      farewellAsk.style.display = "none"; farewellBack.style.display = "block";
-      downloadCardOnly();
+      hideFarewell();
+      showCard();
     }
     document.getElementById("farewellLater").addEventListener("click", hideFarewell);
     document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
-    document.getElementById("farewellShare").addEventListener("click", shareCard);
-    // 結束遊戲:立刻下載招財小卡 → 顯示 2 秒提醒 → 跳粉專
-    const leaving = document.getElementById("leaving");
-    document.getElementById("endBtn").addEventListener("click", () => {
-      const got = records.length > 0;
-      if (got) downloadCardOnly();              // 當下立刻下載,避免直接關掉什麼都沒拿到
-      document.getElementById("leavingTitle").textContent = got ? "招財小卡已下載!🧧" : "謝謝你的支持!🙏";
-      leaving.classList.add("show"); leaving.setAttribute("aria-hidden", "false");
-      let s = 2; const sec = document.getElementById("leavingSec"); sec.textContent = s;
-      const iv = setInterval(() => { s -= 1; sec.textContent = Math.max(0, s); if (s <= 0) clearInterval(iv); }, 1000);
-      setTimeout(() => { location.href = withExternal(FB_PAGE_URL); }, 2000);
+    document.getElementById("farewellShare").addEventListener("click", () => { hideFarewell(); showCard(); });
+    // 結束遊戲 → 直接顯示招財卡(長按儲存/截圖),卡片內可再去粉專按讚
+    document.getElementById("endBtn").addEventListener("click", showCard);
+    // 去粉專按讚:標記、開 FB,並切到「回來分享」畫面(離開前已先說明怎麼回來)
+    document.getElementById("farewellLike").addEventListener("click", () => {
+      markFollowed();
+      awaitingReturn = true;
+      farewellAsk.style.display = "none"; farewellBack.style.display = "block";
     });
     // 去粉專按讚:標記、開 FB,並切到「回來分享」畫面(離開前已先說明怎麼回來)
     document.getElementById("farewellLike").addEventListener("click", () => {
