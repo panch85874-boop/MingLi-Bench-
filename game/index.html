@@ -351,6 +351,15 @@
     .iab-btn.show { display: inline-block; }
     .iab-x { background: transparent; border: none; color: #06283a; font-size: 16px; font-weight: 900; cursor: pointer; }
     /* 結束遊戲 CTA */
+    .rank-btn { display: block; width: 100%; margin-bottom: 12px; padding: 12px; border-radius: 10px; cursor: pointer;
+      font-size: 15px; font-weight: 800; color: #fff; border: 1px solid var(--brand);
+      background: rgba(54,150,211,0.18); }
+    .rank-btn:hover { background: rgba(54,150,211,0.32); }
+    .rank-list { max-height: 60vh; overflow-y: auto; text-align: left; margin: 4px 0 14px; }
+    .rank-row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 15px; }
+    .rank-row:nth-child(odd) { background: rgba(255,255,255,0.05); }
+    .rank-row small { color: var(--brand); font-size: 12px; }
+    .rank-row b { color: var(--gold); white-space: nowrap; }
     .cta-end { display: block; width: 100%; margin-top: 14px; padding: 16px; border: none; border-radius: 14px;
       cursor: pointer; font-size: 17px; font-weight: 900; color: #5a3d00;
       background: radial-gradient(circle at 30% 30%, #fff3c4, var(--gold-deep));
@@ -373,6 +382,16 @@
     <span class="iab-msg" id="iabMsg">用瀏覽器開啟更完整 👉 右上選單 → 用瀏覽器開啟</span>
     <a class="iab-btn" id="iabChrome">🌐 用 Chrome 開啟</a>
     <button class="iab-x" id="iabClose" aria-label="關閉">✕</button>
+  </div>
+
+  <!-- 今日股價 TOP50 清單 -->
+  <div class="fb-overlay" id="rankView" aria-hidden="true">
+    <div class="fb-card" style="max-width:460px;width:100%">
+      <h2>📈 今日台股股價 TOP50</h2>
+      <p class="farewell-note" id="rankAsOf">收盤價 · 純娛樂,非投資建議</p>
+      <div class="rank-list" id="rankList"></div>
+      <button class="fb-later" id="rankClose">關閉</button>
+    </div>
   </div>
 
   <!-- 萬用領卡:全螢幕顯示招財卡,長按儲存/截圖,任何瀏覽器都拿得到 -->
@@ -433,6 +452,7 @@
 
       <aside class="panel">
         <div class="budget-status" id="budgetStatus"></div>
+        <button class="rank-btn" id="rankBtn">📈 今日股價 TOP50(點看清單)</button>
         <div class="history">
           <h3>🎯 我射中了哪些股票</h3>
           <ul id="historyList"></ul>
@@ -1055,6 +1075,19 @@
     document.getElementById("cardClose").addEventListener("click", hideCard);
     document.getElementById("cardShare").addEventListener("click", shareCard);
     document.getElementById("cardReplay").addEventListener("click", () => { hideCard(); resetGame(); });
+
+    // 今日股價 TOP50 清單
+    const rankView = document.getElementById("rankView");
+    document.getElementById("rankBtn").addEventListener("click", () => {
+      const list = activeStocks.slice().sort((a, b) => b.price - a.price);
+      document.getElementById("rankList").innerHTML = list.map((s, i) =>
+        `<div class="rank-row"><span>${i + 1}. ${s.name} <small>${s.code}</small></span><b>${money(s.price)}</b></div>`).join("");
+      document.getElementById("rankAsOf").textContent = (priceAsOf ? priceAsOf + " 收盤價" : "收盤價") + " · 純娛樂,非投資建議";
+      rankView.classList.add("show"); rankView.setAttribute("aria-hidden", "false");
+    });
+    document.getElementById("rankClose").addEventListener("click", () => {
+      rankView.classList.remove("show"); rankView.setAttribute("aria-hidden", "true");
+    });
 
     // 切回分頁:自動顯示招財卡(長按/截圖拿卡)
     function autoDeliverOnReturn() {
