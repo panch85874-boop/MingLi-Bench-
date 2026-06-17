@@ -84,6 +84,10 @@
       text-shadow: 0 2px 20px rgba(255,213,74,0.25);
     }
     .subtitle { margin: 6px 0 0; opacity: 0.85; letter-spacing: 2px; }
+    .daily-badge { display: inline-block; margin: 12px auto 0; padding: 8px 18px; border-radius: 999px;
+      font-size: clamp(13px, 3.6vw, 16px); font-weight: 800; color: #06283a;
+      background: linear-gradient(90deg, var(--gold), #fff2b0, var(--gold));
+      box-shadow: 0 4px 14px rgba(255,213,74,0.4); }
 
     .stage { display: flex; gap: 32px; align-items: center; justify-content: center; flex-wrap: wrap; }
 
@@ -438,6 +442,7 @@
     <header class="topbar">
       <h1>🐵 台股千金俄羅斯輪盤</h1>
       <p class="subtitle">黑猩猩射飛鏢 · 隨機選股模擬器</p>
+      <div class="daily-badge">📈 台股「前 50 高價股」· 每日更新最新股價</div>
     </header>
 
     <main class="stage">
