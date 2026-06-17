@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""每日抓取台股「全部上市櫃股票」收盤價,挑出所有股價 >= 門檻的千金股,
+"""每日抓取台股「全部上市櫃股票」收盤價,取「股價最高的前 N 支」,
 更新 game/prices.json(含代號、股名、收盤價)。
 
 資料來源(皆為公開 OpenAPI,伺服器端抓取無 CORS 問題):
@@ -15,7 +15,7 @@ import sys
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
-THRESHOLD = 1000.0   # 千金股門檻(>= 此價列入)
+TOP_N = 50   # 取股價最高的前 N 支
 
 TWSE_URL = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
 TPEX_URL = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
@@ -56,7 +56,7 @@ def collect(records, code_keys, name_keys, close_keys, out):
         if not is_common_stock(code):
             continue
         price = to_float(pick(rec, *close_keys))
-        if not price or price < THRESHOLD:
+        if not price or price <= 0:
             continue
         name = pick(rec, *name_keys)
         out[code] = {"code": code, "name": (str(name).strip() if name else code), "price": price}
@@ -75,7 +75,7 @@ def main():
             data = fetch_json(url)
             before = len(found)
             collect(data, code_keys, name_keys, close_keys, found)
-            print(f"{label}: 新增 {len(found) - before} 檔(>= {THRESHOLD:.0f})")
+            print(f"{label}: 取得 {len(found) - before} 檔普通股報價")
         except Exception as e:  # noqa: BLE001
             print(f"{label} 抓取失敗: {e}", file=sys.stderr)
 
@@ -83,15 +83,18 @@ def main():
         print("沒有取得任何股價,放棄更新(保留舊檔)。", file=sys.stderr)
         sys.exit(1)
 
-    stocks = sorted(found.values(), key=lambda s: -s["price"])
+    # 取股價最高的前 N 支
+    stocks = sorted(found.values(), key=lambda s: -s["price"])[:TOP_N]
     prices = {s["code"]: s["price"] for s in stocks}  # 向後相容
 
     as_of = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d")
-    payload = {"asOf": as_of, "threshold": THRESHOLD, "stocks": stocks, "prices": prices}
+    payload = {"asOf": as_of, "topN": TOP_N, "stocks": stocks, "prices": prices}
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-    print(f"已收錄 {len(stocks)} 檔千金股(>= {THRESHOLD:.0f}),日期 {as_of}")
+    lo = stocks[-1]["price"] if stocks else 0
+    print(f"已收錄股價最高前 {len(stocks)} 支(最低 {lo}),日期 {as_of}")
 
 
 if __name__ == "__main__":
     main()
+
