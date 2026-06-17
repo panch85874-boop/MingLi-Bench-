@@ -3,8 +3,8 @@ name: Update Taiwan stock prices
 # 每個交易日台股收盤後抓收盤價,更新 game/prices.json
 on:
   schedule:
-    # 06:30 UTC = 台北 14:30(收盤後);週一到週五
-    - cron: "30 6 * * 1-5"
+    # 07:00 UTC = 台北 15:00(收盤後,收盤行情已公布);週一到週五
+    - cron: "0 7 * * 1-5"
   workflow_dispatch:        # 也可手動觸發
 
 permissions:

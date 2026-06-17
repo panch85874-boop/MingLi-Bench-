@@ -229,7 +229,7 @@
     .budget-emoji, .fb-emoji { font-size: clamp(40px, 12vw, 64px); }
     .budget-card h2, .fb-card h2 { margin: 8px 0; font-size: clamp(22px, 6vw, 30px); }
     .budget-card p, .fb-card p { opacity: 0.9; line-height: 1.7; font-size: 14px; margin: 0 0 16px; }
-    .budget-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 4px; }
+    .budget-quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 4px; }
     .budget-quick button {
       padding: 26px 8px; border-radius: 16px; cursor: pointer; font-size: 24px; font-weight: 900;
       color: #5a3d00; border: none;
@@ -382,6 +382,7 @@
       <img id="cardImg" class="cardview-img" alt="招財選股紀錄" />
       <div class="cardview-btns">
         <button class="fb-like-btn hl" id="cardShare" style="margin:0">📤 分享給朋友 / 儲存</button>
+        <button class="fb-like-btn" id="cardReplay" style="margin:0;background:#2f9be0">🔄 再玩一次</button>
       </div>
       <button class="fb-later" id="cardClose">關閉</button>
     </div>
@@ -407,10 +408,9 @@
       <h2>選擇你的預算</h2>
       <p>點一個金額,直接開始射飛鏢!</p>
       <div class="budget-quick">
+        <button data-amt="30000">3 萬</button>
         <button data-amt="50000">5 萬</button>
         <button data-amt="100000">10 萬</button>
-        <button data-amt="300000">30 萬</button>
-        <button data-amt="500000">50 萬</button>
       </div>
     </div>
   </div>
@@ -603,8 +603,9 @@
     const budgetStatus = document.getElementById("budgetStatus");
 
     // ---------- 預算 / 累計 / 遊玩次數 ----------
-    let budget = 100000;          // 預估購買金額
+    let budget = 50000;           // 預估購買金額
     let spentTotal = 0;           // 已累計購買金額
+    let gameOver = false;         // 達到預算 → 本局結束
     let priceAsOf = "";           // 股價更新日期(讀到 prices.json 時填入)
     let playCount = parseInt(localStorage.getItem("monkeyDartPlays") || "0", 10);
     const records = [];          // 本次所有命中紀錄(供完整清單匯出)
@@ -641,6 +642,20 @@
     priceAsOf = PRICE_ASOF;
     let N = activeStocks.length;
     let SEG = TAU / N;
+
+    // 每日自動更新:抓 GitHub 上由排程(每交易日 15:00 台北)更新的最新收盤價;抓不到就用內建快照
+    fetch("https://raw.githubusercontent.com/panch85874-boop/MingLi-Bench-/main/game/prices.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.stocks) || data.stocks.length < 6) return;
+        priceAsOf = data.asOf || priceAsOf;
+        activeStocks = data.stocks.map((s, i) => ({ code: String(s.code), name: s.name, price: s.price, color: colorFor(i) }));
+        activeStocks.forEach((s) => { if (s.price != null) PRICES[s.code] = s.price; });
+        N = activeStocks.length; SEG = TAU / N;
+        if (typeof drawWheel === "function") drawWheel();
+        if (typeof updateBudgetStatus === "function") updateBudgetStatus();
+      })
+      .catch(() => { /* 離線/被擋 → 用內建快照 */ });
 
     let rotation = 0, spinning = false, soundOn = true;
 
@@ -713,7 +728,7 @@
     }
 
     function spin() {
-      if (spinning) return;
+      if (spinning || gameOver) return;
       spinning = true; spinBtn.disabled = true; canvas.classList.add("spinning"); whoosh();
       const targetIndex = Math.floor(Math.random() * N);
       const extraTurns = 5 + Math.floor(Math.random() * 4);
@@ -741,6 +756,7 @@
       const price = stock.price != null ? stock.price : (PRICES[stock.code] || 0);
       const cost = price * shares;
       spentTotal += cost;
+      if (spentTotal >= budget) gameOver = true;   // 達到預算 → 本局結束
       playCount += 1;
       localStorage.setItem("monkeyDartPlays", String(playCount));
       records.push({ name: stock.name, code: stock.code.replace(/[a-z]/g, ""), price, shares, cost });
@@ -758,11 +774,10 @@
       revealCode.textContent = stock.code.replace(/[a-z]/g, "");
       revealShares.textContent = shares;
       revealCost.innerHTML = `💲 最新股價 ${money(price)} × ${shares} 股 = <b>${money(cost)}</b>`;
-      const over = spentTotal > budget;
       revealTotal.innerHTML = `本局累計 <b>${money(spentTotal)}</b> ／ 預算 ${money(budget)}`;
-      revealTotal.classList.toggle("over", over);
-      if (over) {
-        revealOver.textContent = `🚨 已超過預算 ${money(spentTotal - budget)}!冷靜一下,但你還是可以繼續玩 🎯`;
+      revealTotal.classList.toggle("over", gameOver);
+      if (gameOver) {
+        revealOver.textContent = `🎉 達到預算 ${money(budget)},本局結束!即將去粉專領招財小卡 🧧`;
         revealOver.classList.add("show");
         revealCard.classList.add("over");
       } else {
@@ -782,7 +797,9 @@
     }
     function closeReveal() {
       reveal.classList.remove("show"); reveal.setAttribute("aria-hidden", "true");
-      confetti.innerHTML = ""; spinBtn.disabled = false;
+      confetti.innerHTML = "";
+      if (gameOver) { openLikeGate(); }       // 達標 → 跳粉專領卡 gate
+      else { spinBtn.disabled = false; }
     }
 
     function launchConfetti() {
@@ -846,10 +863,14 @@
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); startGame(); }
     });
 
-    // 預算:點金額直接開始
+    // 預算:點金額直接開始(同時重置本局)
     function chooseBudget(amt) {
       budget = amt;
       spentTotal = 0;
+      gameOver = false;
+      records.length = 0;
+      historyList.innerHTML = "";
+      spinBtn.disabled = false;
       updateBudgetStatus();
       budgetOverlay.classList.remove("show");
       budgetOverlay.setAttribute("aria-hidden", "true");
@@ -857,6 +878,12 @@
     document.querySelectorAll(".budget-quick button").forEach((b) => {
       b.addEventListener("click", () => chooseBudget(parseInt(b.dataset.amt, 10)));
     });
+    // 再玩一次:回到預算選擇(重新開局)
+    function resetGame() {
+      gameOver = false; spentTotal = 0; records.length = 0;
+      historyList.innerHTML = ""; spinBtn.disabled = false; updateBudgetStatus();
+      budgetOverlay.classList.add("show"); budgetOverlay.setAttribute("aria-hidden", "false");
+    }
 
     spinBtn.addEventListener("click", () => { ac(); spin(); });
     canvas.addEventListener("click", () => { ac(); spin(); });   // 點圓盤任一處都能射飛鏢
@@ -1027,6 +1054,7 @@
     function hideCard() { cardView.classList.remove("show"); cardView.setAttribute("aria-hidden", "true"); }
     document.getElementById("cardClose").addEventListener("click", hideCard);
     document.getElementById("cardShare").addEventListener("click", shareCard);
+    document.getElementById("cardReplay").addEventListener("click", () => { hideCard(); resetGame(); });
 
     // 切回分頁:自動顯示招財卡(長按/截圖拿卡)
     function autoDeliverOnReturn() {
@@ -1035,8 +1063,8 @@
       hideFarewell();
       showCard();
     }
-    document.getElementById("farewellLater").addEventListener("click", hideFarewell);
-    document.getElementById("farewellLater2").addEventListener("click", hideFarewell);
+    document.getElementById("farewellLater").addEventListener("click", () => { hideFarewell(); if (gameOver) resetGame(); });
+    document.getElementById("farewellLater2").addEventListener("click", () => { hideFarewell(); if (gameOver) resetGame(); });
     document.getElementById("farewellShare").addEventListener("click", () => { hideFarewell(); showCard(); });
     // 結束遊戲 → 先跳「按讚送招財小卡」gate(去粉專 → 回來才顯示卡片)
     function openLikeGate() {
