@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Top sheet feeding into the printer -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,30 h28 v22 h-28 z" />
+
+    <!-- Printer body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M33,50 h42 a4,4 0 0 1 4,4 v18 a4,4 0 0 1 -4,4 h-42 a4,4 0 0 1 -4,-4 v-18 a4,4 0 0 1 4,-4 z" />
+
+    <!-- Printed photo coming out -->
+    <path
+        android:fillColor="#6C4DF6"
+        android:pathData="M42,62 h24 v16 h-24 z" />
+
+    <!-- Status light -->
+    <path
+        android:fillColor="#6C4DF6"
+        android:pathData="M71,57 m-2.5,0 a2.5,2.5 0 1 0 5,0 a2.5,2.5 0 1 0 -5,0" />
+</vector>

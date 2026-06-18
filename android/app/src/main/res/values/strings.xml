@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">印酱 PrintAI</string>
+    <string name="choose_file">选择图片</string>
+    <string name="downloading">开始下载…</string>
+    <string name="download_failed">下载失败</string>
+    <string name="no_app_to_open">没有可以打开此链接的应用</string>
+</resources>
