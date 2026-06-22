@@ -1,59 +1,76 @@
 # iPrintOS 無人影印店 — 現場語音主動協助 PoC｜工程規劃文件
 
-> 版本 v0.1（規劃稿）｜目標：**7 天內做出可測試 PoC**
-> 定位：**無人自助影印店「現場操作助理」**，不是聊天客服。
-> 紅線：所有模型輸出**只能進 Action Router 白名單**，不可直接操作交易、付款、退款、機台維修。
+> 版本 **v0.2**（已併入 10 項範圍決定）｜目標：**7 天內做出可測試 PoC**
+> 定位：**無人自助影印店「現場語音引導助理」**，不是聊天客服。
+> 紅線：語音助理是一個**完全獨立的封閉問答盒**——聽 → 比對固定問答庫 → 有就播語音引導、沒有就說「資料庫沒有、無法處理」並結束。**不碰錢、不碰機台、不切畫面、不轉人工、不連 iPrintOS 後端。**
+
+---
+
+## 0. 範圍決定（v0.2 拍板）
+
+| # | 主題 | 決定 |
+|---|---|---|
+| 1 | 部署 | 每店一台**落地 edge box**（店控主機旁） |
+| 2 | 機台 | Windows + 瀏覽器（非觸控一體機）+ **外接 USB 指向性麥克風** |
+| 3 | 對外動作 | **只用 TTS 語音引導**，不切畫面、不轉人工；無對應資料就停止並告知客人 |
+| 4 | 語言 | **國語 + 英文**（外籍客） |
+| 5 | ASR 位置 | **在地端為主**；落地主機預算受限才改雲端（ASR Adapter 可插拔切換） |
+| 6 | ASR 引擎 | 第一版**只做 faster-whisper**；Nemotron 對照組延後 |
+| 7 | 觸發方式 | 用**既有店內監視系統的「人員進入」訊號**觸發問候 → 開收音窗對答 |
+| 8 | 後端串接 | **純獨立 FAQ**，v1 不連 iPrintOS 後端（唯讀串接留 v2） |
+| 9 | 資料保存 | **只存文字 + 指標**，原始音檔即收即丟 |
+| 10 | 本輪交付 | 規劃文件 + **100 句引導語庫**（見 `iPrintOS_語音引導語庫.md`） |
 
 ---
 
 ## 1. 一句話總結
 
-在無人影印店機台前放一隻「語音耳朵」：聽懂客人卡在哪 → 分類成 7 種固定意圖 → 觸發 iPrintOS 既有白名單流程或轉人工，**降低現場求助電話與操作流失**，且**完全不碰錢與機台執行權**。
+監視系統偵測到客人走進無人影印店 → edge box 上的語音助理主動問候 → 聽客人講一句卡在哪 → 分類成 7 種固定意圖 → **播一段簡短的固定語音引導**；**比對不到就直說「這個我這邊沒有資料」並結束**。全程在地端、不碰錢、不碰機台、不轉人工。
 
 ---
 
 ## 2. 系統架構（文字描述）
 
 ```
-┌──────────────────────────── 機台端 (Kiosk / Edge) ────────────────────────────┐
+┌─────────── 店內既有監視系統 (NVR / IP Cam, 從外往內照, 拍不到路人) ───────────┐
+│   偵測到「有人進入」 ── ONVIF事件 / HTTP webhook / IO乾接點 / RTSP自判 ──┐      │
+└──────────────────────────────────────────────────────────────────────┼──────┘
+                                                                         │ presence signal
+┌─────────────────────── 落地 edge box (Windows 店控主機旁) ─────────────▼──────┐
 │                                                                                │
-│  [麥克風] → [VAD 語音活動偵測]  ──(偵測到人聲開口, 去背景噪音)──┐                │
-│                                                               │                │
-│                                              audio chunk (16k mono PCM)         │
-│                                                               ▼                │
-│                                                   [WebSocket 上行]              │
-└───────────────────────────────────────────────────────────────┬──────────────┘
-                                                                  │
-┌──────────────────────────── 語音服務 (Voice Service) ──────────▼──────────────┐
-│                                                                                │
-│  [ASR Adapter]  ── faster-whisper (主力) / Nemotron (benchmark 對照)            │
-│       │  text + confidence + latency                                           │
-│       ▼                                                                        │
-│  [Intent Classifier]  ── L1 關鍵詞規則 → L2 向量相似度 → (信心不足) unknown      │
-│       │  {intent, score, slots}                                                │
-│       ▼                                                                        │
-│  [Action Router]  ★安全閘門★  只查白名單 intent→action 對照表                   │
-│       │   ├─ 允許 → 回傳 action（切頁 / 播 TTS / 開升級單）                      │
-│       │   └─ 不在白名單 / 低信心 / 客訴 → 強制走 human_help 或 complaint         │
-│       ▼                                                                        │
-│  ┌────────────┬───────────────┬──────────────────┐                            │
-│  ▼            ▼               ▼                  ▼                            │
-│ [TTS]    [Page Switch]   [Remote Escalation]  [Event Log]                      │
-│ 短句語音  切 iPrintOS     通知遠端人工          記錄全鏈路                       │
-│ 指引     測試頁面        (店/機台/時間/         (audio? text/intent/            │
-│          (mock)         語音文字/意圖/畫面)     action/result)                  │
+│  [M0 Presence Trigger] 收到「有人進入」→ 觸發問候                               │
+│        │                                                                       │
+│        ▼                                                                       │
+│  [M5 TTS] 播問候語「您好，需要幫忙嗎?」（固定句庫, 在地端 piper）               │
+│        │                                                                       │
+│        ▼                                                                       │
+│  [M1 VAD 收音窗] 開 5~10s 收音 (外接USB麥, 指向性, 去背景噪音)                  │
+│        │  16k mono PCM                                                         │
+│        ▼                                                                       │
+│  [M2 ASR Adapter] faster-whisper (本地權重, 中/英自動偵測)                      │
+│        │  text + lang + confidence + latency                                   │
+│        ▼                                                                       │
+│  [M3 Intent Classifier] L1 中英關鍵詞 → L2 多語句向量 → (低信心) unknown        │
+│        │  {intent, score}                                                      │
+│        ▼                                                                       │
+│  [M4 Router] ★安全閘門★ 查問答庫白名單                                          │
+│        │   ├─ 命中且有引導 → 回 guidance_id                                     │
+│        │   └─ 未命中 / 低信心 / unknown → fallback「資料庫沒有, 無法處理」        │
+│        ▼                                                                       │
+│  ┌──────────────┬───────────────────┐                                         │
+│  ▼              ▼                                                              │
+│ [M5 TTS]    [M8 Event Log]                                                     │
+│ 播固定引導   只存 text/intent/score/latency/guidance_id  (★不存音檔★)          │
+│ 語音        SQLite (本地)                                                       │
 └────────────────────────────────────────────────────────────────────────────────┘
-            │                                          │
-            ▼                                          ▼
-   [iPrintOS 後端規則引擎]                      [店主 / 客服 通知通道]
-   (PoC 階段 = mock, 真執行權在此)              (LINE / Webhook / Dashboard)
 ```
 
 **架構紅線（不可違反）**
 
-- Action Router 是**唯一**能對外觸發動作的元件，且只走「白名單對照表」。
-- ASR 與 Intent Classifier 永遠**只輸出資料**，不直接呼叫任何交易 / 機台 API。
-- 任何「信心不足、未知意圖、客訴、涉及錢」→ 一律降級到 `human_help` / `complaint`，不自作主張。
+- 語音助理**不連 iPrintOS 後端、不連金流、不連機台 Driver**。它是旁掛的獨立服務。
+- M4 Router 只查「固定問答庫白名單」，命不中一律走 `fallback_no_data`，**不猜、不下結論、不轉人工**。
+- M8 **只存文字與指標，永不存原始音檔**。
+- 監視系統影像只用來產生「有人進入」這一個布林訊號，**語音端不取畫面、不做人臉辨識、不存 frame**（店家原有的安防錄影是另一套系統，與此無關）。
 
 ---
 
@@ -61,197 +78,170 @@
 
 | # | 模組 | 責任 | PoC 實作方式 | 不負責 |
 |---|---|---|---|---|
-| M1 | Mic + VAD | 偵測開口、切句、過濾背景噪音與靜音 | `webrtcvad` 或 `silero-vad`；能量門檻 + 最短語音長度防誤觸發 | 不做喚醒詞、不做聲紋 |
-| M2 | ASR Adapter | 語音→文字，輸出 text/confidence/latency；可切換引擎 | `faster-whisper`（主力，small/medium）；`nemotron` adapter 僅供 benchmark | 不做語意判斷 |
-| M3 | Intent Classifier | 文字→7 類意圖之一或 `unknown` | L1 關鍵詞規則 + L2 句向量相似度（`bge-small-zh` / `text2vec`）；門檻以下 = unknown | 不執行動作、不下結論 |
-| M4 | Action Router ★ | 安全閘門：查白名單、決定 action、強制降級 | 純規則表（JSON / dict），無 LLM 參與決策 | **不接付款 / 退款 / 機台維修** |
-| M5 | TTS | 把固定指引語句轉語音播放 | 邊緣 `piper`（繁中）或雲端 TTS；PoC 可先用預錄音檔 | 不生成自由台詞（只播固定句庫） |
-| M6 | Page Switch | 切 iPrintOS 測試頁（手機列印 / 證件 / 掃描教學頁） | PoC = 切換本地 mock 頁面（URL/route 事件） | 不操作正式機台 UI |
-| M7 | Remote Escalation | 產生人工升級事件並送出 | Webhook / LINE Notify；含完整現場快照欄位 | 不替人工回覆、不關單 |
-| M8 | Event Log | 記錄全鏈路供 benchmark 與稽核 | SQLite（PoC）→ 後續換 D1 / Postgres | — |
-| M9 | Orchestrator | 串接 M1–M8 的 WebSocket 服務 + 狀態機 | FastAPI + websockets | — |
+| M0 | Presence Trigger | 收店內監視系統「有人進入」訊號 → 觸發問候 | 優先 ONVIF/HTTP webhook；備援 IO 乾接點；最後備援拉 RTSP 自判 | 不存畫面、不辨識人臉 |
+| M1 | VAD 收音窗 | 問候後開 5~10s 收音，切句、去背景噪音 | `silero-vad` / `webrtcvad` + 指向性 USB 麥；最短語音長度防誤觸發 | 不做喚醒詞 |
+| M2 | ASR Adapter | 語音→文字（中/英自動偵測），輸出 text/lang/conf/latency；可插拔本地/雲端 | `faster-whisper`（本地 small/medium）；雲端 adapter 為預算備援 | 不做語意判斷 |
+| M3 | Intent Classifier | 文字→7 類意圖之一或 `unknown` | L1 中英關鍵詞 + L2 多語句向量（`bge-m3` / multilingual）；門檻以下=unknown | 不執行動作、不下結論 |
+| M4 | Router ★ | 安全閘門：查問答庫白名單 → 回 guidance_id 或 fallback | 純規則表（讀 `intents.json` + `guidance` 庫），無 LLM 決策 | **不碰金流/機台/人工** |
+| M5 | TTS | 播問候語 + 固定引導語（中/英） | 在地端 `piper`（繁中+英文）；PoC 可先用預錄音檔 | 不自由生成台詞（只播固定句庫） |
+| M8 | Event Log | 記錄全鏈路供 benchmark 與稽核 | SQLite（本地）；**不含音檔** | — |
+| M9 | Orchestrator | 串接 M0→M1→M2→M3→M4→M5 的狀態機服務 | FastAPI + WebSocket / 本地行程 | — |
+
+> 對比 v0.1：**移除 M6 Page Switch**（不切畫面）、**移除 M7 Remote Escalation**（不轉人工）。**新增 M0 Presence Trigger**（鏡頭觸發）。
 
 ---
 
-## 4. Intent Schema（JSON 草案）
+## 4. Intent Schema（JSON 草案 v0.2）
+
+動作模型簡化為：命中 → `play_guidance`（指向引導語庫的 guidance group）；未命中 → `fallback_no_data`。**已移除 `needs_human` 與所有升級動作。**
 
 ```json
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
+  "lang": ["zh-TW", "en"],
   "intents": [
     {
       "id": "print_mobile",
       "desc": "手機 / 雲端檔案列印",
-      "examples": ["我要印手機裡的檔案", "LINE 的檔案怎麼印", "手機可以列印嗎", "我要傳檔案來印"],
-      "keywords": ["手機", "LINE", "傳檔", "上傳", "雲端", "照片印"],
-      "action": "show_page_mobile_print",
-      "needs_human": false
+      "keywords_zh": ["手機", "LINE", "傳檔", "上傳", "雲端", "照片印", "QR", "掃碼"],
+      "keywords_en": ["phone", "upload", "file", "qr", "print from phone"],
+      "action": "play_guidance",
+      "guidance_group": "print_mobile"
     },
     {
       "id": "copy_id",
-      "desc": "身分證 / 證件影印",
-      "examples": ["我要印身分證", "證件正反面怎麼印", "健保卡可以印嗎", "雙面證件影印"],
-      "keywords": ["身分證", "證件", "健保卡", "正反面", "雙面印"],
-      "action": "show_page_id_copy",
-      "needs_human": false
+      "desc": "身分證 / 證件影印（走 Copy via FTP 流程）",
+      "keywords_zh": ["身分證", "證件", "健保卡", "駕照", "正反面", "雙面"],
+      "keywords_en": ["id card", "id copy", "both sides", "passport"],
+      "action": "play_guidance",
+      "guidance_group": "copy_id"
     },
     {
       "id": "scan",
       "desc": "掃描到 Email / USB",
-      "examples": ["我要掃描到信箱", "我要掃描文件", "可以掃到 USB 嗎", "掃描怎麼用"],
-      "keywords": ["掃描", "掃瞄", "信箱", "email", "USB", "隨身碟"],
-      "action": "show_page_scan",
-      "needs_human": false
+      "keywords_zh": ["掃描", "掃瞄", "信箱", "email", "USB", "隨身碟"],
+      "keywords_en": ["scan", "email", "usb", "scan to"],
+      "action": "play_guidance",
+      "guidance_group": "scan"
     },
     {
       "id": "payment",
-      "desc": "付款問題（操作層級，不含退款）",
-      "examples": ["怎麼付款", "我付款了沒出紙", "可以用悠遊卡嗎", "投幣在哪裡"],
-      "keywords": ["付款", "付錢", "投幣", "悠遊卡", "扣款", "沒出紙"],
-      "action": "show_page_payment_help",
-      "needs_human": false,
-      "note": "若同時偵測到『扣錢/退款/賠』等字 → 由 Router 升級為 complaint"
+      "desc": "付款操作問題（不含退款爭議）",
+      "keywords_zh": ["付款", "付錢", "怎麼付", "悠遊卡", "Line Pay", "掃碼付", "沒出紙"],
+      "keywords_en": ["pay", "payment", "how to pay", "no print after pay"],
+      "action": "play_guidance",
+      "guidance_group": "payment"
     },
     {
       "id": "machine_error",
-      "desc": "機台故障（卡紙 / 缺紙 / 印壞）",
-      "examples": ["卡紙了", "沒紙了", "印出來是空白的", "機器當機了"],
-      "keywords": ["卡紙", "沒紙", "缺紙", "印壞", "空白", "當機", "壞掉"],
-      "action": "notify_store_owner",
-      "needs_human": true
+      "desc": "機台狀況（卡紙/缺紙/印壞）— 只給固定指引與店家聯絡資訊",
+      "keywords_zh": ["卡紙", "沒紙", "缺紙", "印壞", "空白", "當機", "壞掉"],
+      "keywords_en": ["jam", "paper jam", "out of paper", "blank", "broken"],
+      "action": "play_guidance",
+      "guidance_group": "machine_error"
     },
     {
       "id": "human_help",
-      "desc": "主動找人工",
-      "examples": ["我要找人", "可以幫我嗎", "有沒有人", "請問怎麼用"],
-      "keywords": ["找人", "幫我", "有人嗎", "客服", "怎麼用"],
-      "action": "escalate_human",
-      "needs_human": true
+      "desc": "想找人 — v1 不轉接，提供店家聯絡方式（靜態資訊）",
+      "keywords_zh": ["找人", "幫我", "有人嗎", "客服", "聯絡"],
+      "keywords_en": ["help", "someone", "contact", "support"],
+      "action": "play_guidance",
+      "guidance_group": "human_help"
     },
     {
       "id": "complaint",
-      "desc": "客訴 / 抱怨 / 涉及金錢爭議",
-      "examples": ["我被扣錢", "我要退款", "這台不能用", "我要客訴"],
-      "keywords": ["扣錢", "退款", "退費", "賠", "客訴", "投訴", "亂扣"],
-      "action": "escalate_human_priority",
-      "needs_human": true
+      "desc": "客訴/抱怨 — v1 不處理爭議，僅給固定致歉 + 店家聯絡方式",
+      "keywords_zh": ["扣錢", "退款", "退費", "賠", "客訴", "投訴", "亂扣"],
+      "keywords_en": ["refund", "overcharge", "complaint", "money back"],
+      "action": "play_guidance",
+      "guidance_group": "complaint"
     },
     {
       "id": "unknown",
-      "desc": "系統保留：低信心 / 無法分類 / 雜訊",
-      "examples": [],
-      "keywords": [],
-      "action": "ask_repeat_then_escalate",
-      "needs_human": false,
-      "note": "連續 2 次 unknown → 自動降級 human_help"
+      "desc": "系統保留：低信心/無法分類/雜訊",
+      "action": "fallback_no_data",
+      "note": "連續 2 次 unknown → 播『建議您撥打店家電話』後結束"
     }
   ],
   "routing": {
     "min_confidence": 0.55,
-    "below_confidence_action": "ask_repeat_then_escalate",
-    "money_dispute_keywords": ["退款", "退費", "扣錢", "賠", "亂扣"],
-    "money_dispute_override": "complaint"
+    "below_confidence_action": "fallback_no_data",
+    "fallback_no_data_tts": {
+      "zh": "抱歉，這個問題我這邊沒有資料，沒辦法幫您處理。",
+      "en": "Sorry, I don't have information about that, so I can't help with it."
+    }
   }
 }
 ```
 
-> 註：原始需求列 7 類，這裡額外加 `unknown` 作為**系統保留意圖**，是誤觸發控制與安全降級的關鍵，不算對外功能。
+> 註：`machine_error / human_help / complaint` 在 v1 **不轉人工**，只播固定引導（含店家聯絡電話這類靜態資訊）。給不給聯絡電話是一個待你確認的小決定（見 §10 假設）。
 
 ---
 
-## 5. 事件流程範例 A：客人說「我要印手機檔案」
+## 5. 事件流程範例 A：客人進門問「我要印手機檔案」
 
 ```
-1. VAD 偵測開口 → 錄到 1.4s 語音 chunk → WS 上行
-2. ASR(faster-whisper) → text="我要印手機裡的檔案"  conf=0.92  latency=380ms
-3. Intent Classifier:
-     L1 關鍵詞命中 "手機" → candidate=print_mobile
-     L2 向量相似度=0.88 (> 0.55) → intent=print_mobile  score=0.88
-4. Action Router:
-     查白名單 print_mobile → action="show_page_mobile_print", needs_human=false → 允許
-5. 並行執行:
-     [Page Switch] 切到 mock 頁 /demo/mobile-print
-     [TTS] 播 "好的，請依畫面用手機掃 QR Code 上傳檔案"
-6. Event Log 寫入:
-     {ts, store_id, kiosk_id, text, intent=print_mobile, score=0.88,
-      action=show_page_mobile_print, asr_latency_ms=380, e2e_latency_ms=720,
-      result=ok, escalated=false}
-7. 結束（無人工介入）
+1. [M0] 監視系統送「有人進入」訊號 → edge box 收到
+2. [M5] 播問候「您好，需要幫忙嗎?」(中) / 偵測到後續英文則切英文問候
+3. [M1] 開 8s 收音窗 → 客人說「我要印手機裡的檔案」→ 切句
+4. [M2] faster-whisper → text="我要印手機裡的檔案" lang=zh conf=0.92 latency=380ms
+5. [M3] L1 命中「手機」→ L2 相似度 0.88 (>0.55) → intent=print_mobile
+6. [M4] 查白名單 print_mobile → action=play_guidance, group="print_mobile"
+        → 選該 group 的入口引導句 PM-01
+7. [M5] 播 PM-01「好的，請拿手機掃描機台上的 QR Code，就能上傳檔案列印。」
+8. [M8] 寫入 {ts, store_id, kiosk_id, text, intent=print_mobile, score=0.88,
+        guidance_id=PM-01, asr_latency_ms=380, e2e_latency_ms=720, result=ok}
+        ★不寫音檔★
+9. 結束
 ```
 
-端到端目標：**≤ 1s（理想 ≤ 500ms 進入 intent）**。
+端到端目標：**問候後客人講完 ≤ 1s 出聲引導（理想 ≤ 500ms 進入 intent）**。
 
 ---
 
-## 6. 事件流程範例 B：客人說「付款了沒出紙」
+## 6. 事件流程範例 B：客人說「付款了沒出紙」（v1 純 FAQ，不讀後端）
 
 ```
-1. VAD → 語音 chunk → WS 上行
-2. ASR → text="我付款了可是沒有出紙"  conf=0.85
-3. Intent Classifier:
-     L1 命中 "付款"+"沒出紙" → candidate=payment  score=0.81
-4. Action Router（★安全降級判斷★）:
-     a. payment.needs_human=false，但
-     b. 偵測語句涉及「已付款但無產出」= 可能金錢損失情境
-     c. routing 規則：payment + 出紙失敗語境 → 不自行判定，動作 = 同時
-        - action="show_page_payment_help"（先給自助排查指引）
-        - 並開 [Remote Escalation] 低優先升級單（讓店主可追）
-     ❗不做：不退款、不承諾賠償、不判定機台故障原因
-5. [TTS] 播 "我幫你通知店家確認這筆交易，請稍候；同時你可依畫面檢查出紙匣"
-6. [Remote Escalation] 送出升級事件（見下方欄位）
-7. Event Log 寫入完整鏈路，escalated=true, priority=low
+1~4. 同上：收音 → ASR → text="我付款了可是沒有出紙"
+5. [M3] L1 命中「付款」「沒出紙」→ intent=payment  score=0.81
+6. [M4] 查白名單 payment → action=play_guidance, group="payment"
+        → 命中子題 PAY-07「付款後沒出紙」
+   ❗v1 不讀 iPrintOS reconciliation（8-a），所以不查真實出紙狀態、不判斷、不退款
+7. [M5] 播 PAY-07（固定引導）:
+        「如果您已完成付款但沒有出紙，請先確認出紙匣，並稍等約 30 秒；
+          若仍未出紙，請撥打機台上的店家服務電話，由人員為您確認這筆交易。」
+8. [M8] 寫入完整鏈路 (guidance_id=PAY-07)
+9. 結束
 ```
 
-**人工升級事件必含欄位（需求硬性要求）**
-
-```json
-{
-  "event_id": "evt_20260622_1530_kiosk07",
-  "store_id": "taipei_zhongshan_01",
-  "kiosk_id": "kiosk07",
-  "ts": "2026-06-22T15:30:12+08:00",
-  "asr_text": "我付款了可是沒有出紙",
-  "intent": "payment",
-  "intent_score": 0.81,
-  "screen_state": "page=payment, last_job=printing, paper_out=unknown",
-  "action_taken": "show_page_payment_help + escalate_low",
-  "priority": "low",
-  "needs_human": true
-}
-```
+> 對比 v0.1：不再開升級單、不再寫真實 `screen_state`。涉及金錢爭議（退款/被扣錢）→ 落到 `complaint` group，只播固定致歉 + 店家聯絡方式，**不承諾任何賠償**。
+> （若日後 8 改為 (b) 唯讀串接，這裡才會插入「查 reconciliation 真實出紙狀態」的步驟——列為 v2。）
 
 ---
 
 ## 7. ASR 測試計畫（Benchmark 方法）
 
-**比較組**：`faster-whisper-small` / `faster-whisper-medium` / `Nemotron(對照)`
-（Nemotron 系列對繁中台灣口音支援待驗證，列為對照而非主力。）
-
-**評估指標**
+**第一版只跑 `faster-whisper`**（small vs medium 二選一）。Nemotron 對照延後（6-c）。
 
 | 指標 | 定義 | PoC 目標 |
 |---|---|---|
-| CER | 字元錯誤率（繁中用 CER 不用 WER） | medium ≤ 12%（乾淨）/ ≤ 20%（噪音） |
-| Intent Hit Rate | 100 句進正確 intent 的比例 | **≥ 90%** |
-| ASR Latency | 語音結束→文字 | ≤ 500ms（GPU medium）|
+| CER | 字元錯誤率（繁中用 CER） | medium ≤ 12%（乾淨）/ ≤ 20%（噪音） |
+| EN WER | 英文詞錯誤率 | ≤ 20%（短句） |
+| Intent Hit Rate | 100 句測試語料進對 intent 的比例 | **≥ 90%** |
+| ASR Latency | 語音結束→文字 | ≤ 500ms |
 | E2E Latency | 語音結束→TTS 開始 | ≤ 1s |
-| False Trigger Rate | 無人/背景音被當成指令 | 量化並設門檻，越低越好 |
+| False Trigger | 收音窗內無有效指令被誤判 | 量化並設門檻 |
 
-**測試矩陣**：｛3 模型｝×｛乾淨 / 店內噪音（影印機運轉、人聲、冷氣）｝×｛100 句語料｝。
-**流程**：固定語料 → 三模型各跑一輪 → 寫入 Event Log → 用同一支評分腳本算 CER/Intent Hit/Latency → 出對照表，選定 PoC 主力引擎。
+**測試矩陣**：｛small, medium｝×｛乾淨 / 店內噪音（影印機運轉、人聲、冷氣）｝×｛100 句測試語料（中+英）｝→ 選定 PoC 主力模型。
 
 ---
 
-## 8. 100 句測試語料分類方式
+## 8. 兩份語料（務必分清楚）
 
-- **每類 ~13–15 句**，7 類共 ~100 句，覆蓋：標準說法 / 口語省略 / 台灣慣用詞 / 同義替換。
-- 標註欄位：`text, gold_intent, style(標準|口語|台味), noise(clean|noisy), source(自錄|TTS合成)`。
-- 三段難度：
-  - **Easy**：含明確關鍵詞（「我要印身分證」）
-  - **Medium**：口語/省略（「那個證件兩面的怎用」）
-  - **Hard**：含干擾或情緒（「啊這個我剛剛付了錢欸怎麼沒東西」）
-- **誤觸發專組（額外 ~20 句，不計入 100）**：純背景噪音、旁人閒聊、與影印無關的話 → gold=`unknown`，驗證 false trigger 控制。
-- 儲存格式：`data/voice_poc/corpus.jsonl`，方便評分腳本直接讀。
+> **這是兩個不同的東西，別混：**
+
+1. **100 句測試語料**（`corpus.jsonl`）：模擬**客人會講的話**，用來驗證辨識率與 intent 命中率。欄位 `text, gold_intent, lang(zh|en), style(標準|口語|台味), noise(clean|noisy)`。含 7 類各 ~13 句 + 誤觸發專組（gold=unknown）。
+2. **100 句引導語庫**（`iPrintOS_語音引導語庫.md` → 之後轉 `guidance.jsonl`）：**系統要播給客人的固定回答**。依 7 意圖分群，每句有 `guidance_id, intent, trigger 範例, 中文引導(TTS), English guidance`。**本輪已產出**。
 
 ---
 
@@ -259,98 +249,95 @@
 
 | Day | 產出 | 驗收 |
 |---|---|---|
-| D1 | repo 骨架 + intent schema JSON + 100 句語料初稿 + Event Log（SQLite）schema | `pytest` 跑通 schema 載入；語料可讀 |
-| D2 | ASR Adapter（faster-whisper）+ 離線評分腳本（CER/latency） | 餵 wav → 出文字 + 指標 |
-| D3 | Intent Classifier（L1 關鍵詞 + L2 向量）+ 對 100 句出 Hit Rate | Intent Hit Rate 報表 |
-| D4 | Action Router（白名單表 + 安全降級規則）+ 單元測試（含 complaint/money override） | 紅線案例全綠（不可觸發交易） |
-| D5 | Orchestrator（FastAPI + WebSocket）串 VAD→ASR→Intent→Router；TTS 先用預錄音檔 | 麥克風講話 → 切 mock 頁 + 播音 |
-| D6 | Remote Escalation（Webhook/LINE）+ mock iPrintOS 測試頁（手機列印/證件/掃描）| 升級事件含完整欄位送達 |
-| D7 | 噪音情境測試 + Nemotron 對照跑分 + 出 benchmark 報表 + Demo 腳本 | 100 句 ≥ 90% intent、E2E ≤ 1s 抽測 |
+| D1 | repo 骨架 + `intents.json` + `guidance.jsonl`（由引導語庫轉）+ Event Log schema | schema/guidance 載入測試通過 |
+| D2 | ASR Adapter（faster-whisper, 中英）+ 離線評分腳本（CER/WER/latency） | 餵 wav → 出文字+指標 |
+| D3 | Intent Classifier（L1 中英關鍵詞 + L2 多語向量）+ 100 句測試語料 + Hit Rate 報表 | Intent Hit Rate ≥ 90% |
+| D4 | Router（白名單 + fallback_no_data）+ 安全測試（不可碰金流/機台/人工/後端） | 紅線案例全綠 |
+| D5 | Orchestrator 狀態機：Presence(先用假訊號/按鍵模擬)→問候→VAD→ASR→Intent→Router→TTS | 講一句 → 正確播引導 |
+| D6 | M0 真接監視訊號（ONVIF/HTTP/IO 擇一）+ TTS piper 中英固定句庫 | 有人進入 → 自動問候 → 對答 |
+| D7 | 噪音情境測試 + benchmark 報表 + Demo 腳本 + 規格建議（edge box） | 100 句 ≥ 90%、E2E ≤ 1s 抽測 |
 
-**砍裁原則**：D1–D6 任何延遲，先砍 Nemotron 對照（移到後續）、TTS 先用預錄音檔，保住「能現場講一句→正確切頁/升級」這條主幹。
+**砍裁原則**：M0 真接訊號（D6）若卡關，先用「按鍵/假訊號」模擬觸發，保住「有人→問候→講一句→正確引導」主幹；TTS 先用預錄音檔。
 
 ---
 
 ## 10. 風險清單與解法
 
-| # | 風險 | 影響 | 解法 |
-|---|---|---|---|
-| R1 | Nemotron 繁中台灣口音支援弱 | 主力選錯、CER 高 | 主力用 faster-whisper，Nemotron 僅對照；D2 早驗證 |
-| R2 | 店內噪音（影印機/人聲）誤觸發 | 客人沒講話卻動作 | VAD 能量門檻 + 最短語音長度 + unknown 降級 + false trigger 專組測試 |
-| R3 | 邊緣機算力不足達不到 500ms | 體驗差 | PoC 先在 GPU 開發機 / 每店一台小推論盒；CPU 退而求其次用 small + 串流 |
-| R4 | LLM/模型越權操作交易 | **致命合規風險** | 架構紅線：只走 Action Router 白名單，模型不持有任何執行 API；D4 紅線測試 |
-| R5 | 付款爭議被自動判定 | 賠償/客訴風險 | payment 涉錢語境一律不下結論，走升級 + 自助指引雙軌 |
-| R6 | 客人隱私（錄音含個資） | 法遵風險 | PoC 預設只存文字+指標，不存原始音檔（或存後限時刪）；現場告示告知 |
-| R7 | 7 類涵蓋不足 | 大量 unknown | 連續 2 次 unknown 自動轉人工；蒐集 unknown 語料迭代 |
-| R8 | TTS 自由生成不當內容 | 亂承諾 | 只播固定句庫，不讓模型自由生成台詞 |
+| # | 風險 | 解法 |
+|---|---|---|
+| R1 | 監視系統不支援 ONVIF/RTSP/IO，訊號接不出來 | D6 前先驗證；接不出來就退用「機台旁按鍵」觸發；最後備援拉 RTSP 自判 |
+| R2 | 收音窗內店內噪音誤辨 | 指向性 USB 麥 + VAD 能量門檻 + 最短語音長度 + 低信心走 fallback |
+| R3 | 落地主機算力不足達不到 500ms | 用 faster-whisper small + 收窗式（非串流）；規格不足時 ASR 改雲端備援(5) |
+| R4 | 模型越權碰金流/機台 | 架構上**根本不連** iPrintOS 後端/金流/Driver；D4 紅線測試 |
+| R5 | 客人講真問題卻被「無資料」擋掉不滿 | 引導語庫盡量覆蓋常見問題（100 句）；machine_error/complaint 給店家聯絡方式 |
+| R6 | 連續 unknown 造成鬼打牆 | 連 2 次 unknown → 播「建議撥打店家電話」後結束收音窗 |
+| R7 | TTS 自由生成不當內容 | 只播固定句庫，模型不生成台詞 |
+| R8 | 鏡頭/音訊隱私疑慮 | 影像只取布林訊號不存 frame；音訊只存文字不存音檔；現場貼告示 |
+
+**待你確認的假設（不阻擋本輪）**：
+- A1：`machine_error / human_help / complaint` 的引導語中**可以提供店家服務電話**（靜態資訊，非轉接）。若不要連電話都給，引導語會改成更保守的版本。
+- A2：每店一個機台 / 進門者即客戶，所以「有人進入」≈「該問候」。若一店多機台，M0 需細分熱區（v2）。
 
 ---
 
 ## 11. 第一版「不做」事項（明確劃線）
 
-- ❌ 不接正式付款、不處理金流
-- ❌ 不決定退款 / 退費 / 賠償
-- ❌ 不承諾任何補償
-- ❌ 不改動正式機台流程、不操作正式機台 UI
-- ❌ 不讓 LLM 自由操作機台或自由生成回覆台詞
-- ❌ 不讓模型判斷維修結論（卡紙原因、是否故障由人工/後端規則定）
-- ❌ 不做喚醒詞、聲紋辨識、多輪自由對話、閒聊
-- ❌ 不串接真實 iPrintOS 後端交易 API（PoC 用 mock）
+- ❌ 不切任何畫面（不推客人手機 session、不設輔助螢幕）
+- ❌ 不轉人工、不開升級單（無資料就停止並告知）
+- ❌ 不連 iPrintOS 後端（不讀付款/出紙/機台狀態）
+- ❌ 不接金流、不決定退款、不承諾賠償
+- ❌ 不操作機台、不碰 Fuji Driver / SNMP
+- ❌ 不讓 LLM 自由操作或自由生成台詞（只播固定句庫）
+- ❌ 不存原始音檔、不做人臉辨識、不存監視 frame
+- ❌ 不做 Nemotron 對照（延後）、不做台語、不做多輪自由對話
 
 ---
 
 ## 12. 下一步若要實作：先建立的檔案與 API
 
-**建議目錄結構（新獨立模組，與既有 benchmark 隔離）**
-
 ```
 iprintos_voice/
 ├── README.md
-├── requirements.txt              # faster-whisper, webrtcvad/silero, fastapi, websockets, sentence-transformers
+├── requirements.txt              # faster-whisper, silero-vad, fastapi, sentence-transformers, piper-tts, onvif-zeep(選)
 ├── config/
-│   └── intents.json              # §4 intent schema（單一事實來源）
-├── data/
-│   └── voice_poc/
-│       ├── corpus.jsonl          # §8 100 句語料 + 誤觸發專組
-│       └── audio/                # 測試 wav（git-ignored）
+│   ├── intents.json              # §4 意圖 schema（白名單單一事實來源）
+│   └── guidance.jsonl            # 由 iPrintOS_語音引導語庫.md 轉出（100 句）
+├── data/voice_poc/
+│   ├── corpus.jsonl              # §8 100 句『測試語料』（客人會講的話）
+│   └── audio/                    # 測試 wav（git-ignored）
 ├── src/iprintos_voice/
-│   ├── vad.py                    # M1 切句 + 噪音門檻
-│   ├── asr/
-│   │   ├── base.py               # ASRAdapter 介面: transcribe(audio)->{text,conf,latency}
-│   │   ├── whisper_adapter.py    # 主力
-│   │   └── nemotron_adapter.py   # 對照
-│   ├── intent.py                 # M3 L1+L2 分類器
-│   ├── router.py                 # M4 ★安全閘門★ 白名單 + 降級規則
-│   ├── tts.py                    # M5 固定句庫播放
-│   ├── escalation.py             # M7 升級事件
-│   ├── event_log.py              # M8 SQLite
-│   └── server.py                 # M9 FastAPI + WebSocket 狀態機
-├── mock_iprintos/                # M6 假測試頁: mobile-print / id-copy / scan
+│   ├── presence.py               # M0 收監視訊號（ONVIF/HTTP/IO/RTSP）
+│   ├── vad.py                    # M1 收音窗
+│   ├── asr/{base,whisper_adapter,cloud_adapter}.py   # M2 可插拔
+│   ├── intent.py                 # M3 中英 L1+L2
+│   ├── router.py                 # M4 ★白名單 + fallback_no_data★
+│   ├── tts.py                    # M5 piper 固定句庫
+│   ├── event_log.py              # M8 SQLite（不存音檔）
+│   └── server.py                 # M9 狀態機
 └── tests/
-    ├── test_intent.py            # 100 句 Hit Rate
-    ├── test_router_safety.py     # 紅線: 任何輸入都不可觸發交易/退款
-    └── benchmark_asr.py          # §7 三模型對照
+    ├── test_intent.py            # 100 句測試語料 Hit Rate
+    ├── test_router_safety.py     # 紅線：任何輸入都不可碰金流/機台/人工/後端
+    └── benchmark_asr.py          # §7 small vs medium
 ```
 
-**第一版 API（PoC）**
+**第一版 API（本地）**
 
 | 方法 | 路徑 | 用途 |
 |---|---|---|
-| `WS` | `/ws/audio?store_id=&kiosk_id=` | 上行音訊 chunk；下行 `{action, tts_text, page}` |
-| `POST` | `/v1/intent` | 文字→意圖（離線評分/測試用）`{text}→{intent,score}` |
-| `POST` | `/v1/route` | 意圖→動作（測 Router 白名單）`{intent,context}→{action,needs_human}` |
-| `POST` | `/v1/escalate` | 產生人工升級事件（§6 欄位） |
-| `GET` | `/v1/events` | 查 Event Log（稽核/benchmark） |
+| `POST` | `/v1/presence` | 監視系統 webhook：`{store_id,kiosk_id,event:"person_in"}` → 觸發問候 |
+| `WS` | `/ws/session?store_id=&kiosk_id=` | 問候後收音窗：上行音訊、下行 `{tts_text, guidance_id}` |
+| `POST` | `/v1/intent` | 文字→意圖（離線測試）`{text}→{intent,score}` |
+| `POST` | `/v1/route` | 意圖→引導（測白名單）`{intent}→{action,guidance_id}` |
+| `GET` | `/v1/events` | 查 Event Log |
 | `GET` | `/healthz` | 健康檢查 |
 
 **最先動工的 3 個檔案（決定成敗）**
-
-1. `config/intents.json` — 唯一事實來源，schema/keywords/白名單/降級規則都在這。
+1. `config/intents.json` + `config/guidance.jsonl` — 白名單與 100 句引導語，唯一事實來源。
 2. `src/iprintos_voice/router.py` — 安全紅線，先寫 `test_router_safety.py` 再寫實作（TDD）。
-3. `tests/benchmark_asr.py` + `data/voice_poc/corpus.jsonl` — 沒有語料與評分，benchmark 與 90% 目標無從談起。
+3. `tests/benchmark_asr.py` + `data/voice_poc/corpus.jsonl` — 沒語料與評分，90% 目標無從驗證。
 
 ---
 
 ### 給工程師的一句話
 
-> 先把「**講一句話 → VAD 切句 → ASR → intent → Router 白名單 → 切 mock 頁 / 開升級單 → 寫 log**」這條最短主幹打通（D5 前），再談模型對照與噪音優化。**Router 的紅線測試先寫**，這是整個 PoC 唯一不能妥協的地方。
+> 先把「**假裝有人進入 → 問候 → 講一句 → VAD → ASR → intent → Router 白名單 → 命中播引導 / 未命中播『無資料』 → 寫 log**」這條最短主幹打通（D5 前），D6 才接真實監視訊號。**Router 紅線測試先寫**：這套東西的唯一鐵則是——它連碰錢和機台的能力都沒有。
