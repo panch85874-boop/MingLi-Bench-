@@ -156,7 +156,7 @@
 | HLP-04 | 現場都沒有店員嗎 | 對，這是無人門市，全部自助操作；需要時可參考線上常見問題頁面，我也能引導您。 | Yes, it's fully self-service; check the online FAQ anytime, and I can help guide you. |
 | HLP-05 | 我不會用，可以教我嗎 | 沒問題，請告訴我您要列印、影印還是掃描，我一步步引導您。 | Of course—tell me if you want to print, copy, or scan, and I'll guide you step by step. |
 | HLP-06 | 我遇到緊急狀況 | 若是火災、有人受傷等緊急狀況，請立即撥打 119 或 110。 | For a fire or injury emergency, call 119 or 110 immediately. |
-| HLP-07 | 廁所在哪 / 其他問題 | 這部分我這邊沒有資料，建議您參考門市告示或線上常見問題頁面。 | I don't have that info—please check the in-store notices or our online FAQ. |
+| HLP-07 | 廁所在哪 / 洗手 / 其他問題 | 不好意思，本店是無人自助門市，沒有提供廁所與洗手設備；其他問題請參考門市現場告示。 | Sorry, this unmanned store has no restroom or handwashing facilities; for other questions, please see the in-store notices. |
 | HLP-08 | 我已經試很多次了 | 不好意思造成不便，您可以改用旁邊另一台機器，或參考線上常見問題頁面的詳細步驟。 | Sorry for the trouble—try one of the other machines, or see the detailed steps in our online FAQ. |
 
 ---
