@@ -3,7 +3,8 @@
 > 用途：語音助理**命中意圖後要播給客人的固定引導語**（封閉問答庫的答案側）。
 > 對應規劃文件 `iPrintOS_語音PoC_工程規劃.md` v0.2，§8 第 2 份語料。
 > 原則：**每句簡短（口語、1~2 句、適合 TTS）**；模型不自由生成，只從本庫選。
-> 待確認假設：`〔店家服務電話〕` 為現場張貼的店家服務電話（靜態資訊，非真人轉接）。
+> 定位：簡易問答型語音助理（封閉領域，類似 AI 客服但只播固定答案、不自由閒聊）。
+> 電話佔位：`〔店家行動電話〕` 為店家提供的行動電話號碼（靜態資訊，非真人轉接），由各店填入。
 > 實作時轉成 `config/guidance.jsonl`，欄位：`guidance_id, intent, triggers[], tts_zh, tts_en`。
 
 ---
@@ -143,7 +144,7 @@
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
 | HLP-01 | 有沒有人可以幫我 | 這是無人自助門市，需要真人協助請撥打機台上的店家服務電話。 | This is a self-service store; for staff help, please call the store number on the machine. |
-| HLP-02 | 店家電話幾號 | 店家服務電話貼在機台上，您也可以記下〔店家服務電話〕。 | The store number is posted on the machine: 〔店家服務電話〕. |
+| HLP-02 | 店家電話幾號 | 店家服務電話貼在機台上，您也可以記下〔店家行動電話〕。 | The store number is posted on the machine: 〔店家行動電話〕. |
 | HLP-03 | 你們幾點營業 | 營業時間請參考門口或機台上的告示。 | Please see the opening hours posted at the door or on the machine. |
 | HLP-04 | 現場都沒有店員嗎 | 這是無人門市，現場以自助操作為主，需要時可電話聯絡店家。 | Yes, it's unmanned—everything is self-service; call the store if you need help. |
 | HLP-05 | 我不會用，可以教我嗎 | 沒問題，請告訴我您要列印、影印還是掃描，我一步步引導您。 | Of course—tell me if you want to print, copy, or scan, and I'll guide you step by step. |
