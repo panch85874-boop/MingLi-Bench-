@@ -69,7 +69,7 @@
 | PM-14 | 印好的紙在哪裡拿 | 付款完成後紙張會從出紙匣送出，請到出紙口拿取。 | Collect your prints from the output tray after payment. |
 | PM-15 | 可以一次印很多檔案嗎 | 可以，上傳頁面能加入多個檔案，會一起計算份數與價格。 | Yes—add multiple files; they're priced together. |
 | PM-16 | Word 排版跑掉了 | Word 轉檔有時會位移，建議先轉成 PDF 再上傳最準確。 | Word layout can shift; convert to PDF first. |
-| PM-17 | 手機沒網路怎麼辦 | 請開啟手機行動網路，或連線店內提供的網路後再掃 QR Code。 | Turn on mobile data or join the in-store network, then scan. |
+| PM-17 | 手機沒網路怎麼辦 | 掃機台 QR Code 上傳檔案時會自動連線傳檔，不需另外上網；其他用途請用手機行動網路。 | Scanning the QR auto-connects just to send your file—no internet needed; use mobile data for anything else. |
 | PM-18 | 上傳到一半想取消 | 直接關閉手機頁面即可取消，未付款不會列印也不會收費。 | Just close the page to cancel; nothing prints or charges before payment. |
 | PM-19 | 可以縮放或滿版嗎 | 在手機設定可選縮放或滿版列印，預覽會即時更新。 | Choose scaling or fit-to-page; the preview updates instantly. |
 | PM-20 | 列印怎麼算錢 | 系統會依頁數、黑白或彩色、紙張大小自動計價，付款前會顯示金額。 | Price is by pages, color, and size; shown before payment. |
@@ -166,15 +166,15 @@
 | FN-03 | 打洞 | 是否提供打洞以機台設定為準，請看畫面選項。 | Hole-punching depends on the machine; check on screen. |
 | FN-04 | 印海報 / 大張 | 可選 A3 大尺寸列印，依畫面設定。 | Choose A3 for large prints on screen. |
 | FN-05 | 印名片 | 可上傳名片檔列印，建議用 PDF 並設定尺寸。 | Upload a card file as PDF and set the size. |
-| FN-06 | 護貝 | 不好意思，是否提供護貝請參考現場告示。〔需店家確認〕 | Sorry—please check the in-store notice for lamination. |
-| FN-07 | 裁切 | 是否提供裁切請參考現場告示。〔需店家確認〕 | Cutting service: please check the in-store notice. |
+| FN-06 | 護貝 | 不好意思，本店目前不提供護貝服務。 | Sorry—we don't offer lamination. |
+| FN-07 | 裁切 | 不好意思，本店目前不提供裁切服務。 | Sorry—we don't offer cutting. |
 | FN-08 | 合併多個 PDF | 上傳頁面可加入多個檔案一起列印。 | Add multiple files on the upload page to print together. |
 | FN-09 | 加浮水印 | 系統不提供浮水印，建議在原檔處理好再上傳。 | No watermark feature—add it to your file first. |
 | FN-10 | 印黑白省錢 | 在設定選黑白即可，費用較彩色低。 | Choose black-and-white to save; it's cheaper than color. |
 | FN-11 | 一頁印多頁 / 多合一 | 部分機型支援多合一，請看畫面設定。 | Some machines support N-up; check on-screen settings. |
 | FN-12 | 自動雙面 | 在設定選雙面列印即可。 | Choose double-sided in settings. |
 | FN-13 | 印信封 | 一般機台不支援信封，建議改印標籤再貼上。 | Envelopes aren't supported; print a label instead. |
-| FN-14 | 印貼紙 / 標籤紙 | 是否提供特殊紙材請參考現場告示。〔需店家確認〕 | Special media: please check the in-store notice. |
+| FN-14 | 印貼紙 / 標籤紙 | 不好意思，本店目前不提供特殊紙材。 | Sorry—we don't offer special media. |
 | FN-15 | 縮放到指定比例 | 在設定輸入縮放比例，預覽會更新。 | Enter a scaling ratio in settings; the preview updates. |
 | FN-16 | 邊界 / 滿版列印 | 在設定選滿版或保留邊界。 | Choose full-bleed or margins in settings. |
 
@@ -185,8 +185,8 @@
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
 | SUP-01 | 有 A3 嗎 | 有，列印或影印時在畫面選 A3。 | Yes—choose A3 when printing or copying. |
-| SUP-02 | 有相片紙嗎 | 是否提供相片紙請參考現場告示。〔需店家確認〕 | Photo paper: please check the in-store notice. |
-| SUP-03 | 紙張厚度 / 磅數 | 一般為普通影印紙，特殊磅數請參考現場告示。〔需店家確認〕 | Standard paper; for special weights see the in-store notice. |
+| SUP-02 | 有相片紙嗎 | 不好意思，本店目前不提供相片紙。 | Sorry—we don't offer photo paper. |
+| SUP-03 | 紙張厚度 / 磅數 | 本店使用一般影印紙，目前不提供特殊磅數。 | We use standard paper; no special weights are offered. |
 | SUP-04 | 有彩色嗎 | 有，列印影印都可選彩色，費用較高。 | Yes—color is available; it costs more. |
 | SUP-05 | 紙質不好 | 若對紙質有疑問，可改用旁邊另一台機器試印。 | If unsatisfied, try one of the other machines. |
 | SUP-06 | 可以用我自己的紙嗎 | 不好意思，機台使用內建紙張，無法放自備紙張。 | Sorry—machines use built-in paper; you can't load your own. |
@@ -217,13 +217,13 @@
 | PAY-08 | 我好像被扣兩次 | 不好意思造成困擾；目前現場無法直接處理重複扣款，請先保留交易紀錄，線上退款申請功能即將開放。 | Sorry—double charges can't be handled on-site yet; keep your record, online refunds are coming soon. |
 | PAY-09 | 付款失敗 | 請稍候再試一次，或換一種付款方式；也可以改用旁邊另一台機器。 | Try again or another method; you can also use another machine. |
 | PAY-10 | 付款的 QR 在哪 | 確認預覽後，付款 QR 會顯示在手機或機台畫面上。 | After the preview, the payment QR appears on your phone or screen. |
-| PAY-11 | 有收據或發票嗎 | 電子發票或收據會依畫面顯示，您可以在手機操作頁面查看。 | E-receipts appear on screen; view them on the phone page. |
+| PAY-11 | 有收據或發票嗎 | 不好意思，本店目前不提供發票；付款明細會顯示在畫面與手機操作頁面。 | Sorry—we don't provide invoices; payment details show on screen and the phone page. |
 | PAY-12 | 金額好像不對 | 金額依頁數、彩色與紙張自動計算，付款前畫面會先顯示；有疑問請保留交易紀錄。 | The amount is auto-calculated and shown before payment; keep your record if in doubt. |
 | PAY-13 | 付到一半中斷了 | 未完成付款不會列印也不會扣款，請重新操作一次。 | An incomplete payment won't print or charge; start again. |
 | PAY-14 | 我要退款 | 不好意思，若付款後沒印出來，您可以改用旁邊另一台機器重印，未完成不扣款；線上退款申請即將開放。 | Sorry—if a paid job didn't print, reprint on another machine (no charge); online refunds coming soon. |
 | PAY-15 | 有找零或低消嗎 | 相關規則以畫面與機台設定為準，操作前畫面會顯示金額。 | Change and minimums follow the machine; the amount shows first. |
 | PAY-16 | 付款後多久會印 | 付款成功後通常幾秒內就會開始出紙。 | Printing starts within seconds after payment. |
-| PAY-17 | 可以開統編嗎 | 電子發票可否開統編以付款畫面為準，請依畫面輸入。 | Business numbers depend on the payment screen; enter as shown. |
+| PAY-17 | 可以開統編嗎 | 不好意思，本店目前不提供發票，無法開立統編。 | Sorry—we don't provide invoices, so no business number. |
 | PAY-18 | 有最低消費嗎 | 相關規則以畫面與機台設定為準。 | Minimum-charge rules follow the machine settings. |
 | PAY-19 | 可以分開付嗎 | 一次列印以一筆計費，請依畫面金額付款。 | Each job is one charge; pay the amount shown. |
 | PAY-20 | 付款畫面卡住 | 請稍候重整或重新操作；也可改用旁邊另一台機器。 | Wait and retry, or use one of the other machines. |
@@ -236,16 +236,16 @@
 
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
-| INV-01 | 有發票嗎 | 系統開立電子發票，會依畫面顯示。 | We issue e-invoices, shown on screen. |
-| INV-02 | 我要紙本發票 | 為電子發票，可在手機操作頁面查看，依畫面說明處理。 | It's an e-invoice—view it on the phone page. |
-| INV-03 | 載具怎麼設 | 電子發票可依畫面設定載具或輸入手機條碼。 | Set a carrier or enter your phone barcode on screen. |
-| INV-04 | 統一編號 | 可否輸入統編以付款畫面為準，請依畫面操作。 | Entering a business number depends on the payment screen. |
-| INV-05 | 發票中獎怎麼領 | 電子發票中獎依財政部規定，請依載具或通知處理。 | E-invoice prizes follow government rules via your carrier. |
-| INV-06 | 收據在哪 | 收據或交易明細會依畫面顯示。 | Receipts and details show on screen. |
-| INV-07 | 發票寄到哪 | 電子發票存於載具，可依設定查詢。 | E-invoices are stored on your carrier. |
-| INV-08 | 可以捐發票嗎 | 可否捐贈以畫面選項為準。 | Donation depends on the on-screen options. |
-| INV-09 | 重印發票 | 電子發票可依載具查詢，現場不另印紙本。 | E-invoices are on your carrier; no on-site reprint. |
-| INV-10 | 發票金額不對 | 金額依實際列印計算；有疑問請保留交易紀錄。 | The amount reflects actual printing; keep your record if in doubt. |
+| INV-01 | 有發票嗎 | 不好意思，本店目前不提供發票。 | Sorry—we don't provide invoices at this time. |
+| INV-02 | 我要紙本發票 | 不好意思，本店目前不提供發票。 | Sorry—no invoices are provided. |
+| INV-03 | 載具怎麼設 | 本店目前不提供電子發票，沒有載具設定。 | We don't issue e-invoices, so there's no carrier setup. |
+| INV-04 | 統一編號 | 不好意思，本店目前不提供發票，無法開立統編。 | Sorry—no invoices, so no business number. |
+| INV-05 | 發票中獎怎麼領 | 本店目前不提供發票，故無此項。 | We don't provide invoices, so this doesn't apply. |
+| INV-06 | 收據在哪 | 付款明細會顯示在畫面與手機操作頁面，可自行查看。 | Payment details show on screen and the phone page. |
+| INV-07 | 發票寄到哪 | 不好意思，本店目前不提供發票。 | Sorry—we don't provide invoices. |
+| INV-08 | 可以捐發票嗎 | 不好意思，本店目前不提供發票。 | Sorry—we don't provide invoices. |
+| INV-09 | 重印發票 | 本店目前不提供發票；付款明細可在畫面查看。 | No invoices; payment details show on screen. |
+| INV-10 | 發票金額不對 | 金額依實際列印計算，付款前畫面會顯示；本店不提供發票。 | The amount reflects actual printing and shows before payment; no invoices provided. |
 
 ---
 
@@ -282,16 +282,16 @@
 
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
-| LOC-01 | 幾點營業 | 營業時間請參考門口或機台告示。〔需店家確認〕 | Hours are posted at the door or on the machine. |
-| LOC-02 | 開到幾點 | 請參考門口或機台上的營業時間告示。〔需店家確認〕 | Closing time is posted at the door or machine. |
-| LOC-03 | 假日有開嗎 | 請參考門口告示的營業時間。〔需店家確認〕 | Holiday hours are posted at the door. |
+| LOC-01 | 幾點營業 | 本店 24 小時營業、全年無休。 | We're open 24 hours, every day of the year. |
+| LOC-02 | 開到幾點 | 本店 24 小時營業，全天候開放。 | We're open 24 hours a day. |
+| LOC-03 | 假日有開嗎 | 有，本店全年無休、24 小時營業。 | Yes—open 24 hours, every day, all year. |
 | LOC-04 | 地址在哪 | 地址請參考門口告示或您的地圖定位。〔需店家確認〕 | The address is on the door notice or your map app. |
 | LOC-05 | 怎麼去 / 在哪裡 | 位置請參考您手機的地圖定位。 | Please check your map app for the location. |
-| LOC-06 | 有停車位嗎 | 停車資訊請參考門市現場告示。〔需店家確認〕 | Parking info is on the in-store notice. |
-| LOC-07 | 可以停哪 | 停車請參考周邊路邊或附近停車場，詳情見現場告示。〔需店家確認〕 | Use nearby street or lot parking; see the in-store notice. |
+| LOC-06 | 有停車位嗎 | 不好意思，本店沒有提供停車位。 | Sorry—we don't have parking. |
+| LOC-07 | 可以停哪 | 本店沒有專用停車位，請利用周邊合法停車空間。 | We have no parking; please use nearby legal parking. |
 | LOC-08 | 有廁所嗎 | 不好意思，本店是無人門市，沒有提供廁所與洗手設備。 | Sorry—this unmanned store has no restroom or handwashing. |
 | LOC-09 | 可以洗手嗎 | 不好意思，本店沒有提供洗手設備。 | Sorry—no handwashing facilities here. |
-| LOC-10 | 有 wifi 嗎 | 請使用手機行動網路；店內是否提供網路請參考現場告示。〔需店家確認〕 | Use mobile data; in-store network info is on the notice. |
+| LOC-10 | 有 wifi 嗎 | 店內掃碼連線僅用於傳送檔案到事務機，不提供一般上網；需上網請用手機行動網路。 | The in-store QR connection is only for sending files to the machine, not general internet—use mobile data for browsing. |
 | LOC-11 | 有冷氣嗎 | 環境相關以現場為準。 | Please refer to the on-site environment. |
 | LOC-12 | 有幾台機器 | 本店有三台機器，可任選使用。 | There are three machines; use any of them. |
 | LOC-13 | 哪一台比較好 | 三台功能相同，任選一台即可；某台有狀況可換另一台。 | All three are the same; switch if one has an issue. |
@@ -311,7 +311,7 @@
 |---|---|---|---|
 | HLP-01 | 有沒有人可以幫我 | 這是無人自助門市，我可以直接引導您操作，請告訴我您的需求。 | This is a self-service store—I can guide you; tell me what you need. |
 | HLP-02 | 哪裡有更多說明 | 機台螢幕都有操作指引，我也可以一步步引導您。 | The screen has guidance, and I can walk you through it. |
-| HLP-03 | 你們幾點營業 | 營業時間請參考門口或機台上的告示。〔需店家確認〕 | Hours are posted at the door or on the machine. |
+| HLP-03 | 你們幾點營業 | 本店 24 小時營業、全年無休。 | We're open 24 hours, every day of the year. |
 | HLP-04 | 現場都沒有店員嗎 | 對，這是無人門市，全部自助操作，我可以引導您。 | Yes—it's fully self-service, and I can help guide you. |
 | HLP-05 | 我不會用，可以教我嗎 | 沒問題，請告訴我您要列印、影印還是掃描，我一步步引導您。 | Of course—tell me what you need and I'll guide you step by step. |
 | HLP-06 | 我遇到緊急狀況 | 若是火災、有人受傷等緊急狀況，請立即撥打 119 或 110。 | For a fire or injury, call 119 or 110 immediately. |
@@ -379,13 +379,15 @@
 | privacy 隱私 | 6 |
 | **合計** | **230** |
 
-### 需店家確認 / 現場張貼的事實（語句中標 `〔需店家確認〕`）
-1. 營業時間（平日/假日/結束時間）— LOC-01/02/03、HLP-03
-2. 地址與位置 — LOC-04
-3. 停車資訊 — LOC-06/07
-4. 店內是否提供 wifi/網路 — LOC-10、PM-17
-5. 是否提供護貝/裁切/特殊紙材/相片紙/特殊磅數 — FN-06/07/14、SUP-02/03
-6. 發票統編/載具/捐贈等細項是否開放 — INV-04/08、PAY-17
+### 已確認的門市事實（v0.4.1）
+- **營業時間：24 小時、全年無休** — LOC-01/02/03、HLP-03
+- **停車：無停車位** — LOC-06/07
+- **店內 WiFi：掃碼僅供傳檔到事務機，不提供一般上網** — LOC-10、PM-17
+- **加值服務：不提供護貝 / 裁切 / 相片紙 / 特殊磅數 / 特殊紙材** — FN-06/07/14、SUP-02/03
+- **發票：不提供電子發票**（付款明細顯示於畫面與手機操作頁面）— INV 全組、PAY-11/17
+
+### 仍需店家確認 / 現場張貼
+- 地址與精確位置 — LOC-04（目前導向「地圖定位 / 門口告示」）
 
 ### v0.4 擴充摘要
 - 由 100 句擴到 **230 句**，新增 GEN(招呼互動)、CPY(一般影印)、FN(進階功能)、SUP(紙張耗材)、INV(發票)、LOC(店務環境)、PRIV(隱私) 七個常用會話群組，並補各類口語/台味變體。

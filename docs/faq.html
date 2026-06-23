@@ -7,8 +7,7 @@
 <style>
   :root{--bg:#f6f7f9;--card:#fff;--ink:#1c2430;--sub:#5b6675;--brand:#1664d8;--line:#e6e9ee}
   *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
-       background:var(--bg);color:var(--ink);line-height:1.7;-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-text-size-adjust:100%}
   header{background:var(--brand);color:#fff;padding:28px 20px}
   .wrap{max-width:720px;margin:0 auto;padding:0 16px}
   header h1{margin:0 0 6px;font-size:22px}
@@ -16,6 +15,8 @@
   .search{margin:16px 0 8px}
   .search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:16px}
   .note{background:#fff7e6;border:1px solid #ffe1a8;border-radius:10px;padding:12px 14px;margin:16px 0;font-size:14px;color:#7a5a00}
+  .facts{background:#eef4ff;border:1px solid #cfe0ff;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px}
+  .facts b{color:var(--brand)}
   h2{font-size:17px;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--brand)}
   details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
   summary{cursor:pointer;padding:13px 15px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
@@ -37,117 +38,245 @@
 
 <div class="wrap">
 
-  <div class="search"><input id="q" type="search" placeholder="輸入關鍵字搜尋，例如：卡紙、退款、雙面、掃描" oninput="filterFAQ()"></div>
+  <div class="search"><input id="q" type="search" placeholder="輸入關鍵字搜尋，例如：卡紙、退款、雙面、停車" oninput="filterFAQ()"></div>
 
   <div class="note">本店為 <b>無人自助門市，現場沒有專人</b>。多數狀況可自行排除；機台問題時，<b>店內共有三台機器（每台間隔約一公尺），可直接改用旁邊另一台，未完成的列印不會扣款</b>。</div>
 
-  <h2>📱 手機 / 雲端檔案列印</h2>
-  <details><summary>我要印手機裡的檔案</summary><div class="ans">請拿手機掃描機台上的 QR Code，就能上傳檔案列印。</div></details>
-  <details><summary>QR Code 在哪裡？</summary><div class="ans">在機台螢幕或機身貼紙上，掃描後手機會打開上傳頁面。</div></details>
-  <details><summary>支援什麼檔案格式？</summary><div class="ans">支援 PDF、Word，以及 JPG、PNG 圖片，建議先轉成 PDF 最穩定。</div></details>
-  <details><summary>LINE 裡的檔案怎麼印？</summary><div class="ans">先在 LINE 把檔案存到手機，再掃 QR Code 從上傳頁選那個檔案。</div></details>
-  <details><summary>我要印照片</summary><div class="ans">掃 QR Code 後選照片上傳，可以選彩色和尺寸再確認列印。</div></details>
-  <details><summary>怎麼選黑白或彩色？</summary><div class="ans">上傳後在手機頁面可切換黑白或彩色，彩色費用較高。</div></details>
-  <details><summary>怎麼設定份數？</summary><div class="ans">在手機預覽頁面可調整份數，確認後再付款。</div></details>
-  <details><summary>可以雙面列印嗎？</summary><div class="ans">可以，在手機設定頁面選「雙面列印」即可。</div></details>
-  <details><summary>紙張大小怎麼選？</summary><div class="ans">可選 A4 或 A3，在手機頁面的紙張設定切換。</div></details>
-  <details><summary>列印前可以先預覽嗎？</summary><div class="ans">可以，付款前手機會顯示預覽，確認沒問題再付款。</div></details>
-  <details><summary>檔案太大傳不上去</summary><div class="ans">檔案較大請稍等上傳完成，或先壓縮、分次上傳。</div></details>
-  <details><summary>上傳後找不到檔案</summary><div class="ans">請確認有「上傳完成」提示，沒有的話重新掃 QR Code 再上傳一次。</div></details>
-  <details><summary>上傳完怎麼付款？</summary><div class="ans">確認預覽後點付款，依畫面用電子支付或掃碼完成即可。</div></details>
-  <details><summary>印好的紙在哪裡拿？</summary><div class="ans">付款完成後紙張會從機台出紙匣送出，請到出紙口拿取。</div></details>
-  <details><summary>可以一次印很多檔案嗎？</summary><div class="ans">可以，上傳頁面能加入多個檔案，會一起計算份數與價格。</div></details>
-  <details><summary>Word 排版跑掉了</summary><div class="ans">Word 轉檔有時會位移，建議先在手機轉成 PDF 再上傳最準確。</div></details>
-  <details><summary>手機沒網路怎麼辦？</summary><div class="ans">請開啟手機行動網路，或連線店內提供的網路後再掃 QR Code。</div></details>
-  <details><summary>上傳到一半想取消</summary><div class="ans">直接關閉手機頁面即可取消，未付款不會列印也不會收費。</div></details>
-  <details><summary>可以縮放或滿版嗎？</summary><div class="ans">在手機設定可選縮放或滿版列印，預覽會即時更新。</div></details>
-  <details><summary>列印怎麼算錢？</summary><div class="ans">系統會依頁數、黑白或彩色、紙張大小自動計價，付款前會顯示金額。</div></details>
-  <details><summary>印一份要等多久？</summary><div class="ans">付款後通常幾秒到十幾秒就會出紙，份數多會久一點。</div></details>
-  <details><summary>我的檔案會被留下來嗎？</summary><div class="ans">您的檔案只暫存在店內主機處理，列印後會自動清除，不會上傳雲端。</div></details>
+  <div class="facts">
+    <b>門市資訊：</b>24 小時營業、全年無休｜無停車位｜店內掃碼網路僅供傳檔、不提供上網｜不提供護貝/裁切/相片紙/特殊磅數｜不提供發票（付款明細顯示於畫面）
+  </div>
 
+  <h2>📱 手機 / 雲端檔案列印</h2>
+  <details><summary>我要印手機裡的檔案</summary><div class="ans">好的，請拿手機掃描機台上的 QR Code，就能上傳檔案列印。</div></details>
+  <details><summary>QR Code 在哪裡</summary><div class="ans">QR Code 在機台螢幕或機身貼紙上，掃描後手機會打開上傳頁面。</div></details>
+  <details><summary>支援什麼檔案格式</summary><div class="ans">支援 PDF、Word、以及 JPG、PNG 圖片，建議先轉成 PDF 最穩定。</div></details>
+  <details><summary>LINE 的檔案怎麼印</summary><div class="ans">先在 LINE 把檔案存到手機，再掃 QR Code 從上傳頁選那個檔案。</div></details>
+  <details><summary>我要印照片</summary><div class="ans">掃 QR Code 後選照片上傳，可以選彩色和尺寸再確認列印。</div></details>
+  <details><summary>要選黑白還是彩色</summary><div class="ans">上傳後在手機頁面可切換黑白或彩色，彩色費用較高。</div></details>
+  <details><summary>怎麼設定份數</summary><div class="ans">在手機預覽頁面可調整份數，確認後再付款。</div></details>
+  <details><summary>可以雙面印嗎</summary><div class="ans">可以，在手機設定頁面選「雙面列印」即可。</div></details>
+  <details><summary>紙張大小怎麼選</summary><div class="ans">可選 A4 或 A3，在手機頁面的紙張設定切換。</div></details>
+  <details><summary>印之前可以先看嗎</summary><div class="ans">可以，付款前手機會顯示預覽，確認沒問題再付款。</div></details>
+  <details><summary>檔案太大傳不上去</summary><div class="ans">檔案較大請稍等上傳完成，或先壓縮、分次上傳。</div></details>
+  <details><summary>上傳後找不到檔案</summary><div class="ans">請確認上傳完成的提示，沒有的話重新掃 QR Code 再上傳一次。</div></details>
+  <details><summary>上傳完怎麼付款</summary><div class="ans">確認預覽後點付款，依畫面用電子支付或掃碼完成即可。</div></details>
+  <details><summary>印好的紙在哪裡拿</summary><div class="ans">付款完成後紙張會從出紙匣送出，請到出紙口拿取。</div></details>
+  <details><summary>可以一次印很多檔案嗎</summary><div class="ans">可以，上傳頁面能加入多個檔案，會一起計算份數與價格。</div></details>
+  <details><summary>Word 排版跑掉了</summary><div class="ans">Word 轉檔有時會位移，建議先轉成 PDF 再上傳最準確。</div></details>
+  <details><summary>手機沒網路怎麼辦</summary><div class="ans">掃機台 QR Code 上傳檔案時會自動連線傳檔，不需另外上網；其他用途請用手機行動網路。</div></details>
+  <details><summary>上傳到一半想取消</summary><div class="ans">直接關閉手機頁面即可取消，未付款不會列印也不會收費。</div></details>
+  <details><summary>可以縮放或滿版嗎</summary><div class="ans">在手機設定可選縮放或滿版列印，預覽會即時更新。</div></details>
+  <details><summary>列印怎麼算錢</summary><div class="ans">系統會依頁數、黑白或彩色、紙張大小自動計價，付款前會顯示金額。</div></details>
+  <details><summary>印一份要等多久</summary><div class="ans">付款後通常幾秒到十幾秒就會出紙，份數多會久一點。</div></details>
+  <details><summary>我的檔案會被留下來嗎</summary><div class="ans">您的檔案只暫存在店內主機處理，列印後會自動清除，不會上傳雲端。</div></details>
+  <details><summary>可以用平板印嗎</summary><div class="ans">可以，平板一樣掃 QR Code 上傳即可。</div></details>
+  <details><summary>電腦檔案可以印嗎</summary><div class="ans">可以，把檔案傳到手機或用手機開雲端，再掃 QR Code 上傳。</div></details>
+  <details><summary>雲端硬碟的檔案怎麼印</summary><div class="ans">先在手機開啟雲端把檔案下載，再掃 QR Code 上傳。</div></details>
+  <details><summary>Email 附件怎麼印</summary><div class="ans">在手機把附件存下來，再掃 QR Code 從上傳頁選它。</div></details>
+  <details><summary>印簡報 / PPT</summary><div class="ans">支援，建議先轉成 PDF 再上傳，排版最穩。</div></details>
+  <details><summary>印 Excel 表格</summary><div class="ans">可以，建議先轉 PDF 並確認列印範圍再上傳。</div></details>
+  <details><summary>網頁怎麼印</summary><div class="ans">在手機把網頁存成 PDF，再掃 QR Code 上傳。</div></details>
+  <details><summary>只想印其中幾頁</summary><div class="ans">在手機預覽頁可選列印頁數範圍，再確認付款。</div></details>
   <h2>🪪 身分證 / 證件影印</h2>
-  <details><summary>我要影印身分證</summary><div class="ans">請把證件放在影印機玻璃面板上，蓋上蓋子，依畫面操作影印。</div></details>
-  <details><summary>正反面要印在同一張</summary><div class="ans">可選「證件影印」模式，會把正反面合印在同一張紙上。</div></details>
-  <details><summary>證件要放哪裡？</summary><div class="ans">放在玻璃面板左上角對齊標示線，印好再翻面印背面。</div></details>
-  <details><summary>健保卡 / 駕照可以印嗎？</summary><div class="ans">可以，健保卡、駕照都用同樣的證件影印方式操作。</div></details>
-  <details><summary>護照怎麼印？</summary><div class="ans">護照翻到資料頁，平放在玻璃面板上影印即可。</div></details>
-  <details><summary>可以放大嗎？</summary><div class="ans">可以，在畫面選放大或縮小比例後再影印。</div></details>
-  <details><summary>證件要黑白還是彩色？</summary><div class="ans">可選黑白或彩色，彩色費用較高，依畫面切換。</div></details>
+  <details><summary>我要影印身分證</summary><div class="ans">請把證件放在玻璃面板上，蓋上蓋子，依畫面操作影印。</div></details>
+  <details><summary>正反面印同一張</summary><div class="ans">可選「證件影印」模式，會把正反面合印在同一張紙上。</div></details>
+  <details><summary>證件要放哪裡</summary><div class="ans">放在玻璃面板左上角對齊標示線，印好再翻面印背面。</div></details>
+  <details><summary>健保卡 / 駕照可以印嗎</summary><div class="ans">可以，健保卡、駕照都用同樣的證件影印方式。</div></details>
+  <details><summary>護照怎麼印</summary><div class="ans">護照翻到資料頁，平放在玻璃面板上影印即可。</div></details>
+  <details><summary>可以放大嗎</summary><div class="ans">可以，在畫面選放大或縮小比例後再影印。</div></details>
+  <details><summary>要黑白還是彩色</summary><div class="ans">證件可選黑白或彩色，彩色費用較高。</div></details>
   <details><summary>我要印好幾份</summary><div class="ans">在畫面設定份數後再確認影印。</div></details>
-  <details><summary>影印證件多少錢？</summary><div class="ans">系統會依黑白彩色與份數計價，操作畫面會顯示金額。</div></details>
-  <details><summary>影印也要先付款嗎？</summary><div class="ans">是的，系統會先預覽報價，付款後才會印出來。</div></details>
+  <details><summary>影印證件多少錢</summary><div class="ans">系統會依黑白彩色與份數計價，畫面會顯示金額。</div></details>
+  <details><summary>影印也要先付款嗎</summary><div class="ans">是的，系統會先預覽報價，付款後才印出。</div></details>
   <details><summary>印出來歪歪的</summary><div class="ans">請把證件對齊玻璃面板角落的標示線，再重印一次。</div></details>
   <details><summary>我有好幾張證件</summary><div class="ans">可以一張一張放上去分別影印，或用證件影印模式逐張處理。</div></details>
-  <details><summary>印好的在哪拿？</summary><div class="ans">付款完成後請到機台出紙口拿取。</div></details>
-  <details><summary>證件影印要多久？</summary><div class="ans">通常幾秒就會出紙。</div></details>
-
+  <details><summary>印好的在哪拿</summary><div class="ans">付款完成後請到機台出紙口拿取。</div></details>
+  <details><summary>證件影印要多久</summary><div class="ans">通常幾秒就會出紙。</div></details>
+  <details><summary>居留證可以印嗎</summary><div class="ans">可以，居留證用證件影印方式操作即可。</div></details>
+  <details><summary>學生證 / 員工證</summary><div class="ans">可以，一樣用證件影印模式操作。</div></details>
+  <details><summary>證件要彩色才清楚</summary><div class="ans">建議選彩色，畫面可切換，彩色費用較高。</div></details>
+  <details><summary>兩張證件印一張紙</summary><div class="ans">用證件影印模式可把正反或兩張併在同一張。</div></details>
+  <h2>📄 一般文件影印</h2>
+  <details><summary>我要影印文件</summary><div class="ans">請把文件放上玻璃面板或送稿器，依畫面選影印。</div></details>
+  <details><summary>影印一疊文件</summary><div class="ans">用上方送稿器一次放多張，依畫面開始影印。</div></details>
+  <details><summary>影印書本</summary><div class="ans">把書翻開壓在玻璃面板上，輕壓蓋子再影印。</div></details>
+  <details><summary>放大影印</summary><div class="ans">在畫面選放大比例後影印。</div></details>
+  <details><summary>縮小影印</summary><div class="ans">在畫面選縮小比例後影印。</div></details>
+  <details><summary>A4 印成 A3</summary><div class="ans">在畫面選放大到 A3 即可。</div></details>
+  <details><summary>雙面影印</summary><div class="ans">用送稿器並在畫面選雙面影印。</div></details>
+  <details><summary>影印彩色</summary><div class="ans">在畫面選彩色，彩色費用較高。</div></details>
+  <details><summary>影印多份</summary><div class="ans">在畫面設定份數後確認。</div></details>
+  <details><summary>影印多少錢</summary><div class="ans">依黑白彩色、紙張與份數計價，畫面會顯示金額。</div></details>
+  <details><summary>印出來太黑 / 太淡</summary><div class="ans">在畫面調整濃淡後重印。</div></details>
+  <details><summary>只印中間一部分</summary><div class="ans">可放大該區域或調整擺放位置再影印。</div></details>
+  <details><summary>原稿拿回去了嗎</summary><div class="ans">影印後請記得從玻璃面板或送稿器取回原稿。</div></details>
+  <details><summary>影印要先付款嗎</summary><div class="ans">是的，畫面會先報價，付款後印出。</div></details>
   <h2>🖨️ 掃描到 Email / USB</h2>
   <details><summary>我要掃描文件</summary><div class="ans">請把文件放上玻璃面板或送稿器，在畫面選掃描方式。</div></details>
   <details><summary>我要掃描到信箱</summary><div class="ans">選「掃描到 Email」，輸入您的信箱，掃描後檔案會寄過去。</div></details>
   <details><summary>我要掃到 USB</summary><div class="ans">選「掃描到 USB」，把隨身碟插進機台插槽再開始掃描。</div></details>
-  <details><summary>USB 插哪裡？</summary><div class="ans">USB 插槽在機台前方面板上，插好畫面會顯示已偵測。</div></details>
+  <details><summary>USB 插哪裡</summary><div class="ans">USB 插槽在機台前方面板上，插好畫面會顯示已偵測。</div></details>
   <details><summary>Email 沒收到</summary><div class="ans">請確認信箱輸入正確並查看垃圾信件匣，必要時重新掃描寄送。</div></details>
-  <details><summary>可以掃很多頁嗎？</summary><div class="ans">可以，用上方送稿器一次放多張，會合成一個檔案。</div></details>
-  <details><summary>掃彩色還是黑白？</summary><div class="ans">可在畫面選彩色或黑白掃描。</div></details>
-  <details><summary>掃成 PDF 還是圖片？</summary><div class="ans">可選 PDF 或 JPG，多頁文件建議選 PDF。</div></details>
-  <details><summary>原稿放哪？</summary><div class="ans">單張放玻璃面板，多張放上方送稿器。</div></details>
-  <details><summary>掃描要錢嗎？</summary><div class="ans">掃描費用依機台設定，操作畫面會顯示是否收費與金額。</div></details>
-  <details><summary>可以調解析度嗎？</summary><div class="ans">可以，在畫面選解析度，越高檔案越大。</div></details>
-  <details><summary>可以雙面掃嗎？</summary><div class="ans">可以，用送稿器並在畫面選雙面掃描。</div></details>
+  <details><summary>可以掃很多頁嗎</summary><div class="ans">可以，用上方送稿器一次放多張，會合成一個檔案。</div></details>
+  <details><summary>掃彩色還是黑白</summary><div class="ans">可在畫面選彩色或黑白掃描。</div></details>
+  <details><summary>掃成 PDF 還是圖片</summary><div class="ans">可選 PDF 或 JPG，多頁文件建議選 PDF。</div></details>
+  <details><summary>原稿放哪</summary><div class="ans">單張放玻璃面板，多張放上方送稿器。</div></details>
+  <details><summary>掃描要錢嗎</summary><div class="ans">掃描費用依機台設定，畫面會顯示是否收費與金額。</div></details>
+  <details><summary>可以調解析度嗎</summary><div class="ans">可以，在畫面選解析度，越高檔案越大。</div></details>
+  <details><summary>可以雙面掃嗎</summary><div class="ans">可以，用送稿器並在畫面選雙面掃描。</div></details>
   <details><summary>檔案太大寄不出去</summary><div class="ans">請降低解析度或分次掃描，檔案會比較小。</div></details>
-  <details><summary>掃描的檔案會留著嗎？</summary><div class="ans">掃描檔只暫存於店內主機，完成寄送或存檔後即清除，不上雲。</div></details>
-
+  <details><summary>掃描的檔案會留著嗎</summary><div class="ans">掃描檔只暫存於店內主機，完成寄送或存檔後即清除，不上雲。</div></details>
+  <details><summary>掃描到手機可以嗎</summary><div class="ans">可選掃描到 Email，再用手機收信即可。</div></details>
+  <details><summary>掃描存成一個檔</summary><div class="ans">多頁用送稿器會合成一個 PDF。</div></details>
+  <details><summary>掃描書本</summary><div class="ans">把書翻開壓在玻璃面板上逐頁掃描。</div></details>
+  <details><summary>掃完可以改檔名嗎</summary><div class="ans">可在寄送前依畫面設定檔名或主旨。</div></details>
+  <h2>🛠️ 進階功能</h2>
+  <details><summary>可以裝訂嗎 / 釘起來</summary><div class="ans">是否提供裝訂以機台功能與畫面為準，請依畫面選擇。</div></details>
+  <details><summary>騎馬釘 / 做成冊子</summary><div class="ans">是否支援小冊子列印以畫面顯示為準。</div></details>
+  <details><summary>打洞</summary><div class="ans">是否提供打洞以機台設定為準，請看畫面選項。</div></details>
+  <details><summary>印海報 / 大張</summary><div class="ans">可選 A3 大尺寸列印，依畫面設定。</div></details>
+  <details><summary>印名片</summary><div class="ans">可上傳名片檔列印，建議用 PDF 並設定尺寸。</div></details>
+  <details><summary>護貝</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>護貝服務。</div></details>
+  <details><summary>裁切</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>裁切服務。</div></details>
+  <details><summary>合併多個 PDF</summary><div class="ans">上傳頁面可加入多個檔案一起列印。</div></details>
+  <details><summary>加浮水印</summary><div class="ans">系統<mark>不提供</mark>浮水印，建議在原檔處理好再上傳。</div></details>
+  <details><summary>印黑白省錢</summary><div class="ans">在設定選黑白即可，費用較彩色低。</div></details>
+  <details><summary>一頁印多頁 / 多合一</summary><div class="ans">部分機型支援多合一，請看畫面設定。</div></details>
+  <details><summary>自動雙面</summary><div class="ans">在設定選雙面列印即可。</div></details>
+  <details><summary>印信封</summary><div class="ans">一般機台不支援信封，建議改印標籤再貼上。</div></details>
+  <details><summary>印貼紙 / 標籤紙</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>特殊紙材。</div></details>
+  <details><summary>縮放到指定比例</summary><div class="ans">在設定輸入縮放比例，預覽會更新。</div></details>
+  <details><summary>邊界 / 滿版列印</summary><div class="ans">在設定選滿版或保留邊界。</div></details>
+  <h2>📦 紙張 / 耗材 / 品質</h2>
+  <details><summary>有 A3 嗎</summary><div class="ans">有，列印或影印時在畫面選 A3。</div></details>
+  <details><summary>有相片紙嗎</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>相片紙。</div></details>
+  <details><summary>紙張厚度 / 磅數</summary><div class="ans">本店使用一般影印紙，目前<mark>不提供</mark>特殊磅數。</div></details>
+  <details><summary>有彩色嗎</summary><div class="ans">有，列印影印都可選彩色，費用較高。</div></details>
+  <details><summary>紙質不好</summary><div class="ans">若對紙質有疑問，可<mark>改用旁邊另一台</mark>機器試印。</div></details>
+  <details><summary>可以用我自己的紙嗎</summary><div class="ans">不好意思，機台使用內建紙張，無法放自備紙張。</div></details>
+  <details><summary>顏色很淡 / 沒碳粉</summary><div class="ans">若列印偏淡，建議<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>紙用完會自動補嗎</summary><div class="ans">缺紙時可依螢幕指示補紙，或<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>怎麼印品質比較好</summary><div class="ans">用 PDF 上傳並選彩色，品質較穩定。</div></details>
+  <details><summary>紙卡卡的 / 皺</summary><div class="ans">紙張異常請<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>雙面會不會透</summary><div class="ans">一般影印紙雙面略有透色屬正常。</div></details>
+  <details><summary>最大印到多大</summary><div class="ans">一般最大為 A3。</div></details>
+  <details><summary>最小印到多小</summary><div class="ans">可縮小列印，依畫面設定比例。</div></details>
+  <details><summary>有哪些紙張尺寸</summary><div class="ans">常見為 A4 與 A3，畫面可選。</div></details>
   <h2>💳 付款</h2>
-  <details><summary>怎麼付款？</summary><div class="ans">確認預覽後點付款，依畫面用電子支付或掃碼完成。</div></details>
-  <details><summary>可以用什麼付款？</summary><div class="ans">機台支援掃碼與電子支付，實際方式以付款畫面顯示為準。</div></details>
-  <details><summary>可以用 LINE Pay 嗎？</summary><div class="ans">若付款畫面有顯示該選項即可使用，依畫面掃碼付款。</div></details>
-  <details><summary>可以刷悠遊卡嗎？</summary><div class="ans">是否支援以付款畫面顯示為準，請依畫面選擇方式。</div></details>
-  <details><summary>可以刷卡嗎？</summary><div class="ans">信用卡是否支援以付款畫面為準，依畫面操作即可。</div></details>
-  <details><summary>可以投現金嗎？</summary><div class="ans">是否收現金以機台設定為準，畫面會顯示可用的付款方式。</div></details>
-  <details><summary>付款了卻沒出紙</summary><div class="ans">請先確認出紙匣並稍等約 30 秒；若仍沒出紙，<mark>請直接改用旁邊另一台機器重印，未完成的列印不會扣款</mark>。</div></details>
-  <details><summary>我好像被扣兩次</summary><div class="ans">不好意思造成困擾；目前現場無法直接處理重複扣款，請先保留您的交易紀錄，線上退款申請功能即將開放，屆時可提出查證。</div></details>
-  <details><summary>付款失敗</summary><div class="ans">請稍候再試一次，或換一種付款方式；也可以直接改用旁邊另一台機器。</div></details>
-  <details><summary>付款的 QR 在哪？</summary><div class="ans">確認預覽後，付款 QR 會顯示在手機或機台畫面上。</div></details>
-  <details><summary>有收據或發票嗎？</summary><div class="ans">電子發票或收據會依畫面顯示，您可以在手機操作頁面查看。</div></details>
-  <details><summary>金額好像不對</summary><div class="ans">金額會依頁數、彩色與紙張大小自動計算，付款前畫面都會先顯示金額；若仍有疑問，請先保留交易紀錄，線上查證功能即將開放。</div></details>
+  <details><summary>怎麼付款</summary><div class="ans">確認預覽後點付款，依畫面用電子支付或掃碼完成。</div></details>
+  <details><summary>可以用什麼付款</summary><div class="ans">機台支援掃碼與電子支付，實際方式以付款畫面為準。</div></details>
+  <details><summary>可以用 LINE Pay 嗎</summary><div class="ans">若付款畫面有顯示該選項即可使用，依畫面掃碼付款。</div></details>
+  <details><summary>可以刷悠遊卡嗎</summary><div class="ans">是否支援以付款畫面為準，請依畫面選擇方式。</div></details>
+  <details><summary>可以刷卡嗎</summary><div class="ans">信用卡是否支援以付款畫面為準，依畫面操作即可。</div></details>
+  <details><summary>可以投現金嗎</summary><div class="ans">是否收現金以機台設定為準，畫面會顯示可用方式。</div></details>
+  <details><summary>付款了卻沒出紙</summary><div class="ans">請先確認出紙匣並稍等約 30 秒；若仍沒出紙，請直接<mark>改用旁邊另一台</mark>機器重印，<mark>未完成的列印不會扣款</mark>。</div></details>
+  <details><summary>我好像被扣兩次</summary><div class="ans">不好意思造成困擾；目前現場無法直接處理重複扣款，請先保留交易紀錄，線上退款申請功能即將開放。</div></details>
+  <details><summary>付款失敗</summary><div class="ans">請稍候再試一次，或換一種付款方式；也可以<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>付款的 QR 在哪</summary><div class="ans">確認預覽後，付款 QR 會顯示在手機或機台畫面上。</div></details>
+  <details><summary>有收據或發票嗎</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票；付款明細會顯示在畫面與手機操作頁面。</div></details>
+  <details><summary>金額好像不對</summary><div class="ans">金額依頁數、彩色與紙張自動計算，付款前畫面會先顯示；有疑問請保留交易紀錄。</div></details>
   <details><summary>付到一半中斷了</summary><div class="ans">未完成付款不會列印也不會扣款，請重新操作一次。</div></details>
-  <details><summary>我要退款</summary><div class="ans">不好意思，若是付款後沒印出來，<mark>您可以直接改用旁邊另一台機器重印，未完成的列印不會扣款</mark>；線上退款申請功能即將開放。</div></details>
-  <details><summary>有找零或低消嗎？</summary><div class="ans">相關規則以畫面與機台設定為準，操作前畫面會顯示金額。</div></details>
-  <details><summary>付款後多久會印？</summary><div class="ans">付款成功後通常幾秒內就會開始出紙。</div></details>
-
-  <h2>🛠️ 機台狀況（卡紙 / 缺紙 / 故障）</h2>
-  <details><summary>卡紙了</summary><div class="ans">請依機台螢幕的圖示指示打開紙匣、取出卡住的紙張即可；若不想自行處理，<mark>旁邊還有另外兩台機器可以直接使用，未完成的列印不會扣款</mark>。</div></details>
-  <details><summary>沒紙了</summary><div class="ans">請依機台螢幕指示打開紙匣補充紙張；或直接改用旁邊另一台機器，未完成的列印不會扣款。</div></details>
-  <details><summary>印出來是空白的</summary><div class="ans">通常是檔案或設定問題，請檢查原始檔案後重新列印，或改用旁邊另一台機器試試。</div></details>
-  <details><summary>印出來有條紋很髒</summary><div class="ans">列印品質不佳時，建議直接改用旁邊另一台機器列印。</div></details>
-  <details><summary>機器沒反應 / 當機</summary><div class="ans">請直接改用旁邊另一台機器操作，未完成的訂單不會扣款。</div></details>
-  <details><summary>螢幕黑掉了</summary><div class="ans">這台螢幕沒反應時，請改用旁邊另一台機器。</div></details>
-  <details><summary>印到一半停住</summary><div class="ans">請稍候幾秒；若沒有恢復，可改用旁邊另一台機器重印。</div></details>
-  <details><summary>顏色很淡 / 沒碳粉</summary><div class="ans">列印偏淡時，建議改用旁邊另一台機器列印。</div></details>
-  <details><summary>我可以自己把紙拉出來嗎？</summary><div class="ans">可以，請依機台螢幕的圖示指示慢慢取出卡住的紙張，不要硬拉；不確定的話直接改用旁邊另一台機器。</div></details>
-  <details><summary>紙要怎麼補？</summary><div class="ans">請依機台螢幕指示打開紙匣，放入紙張即可。</div></details>
-  <details><summary>我印錯了</summary><div class="ans">已印出的內容無法收回；如需重印請重新操作，或改用旁邊另一台機器。</div></details>
-  <details><summary>機器有怪聲音</summary><div class="ans">機台有異常聲響時，請停止使用這台，改用旁邊另一台機器。</div></details>
-  <details><summary>蓋子 / 送稿器卡住</summary><div class="ans">請依機台螢幕指示輕輕復位，不要強行扳動；不確定就改用旁邊另一台機器。</div></details>
-  <details><summary>機器壞掉了</summary><div class="ans">這台無法使用時，請直接改用旁邊另一台機器，未完成的訂單不會扣款。</div></details>
-
-  <h2>🙋 需要協助 / 其他</h2>
-  <details><summary>有沒有人可以幫我？</summary><div class="ans">這是無人自助門市，現場沒有專人；本頁面整理了所有操作步驟，依分類查找即可。</div></details>
-  <details><summary>你們幾點營業？</summary><div class="ans">營業時間請參考門口或機台上的告示。</div></details>
-  <details><summary>現場都沒有店員嗎？</summary><div class="ans">對，這是無人門市，全部自助操作；操作說明都在本頁面。</div></details>
-  <details><summary>我不會用，可以教我嗎？</summary><div class="ans">機台螢幕與本頁面都有逐步指引；要印、影印或掃描，分類點開即可一步步操作。</div></details>
-  <details><summary>我遇到緊急狀況</summary><div class="ans"><mark>若是火災、有人受傷等緊急狀況，請立即撥打 119 或 110。</mark></div></details>
-  <details><summary>有廁所 / 洗手的地方嗎？</summary><div class="ans">不好意思，本店是無人自助門市，<b>沒有提供廁所與洗手設備</b>；其他問題請參考門市現場告示。</div></details>
-  <details><summary>我已經試很多次了</summary><div class="ans">不好意思造成不便，您可以改用旁邊另一台機器，未完成的列印不會扣款。</div></details>
-  <details><summary>我要客訴 / 找負責人</summary><div class="ans">您的意見對我們很重要。本店為無人門市，現場沒有專人；線上意見回報與聯絡功能即將開放，屆時可留下您的意見與聯絡方式。</div></details>
+  <details><summary>我要退款</summary><div class="ans">不好意思，若付款後沒印出來，您可以<mark>改用旁邊另一台</mark>機器重印，<mark>未完成不扣款</mark>；線上退款申請即將開放。</div></details>
+  <details><summary>有找零或低消嗎</summary><div class="ans">相關規則以畫面與機台設定為準，操作前畫面會顯示金額。</div></details>
+  <details><summary>付款後多久會印</summary><div class="ans">付款成功後通常幾秒內就會開始出紙。</div></details>
+  <details><summary>可以開統編嗎</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票，無法開立統編。</div></details>
+  <details><summary>有最低消費嗎</summary><div class="ans">相關規則以畫面與機台設定為準。</div></details>
+  <details><summary>可以分開付嗎</summary><div class="ans">一次列印以一筆計費，請依畫面金額付款。</div></details>
+  <details><summary>付款畫面卡住</summary><div class="ans">請稍候重整或重新操作；也可<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>我掃不到付款碼</summary><div class="ans">請對準畫面付款 QR，或換個角度；仍不行可改用另一台。</div></details>
+  <details><summary>付完可以改份數嗎</summary><div class="ans">付款後無法更改，如需調整請重新操作。</div></details>
+  <h2>🧾 發票 / 收據</h2>
+  <details><summary>有發票嗎</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票。</div></details>
+  <details><summary>我要紙本發票</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票。</div></details>
+  <details><summary>載具怎麼設</summary><div class="ans">本店目前<mark>不提供</mark>電子發票，沒有載具設定。</div></details>
+  <details><summary>統一編號</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票，無法開立統編。</div></details>
+  <details><summary>發票中獎怎麼領</summary><div class="ans">本店目前<mark>不提供</mark>發票，故無此項。</div></details>
+  <details><summary>收據在哪</summary><div class="ans">付款明細會顯示在畫面與手機操作頁面，可自行查看。</div></details>
+  <details><summary>發票寄到哪</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票。</div></details>
+  <details><summary>可以捐發票嗎</summary><div class="ans">不好意思，本店目前<mark>不提供</mark>發票。</div></details>
+  <details><summary>重印發票</summary><div class="ans">本店目前<mark>不提供</mark>發票；付款明細可在畫面查看。</div></details>
+  <details><summary>發票金額不對</summary><div class="ans">金額依實際列印計算，付款前畫面會顯示；本店<mark>不提供</mark>發票。</div></details>
+  <h2>⚠️ 機台狀況（卡紙/缺紙/故障）</h2>
+  <details><summary>卡紙了</summary><div class="ans">請依機台螢幕圖示打開紙匣、取出卡住的紙張即可；不想自行處理，旁邊還有另外兩台可直接用，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>沒紙了</summary><div class="ans">請依機台螢幕指示打開紙匣補充紙張；或直接<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>印出來是空白的</summary><div class="ans">通常是檔案或設定問題，請檢查原始檔案後重印，或<mark>改用旁邊另一台</mark>試試。</div></details>
+  <details><summary>印出來有條紋很髒</summary><div class="ans">列印品質不佳時，建議直接<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>機器沒反應 / 當機</summary><div class="ans">請直接<mark>改用旁邊另一台</mark>機器操作，未完成的訂單不會扣款。</div></details>
+  <details><summary>螢幕黑掉了</summary><div class="ans">這台螢幕沒反應時，請<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>印到一半停住</summary><div class="ans">請稍候幾秒；若沒有恢復，可<mark>改用旁邊另一台</mark>重印。</div></details>
+  <details><summary>顏色很淡 / 沒碳粉</summary><div class="ans">列印偏淡時，建議<mark>改用旁邊另一台</mark>機器。</div></details>
+  <details><summary>我可以自己拉紙嗎</summary><div class="ans">可以，請依螢幕圖示慢慢取出卡紙，不要硬拉；不確定就<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>紙要怎麼補</summary><div class="ans">請依機台螢幕指示打開紙匣，放入紙張即可。</div></details>
+  <details><summary>我印錯了</summary><div class="ans">已印出的內容無法收回；如需重印請重新操作，或<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>機器有怪聲音</summary><div class="ans">機台有異常聲響時，請停止使用這台，<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>蓋子 / 送稿器卡住</summary><div class="ans">請依螢幕指示輕輕復位，不要強行扳動；不確定就<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>機器壞掉了</summary><div class="ans">這台無法使用時，請直接<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>出紙口卡住</summary><div class="ans">請依螢幕指示輕輕取出，不要硬拉；不確定<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>印一半沒紙了</summary><div class="ans">依螢幕補紙後可續印，或<mark>改用旁邊另一台</mark>重印。</div></details>
+  <details><summary>螢幕觸控沒反應</summary><div class="ans">請<mark>改用旁邊另一台</mark>機器操作。</div></details>
+  <details><summary>機器一直轉沒動作</summary><div class="ans">請稍候；若沒反應<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>印出來歪斜</summary><div class="ans">文件或證件請對齊標示線；或<mark>改用旁邊另一台</mark>重印。</div></details>
+  <details><summary>重複印了好幾張</summary><div class="ans">請檢查份數設定，確認份數後再重印。</div></details>
+  <h2>🏪 店務 / 環境資訊</h2>
+  <details><summary>幾點營業</summary><div class="ans">本店 <mark>24 小時營業、全年無休</mark>。</div></details>
+  <details><summary>開到幾點</summary><div class="ans">本店 24 小時營業，全天候開放。</div></details>
+  <details><summary>假日有開嗎</summary><div class="ans">有，本店全年無休、24 小時營業。</div></details>
+  <details><summary>地址在哪</summary><div class="ans">地址請參考門口告示或您的地圖定位。</div></details>
+  <details><summary>怎麼去 / 在哪裡</summary><div class="ans">位置請參考您手機的地圖定位。</div></details>
+  <details><summary>有停車位嗎</summary><div class="ans">不好意思，本店<mark>沒有提供</mark>停車位。</div></details>
+  <details><summary>可以停哪</summary><div class="ans">本店沒有專用停車位，請利用周邊合法停車空間。</div></details>
+  <details><summary>有廁所嗎</summary><div class="ans">不好意思，本店是無人門市，<mark>沒有提供</mark>廁所與洗手設備。</div></details>
+  <details><summary>可以洗手嗎</summary><div class="ans">不好意思，本店<mark>沒有提供</mark>洗手設備。</div></details>
+  <details><summary>有 wifi 嗎</summary><div class="ans">店內掃碼連線僅用於傳送檔案到事務機，<mark>不提供</mark>一般上網；需上網請用手機行動網路。</div></details>
+  <details><summary>有冷氣嗎</summary><div class="ans">環境相關以現場為準。</div></details>
+  <details><summary>有幾台機器</summary><div class="ans">本店有三台機器，可任選使用。</div></details>
+  <details><summary>哪一台比較好</summary><div class="ans">三台功能相同，任選一台即可；某台有狀況可換另一台。</div></details>
+  <details><summary>有監視器嗎</summary><div class="ans">店內設有監視以維護安全，影像僅作安全用途。</div></details>
+  <details><summary>可以坐著休息嗎</summary><div class="ans">本店為自助操作空間，沒有休息座位。</div></details>
+  <details><summary>有賣文具嗎</summary><div class="ans">不好意思，本店只提供列印、影印與掃描，不販售文具。</div></details>
+  <details><summary>可以換零錢嗎</summary><div class="ans">不好意思，本店<mark>不提供</mark>換鈔，付款請用畫面顯示的方式。</div></details>
+  <details><summary>有飲水機嗎</summary><div class="ans">不好意思，本店<mark>沒有提供</mark>飲水設備。</div></details>
+  <h2>🙋 需要協助</h2>
+  <details><summary>有沒有人可以幫我</summary><div class="ans">這是無人自助門市，我可以直接引導您操作，請告訴我您的需求。</div></details>
+  <details><summary>哪裡有更多說明</summary><div class="ans">機台螢幕都有操作指引，我也可以一步步引導您。</div></details>
+  <details><summary>你們幾點營業</summary><div class="ans">本店 <mark>24 小時營業、全年無休</mark>。</div></details>
+  <details><summary>現場都沒有店員嗎</summary><div class="ans">對，這是無人門市，全部自助操作，我可以引導您。</div></details>
+  <details><summary>我不會用，可以教我嗎</summary><div class="ans">沒問題，請告訴我您要列印、影印還是掃描，我一步步引導您。</div></details>
+  <details><summary>我遇到緊急狀況</summary><div class="ans">若是火災、有人受傷等緊急狀況，請立即撥打 <mark>119 或 110</mark>。</div></details>
+  <details><summary>廁所 / 洗手 / 其他問題</summary><div class="ans">不好意思，本店是無人門市，<mark>沒有提供</mark>廁所與洗手設備；其他問題請參考現場告示。</div></details>
+  <details><summary>我已經試很多次了</summary><div class="ans">不好意思造成不便，您可以<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>我看不懂螢幕</summary><div class="ans">沒問題，告訴我您要列印、影印還是掃描，我一步步帶您。</div></details>
+  <details><summary>卡在付款這一步</summary><div class="ans">確認預覽後依畫面付款；卡住可重新操作或<mark>改用旁邊另一台</mark>。</div></details>
+  <details><summary>我東西不見了</summary><div class="ans">請檢查出紙口與玻璃面板、送稿器是否留下原稿或成品。</div></details>
+  <details><summary>操作太複雜</summary><div class="ans">別擔心，跟著螢幕步驟走，需要時我可以一步步引導您。</div></details>
+  <h2>💬 客訴 / 意見</h2>
+  <details><summary>我被亂扣錢</summary><div class="ans">不好意思造成困擾；目前現場無法直接處理扣款爭議，請先保留交易紀錄，線上退款申請即將開放。</div></details>
+  <details><summary>我要退費</summary><div class="ans">不好意思，若付款後沒印出來，可<mark>改用旁邊另一台</mark>重印，不扣款；線上退款申請即將開放。</div></details>
+  <details><summary>這台爛死了不能用</summary><div class="ans">很抱歉造成不便，您可以直接<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>印壞了你要賠我</summary><div class="ans">很抱歉，若付款後沒印好，可<mark>改用旁邊另一台</mark>重印，不扣款；線上退款申請即將開放。</div></details>
+  <details><summary>浪費我時間</summary><div class="ans">很抱歉耽誤您的時間，您可以直接<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>我要客訴 / 投訴</summary><div class="ans">了解，您的意見對我們很重要；線上意見回報功能即將開放，屆時可留下意見。</div></details>
+  <details><summary>我要找負責人</summary><div class="ans">這是無人門市現場沒有專人；線上聯絡功能即將開放，屆時可留下聯絡方式。</div></details>
+  <details><summary>你們服務很差</summary><div class="ans">很抱歉讓您有不好的體驗，我們會持續改進；線上意見回報即將開放。</div></details>
+  <details><summary>等很久很煩</summary><div class="ans">很抱歉久候，您可以<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。</div></details>
+  <details><summary>機器很難用</summary><div class="ans">抱歉造成不便，告訴我您卡在哪，我帶您操作。</div></details>
+  <details><summary>我投訴都沒人理</summary><div class="ans">本店為無人門市；線上意見回報功能即將開放，屆時可留言反映。</div></details>
+  <details><summary>你們會偷看我檔案嗎</summary><div class="ans">不會，檔案只在店內主機處理，完成後自動清除，不會上雲。</div></details>
+  <h2>🔒 隱私 / 資料安全</h2>
+  <details><summary>我的檔案安全嗎</summary><div class="ans">檔案只暫存店內主機，列印後自動清除，不會上雲。</div></details>
+  <details><summary>掃描的會被留嗎</summary><div class="ans">掃描檔完成寄送或存檔後即清除，不上雲。</div></details>
+  <details><summary>會記錄我印什麼嗎</summary><div class="ans">系統不保留您的檔案內容，列印後即清除。</div></details>
+  <details><summary>監視器會拍到我的檔案嗎</summary><div class="ans">監視僅作環境安全用途，不針對您的檔案內容。</div></details>
+  <details><summary>證件影印安全嗎</summary><div class="ans">證件影像只在店內處理，完成後清除，不上雲。</div></details>
+  <details><summary>個資會外洩嗎</summary><div class="ans">您的檔案不上雲、完成即清除，請放心。</div></details>
 
   <div class="qr"><div class="box">（此處貼上 FAQ 網址 QR Code）</div></div>
 
 </div>
 
 <footer>
-  iPrintOS 自助列印 · 本頁為常見問題草稿，由語音引導語庫產生<br>
-  退款 / 聯絡自助入口建置中，敬請期待
+  iPrintOS 自助列印 · 共 210 則常見問題，內容與語音引導語庫一致<br>
+  火災 / 受傷等緊急狀況請撥打 119 或 110
 </footer>
 
 <script>
