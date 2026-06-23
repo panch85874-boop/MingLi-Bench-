@@ -118,7 +118,7 @@
     },
     {
       "id": "scan",
-      "desc": "掃描到 Email / USB",
+      "desc": "掃描到 Email（不支援 USB 隨身碟；Email 附檔上限 15MB）",
       "keywords_zh": ["掃描", "掃瞄", "信箱", "email", "USB", "隨身碟"],
       "keywords_en": ["scan", "email", "usb", "scan to"],
       "action": "play_guidance",
@@ -158,9 +158,9 @@
     },
     { "id": "general",        "desc": "招呼/互動（你好、謝謝、教我用…）；無關列印的閒聊由 GEN-16 拉回", "action": "play_guidance", "guidance_group": "general" },
     { "id": "copy_doc",       "desc": "一般文件影印（非證件）", "action": "play_guidance", "guidance_group": "copy_doc" },
-    { "id": "advanced_func",  "desc": "進階功能（裝訂/海報/名片/多合一/PDF 處理）", "action": "play_guidance", "guidance_group": "advanced_func" },
+    { "id": "advanced_func",  "desc": "進階功能（名片/多合一/雙面/PDF 處理；裝訂・騎馬釘・打孔・海報・信封皆不提供）", "action": "play_guidance", "guidance_group": "advanced_func" },
     { "id": "supplies",       "desc": "紙張/耗材/品質（A3、彩色、磅數、碳粉淡）", "action": "play_guidance", "guidance_group": "supplies" },
-    { "id": "invoice",        "desc": "發票/收據（電子發票、載具、統編）", "action": "play_guidance", "guidance_group": "invoice" },
+    { "id": "invoice",        "desc": "發票/收據（所有消費開電子發票；無紙本、不支援統編、無手機條碼自動捐贈）", "action": "play_guidance", "guidance_group": "invoice" },
     { "id": "store_info",     "desc": "店務/環境（營業時間、停車、廁所、幾台機器…）", "action": "play_guidance", "guidance_group": "store_info" },
     { "id": "privacy",        "desc": "隱私/資料安全（檔案是否保留、會否外洩）", "action": "play_guidance", "guidance_group": "privacy" },
     {
