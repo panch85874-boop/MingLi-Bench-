@@ -6,7 +6,7 @@
 > ①依機台螢幕指示自行處理 ②**改用店內另外兩台機器**（一店三台）③在手機操作頁面填聯絡資料自助申請退款/處理 ④參考線上常見問題頁面。**真人聯絡不是選項；只有火災/受傷才導緊急電話。**
 > 原則：每句簡短（口語、1~2 句、適合 TTS）；模型不自由生成，只從本庫選。
 > 佔位：`〔線上FAQ〕`＝線上常見問題頁面網址/QR；「手機操作頁面」＝客人掃 QR 進入的 iPrintOS 操作介面（可填聯絡資料申請退款/處理）。
-> ⚠️ **前置相依**：本庫為「目標狀態」措辭。其中兩個出口**目前尚未建置**——①退款/聯絡自助入口（規劃文件 D-A，**P0**）②線上FAQ頁面（D-B）。兩者上線前，退款類以「改用旁邊另一台重印」為可行解、HLP 類以「語音引導+機台螢幕」為主，FAQ 連結暫不播（詳見規劃文件〈待開發相依清單〉）。
+> ⚠️ **前置相依（已採過渡措辭）**：兩個出口尚未建置——①退款/聯絡自助入口（規劃文件 D-A，**P0**）②線上FAQ頁面（D-B）。本庫 PAY/CMP 已改為**過渡期措辭：付款後沒印好→只導「改用另一台重印、不扣款」，不承諾現場退款**（決策 1B）；扣款爭議→致歉＋保留交易紀錄＋告知線上申請即將開放。HLP 類以「語音引導＋機台螢幕」為主，FAQ 連結待 D-B 上線再播。〔D-A 上線後〕標註處為目標措辭。
 > 場域：**一店三台、每台間隔約 1 公尺**，故「改用旁邊另一台機器」對客人移動成本極低，為硬體問題首選自助解。
 > 實作時轉成 `config/guidance.jsonl`，欄位：`guidance_id, intent, triggers[], tts_zh, tts_en`。
 
@@ -96,7 +96,7 @@
 
 ## PAY — payment｜付款操作（16）
 
-> 退款/查證走「手機操作頁面填聯絡資料自助申請」；出紙失敗可改用另一台重印（v1 無自動退款機制）。
+> 過渡期：付款後沒出紙 → 導「改用另一台重印、不扣款」，**不承諾現場退款**；退款/查證入口（D-A）上線後再開放。
 
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
@@ -106,14 +106,14 @@
 | PAY-04 | 可以刷悠遊卡嗎 | 是否支援以付款畫面顯示為準，請依畫面選擇方式。 | Whether it's supported is shown on the payment screen; choose as displayed. |
 | PAY-05 | 可以刷卡嗎 | 信用卡是否支援以付款畫面為準，依畫面操作即可。 | Card support is shown on the payment screen; follow the on-screen steps. |
 | PAY-06 | 可以投現金嗎 | 是否收現金以機台設定為準，畫面會顯示可用的付款方式。 | Cash acceptance depends on the machine; the screen shows available methods. |
-| PAY-07 | 付款了卻沒出紙 | 請先確認出紙匣並稍等約 30 秒；若仍沒出紙，您可以直接改用旁邊另一台機器重印，或在手機操作頁面填寫聯絡資料申請退款處理。 | Check the output tray and wait ~30s; if nothing prints, use one of the other machines, or submit your contact details on the phone page to request a refund. |
-| PAY-08 | 我好像被扣兩次 | 若擔心重複扣款，請在手機操作頁面填寫聯絡資料，提出查證與退款申請。 | If you're worried about a double charge, submit your contact details on the phone page to request a check and refund. |
+| PAY-07 | 付款了卻沒出紙 | 請先確認出紙匣並稍等約 30 秒；若仍沒出紙，請直接改用旁邊另一台機器重印，未完成的列印不會扣款。〔D-A 上線後加：或在手機操作頁面填聯絡資料申請退款〕 | Check the output tray and wait ~30s; if nothing prints, just reprint on one of the other machines—unfinished jobs aren't charged. |
+| PAY-08 | 我好像被扣兩次 | 不好意思造成困擾；目前現場無法直接處理重複扣款，請先保留您的交易紀錄，線上退款申請功能即將開放，屆時可提出查證。 | Sorry for the trouble—double charges can't be handled on-site yet; please keep your transaction record, online refund requests are coming soon. |
 | PAY-09 | 付款失敗 | 請稍候再試一次，或換一種付款方式；也可以直接改用旁邊另一台機器。 | Try again shortly or use another payment method; you can also use one of the other machines. |
 | PAY-10 | 付款的 QR 在哪 | 確認預覽後，付款 QR 會顯示在手機或機台畫面上。 | After the preview, the payment QR appears on your phone or the screen. |
 | PAY-11 | 有收據或發票嗎 | 電子發票或收據會依畫面顯示，您可以在手機操作頁面查看。 | E-receipts appear on screen; you can view them on the phone page. |
-| PAY-12 | 金額好像不對 | 金額依頁數、彩色與紙張自動計算；有疑問可在手機操作頁面填聯絡資料申請查證。 | The amount is based on pages, color, and paper; submit your details on the phone page to request a check. |
+| PAY-12 | 金額好像不對 | 金額會依頁數、彩色與紙張大小自動計算，付款前畫面都會先顯示金額；若仍有疑問，請先保留交易紀錄，線上查證功能即將開放。 | The amount is based on pages, color, and paper, and shows before you pay; if in doubt, keep your record—online checks are coming soon. |
 | PAY-13 | 付到一半中斷了 | 未完成付款不會列印也不會扣款，請重新操作一次。 | An incomplete payment won't print or charge; please start again. |
-| PAY-14 | 我要退款 | 需要退款請在手機操作頁面填寫聯絡資料提出申請，我們會為您處理。 | For a refund, submit your contact details on the phone page and we'll process it. |
+| PAY-14 | 我要退款 | 不好意思，若是付款後沒印出來，您可以直接改用旁邊另一台機器重印，未完成的列印不會扣款；線上退款申請功能即將開放。 | Sorry—if a paid job didn't print, just reprint on one of the other machines (unfinished jobs aren't charged); online refund requests are coming soon. |
 | PAY-15 | 有找零或低消嗎 | 相關規則以畫面與機台設定為準，操作前畫面會顯示金額。 | Change and minimum-charge rules follow the machine settings; the amount shows before you pay. |
 | PAY-16 | 付款後多久會印 | 付款成功後通常幾秒內就會開始出紙。 | Printing usually starts within seconds after a successful payment. |
 
@@ -161,18 +161,18 @@
 
 ## CMP — complaint｜客訴 / 抱怨（8）
 
-> 自助申訴/退款走「手機操作頁面填聯絡資料」；不導真人、不承諾賠償。
+> 過渡期（退款入口未上線）：付款後沒印好 → 導「改用另一台重印、不扣款」；其餘費用爭議 → 致歉 + 保留交易紀錄 + 告知線上申請即將開放。**不導真人、不承諾賠償。**
 
 | id | trigger | 中文引導（TTS） | English |
 |---|---|---|---|
-| CMP-01 | 我被亂扣錢 | 不好意思造成困擾，您可以在手機操作頁面填寫聯絡資料，提出查證與退款申請，我們會為您處理。 | Sorry for the trouble—submit your contact details on the phone page to request a check and refund, and we'll handle it. |
-| CMP-02 | 我要退費 | 需要退費請在手機操作頁面填寫聯絡資料提出申請，我們會為您處理。 | For a refund, submit your contact details on the phone page and we'll process it. |
-| CMP-03 | 這台爛死了不能用 | 很抱歉造成不便，您可以直接改用旁邊另一台機器；若有費用問題可在手機操作頁面填聯絡資料申請處理。 | Sorry for the inconvenience—use one of the other machines; for any charge issue, submit your details on the phone page. |
-| CMP-04 | 印壞了你要賠我 | 很抱歉，若是付款後沒印好，請在手機操作頁面填寫聯絡資料申請退款處理。 | I'm sorry—if a paid job didn't print well, submit your details on the phone page to request a refund. |
-| CMP-05 | 浪費我時間 | 很抱歉耽誤您的時間，您可以改用旁邊另一台機器，或在手機操作頁面填聯絡資料反映。 | Sorry for the delay—try another machine, or leave your details on the phone page. |
-| CMP-06 | 我要客訴 / 投訴 | 了解，您的意見很重要，可以在手機操作頁面填寫聯絡資料反映，我們會處理。 | Understood—your feedback matters; leave your details on the phone page and we'll follow up. |
-| CMP-07 | 我要找負責人 | 您可以在手機操作頁面填寫聯絡資料，我們會主動與您聯繫。 | Leave your contact details on the phone page and we'll reach out to you. |
-| CMP-08 | 你們服務很差 | 很抱歉讓您有不好的體驗，您可以在手機操作頁面填聯絡資料反映，我們會改進。 | Sorry for the poor experience—leave your details on the phone page and we'll improve. |
+| CMP-01 | 我被亂扣錢 | 不好意思造成困擾；目前現場無法直接處理扣款爭議，請先保留您的交易紀錄，線上退款申請功能即將開放，屆時可提出查證。 | Sorry for the trouble—charge disputes can't be handled on-site yet; please keep your transaction record, online refund requests are coming soon. |
+| CMP-02 | 我要退費 | 不好意思，若是付款後沒印出來，您可以直接改用旁邊另一台機器重印，未完成的列印不會扣款；線上退款申請功能即將開放。 | Sorry—if a paid job didn't print, just reprint on one of the other machines (unfinished jobs aren't charged); online refund requests are coming soon. |
+| CMP-03 | 這台爛死了不能用 | 很抱歉造成不便，您可以直接改用旁邊另一台機器，未完成的訂單不會扣款。 | Sorry for the inconvenience—please use one of the other machines; unfinished jobs aren't charged. |
+| CMP-04 | 印壞了你要賠我 | 很抱歉，若是付款後沒印好，您可以直接改用旁邊另一台機器重印，未完成的列印不會扣款；線上退款申請功能即將開放。 | I'm sorry—if a paid job didn't print well, reprint on one of the other machines (unfinished jobs aren't charged); online refund requests are coming soon. |
+| CMP-05 | 浪費我時間 | 很抱歉耽誤您的時間，您可以直接改用旁邊另一台機器，未完成的列印不會扣款。 | Sorry for the delay—please use one of the other machines; unfinished jobs aren't charged. |
+| CMP-06 | 我要客訴 / 投訴 | 了解，您的意見對我們很重要；線上意見回報功能即將開放，屆時可留下您的意見，我們會處理。 | Understood—your feedback matters; an online feedback channel is coming soon and we'll follow up. |
+| CMP-07 | 我要找負責人 | 這是無人門市現場沒有專人；線上聯絡功能即將開放，屆時可留下聯絡方式由我們與您聯繫。 | This is an unmanned store with no staff on-site; an online contact channel is coming soon for us to reach you. |
+| CMP-08 | 你們服務很差 | 很抱歉讓您有不好的體驗，我們會持續改進；線上意見回報功能即將開放。 | Sorry for the poor experience—we'll keep improving; an online feedback channel is coming soon. |
 
 ---
 
