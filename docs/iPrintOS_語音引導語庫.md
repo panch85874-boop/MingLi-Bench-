@@ -7,7 +7,6 @@
 > **退款過渡（決策 1B）**：付款後沒印好 → 只導「改用另一台重印、不扣款」，**不承諾現場退款**；扣款爭議 → 致歉＋請客人保留交易紀錄＋告知線上申請即將開放。退款自助入口（D-A）為待開發。
 > **收錄範圍：只收與 iPrintOS 無人門市相關的會話**——列印/影印/掃描/付款/發票/機台/紙張耗材/店務環境/隱私/招呼互動。**與營業無關的閒聊（如年齡、天氣、時間、純聊天）一律不收**；客人若講無關的話，由 GEN-16 統一拉回列印主題。
 > 原則：每句簡短（口語、適合 TTS）；模型只從本庫選句、不自由生成。實作轉成 `config/guidance.jsonl`：`guidance_id, intent, triggers[], tts_zh, tts_en`。
-> ⚠️ 標 `〔需店家確認〕` 的答案需各店填入或張貼現場告示（見文末清單）。
 
 ---
 
@@ -285,7 +284,7 @@
 | LOC-01 | 幾點營業 | 本店 24 小時營業、全年無休。 | We're open 24 hours, every day of the year. |
 | LOC-02 | 開到幾點 | 本店 24 小時營業，全天候開放。 | We're open 24 hours a day. |
 | LOC-03 | 假日有開嗎 | 有，本店全年無休、24 小時營業。 | Yes—open 24 hours, every day, all year. |
-| LOC-04 | 地址在哪 | 地址請參考門口告示或您的地圖定位。〔需店家確認〕 | The address is on the door notice or your map app. |
+| LOC-04 | 地址在哪 | 地址請參考門口告示或您的地圖定位。 | The address is on the door notice or your map app. |
 | LOC-05 | 怎麼去 / 在哪裡 | 位置請參考您手機的地圖定位。 | Please check your map app for the location. |
 | LOC-06 | 有停車位嗎 | 不好意思，本店沒有提供停車位。 | Sorry—we don't have parking. |
 | LOC-07 | 可以停哪 | 本店沒有專用停車位，請利用周邊合法停車空間。 | We have no parking; please use nearby legal parking. |
@@ -389,7 +388,7 @@
 - **發票：所有消費開立電子發票**（無紙本、不支援統編、無手機條碼自動捐贈公益；低消 2 元）— INV 全組、PAY-11/15/17
 
 ### 仍需店家確認 / 現場張貼
-- 地址與精確位置 — LOC-04（目前導向「地圖定位 / 門口告示」）
+- （無）門市事實已全數確認；地址統一導向「地圖定位 / 門口告示」，不另填入。
 
 ### v0.4 擴充摘要
 - 由 100 句擴到 **230 句**，新增 GEN(招呼互動)、CPY(一般影印)、FN(進階功能)、SUP(紙張耗材)、INV(發票)、LOC(店務環境)、PRIV(隱私) 七個常用會話群組，並補各類口語/台味變體。
