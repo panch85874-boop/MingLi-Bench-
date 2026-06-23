@@ -12,7 +12,7 @@
 |---|---|---|
 | 1 | 部署 | 每店一台**落地 edge box**（店控主機旁） |
 | 2 | 機台 | Windows + 瀏覽器（非觸控一體機）+ **外接 USB 指向性麥克風** |
-| 3 | 對外動作 | **只用 TTS 語音引導**，不切畫面、不轉人工；無對應資料就停止並告知客人 |
+| 3 | 對外動作 | **只用 TTS 語音引導**，不切畫面、不轉人工；**模糊比對、永遠回最接近的一句**（不設門檻、不說「沒資料」）；唯一例外是完全沒聽到語音時請客人再說一次 |
 | 4 | 語言 | **國語 + 英文**（外籍客） |
 | 5 | ASR 位置 | **在地端為主**；落地主機預算受限才改雲端（ASR Adapter 可插拔切換） |
 | 6 | ASR 引擎 | 第一版**只做 faster-whisper**；Nemotron 對照組延後 |
@@ -25,7 +25,7 @@
 
 ## 1. 一句話總結
 
-監視系統偵測到客人走進無人影印店 → edge box 上的語音助理主動問候 → 聽客人講一句卡在哪 → 分類成 7 種固定意圖 → **播一段簡短的固定語音引導**；**比對不到就直說「這個我這邊沒有資料」並結束**。全程在地端、不碰錢、不碰機台、不轉人工。
+監視系統偵測到客人走進無人影印店 → edge box 上的語音助理主動問候 → 聽客人講一句卡在哪 → **對 100 句固定引導語做模糊語意比對，永遠挑出最接近的一句播出**（不設信心門檻、不回「沒資料」）；只有完全沒聽到語音時才請客人再說一次。全程在地端、不碰錢、不碰機台、不轉人工。
 
 ---
 
@@ -50,12 +50,12 @@
 │  [M2 ASR Adapter] faster-whisper (本地權重, 中/英自動偵測)                      │
 │        │  text + lang + confidence + latency                                   │
 │        ▼                                                                       │
-│  [M3 Intent Classifier] L1 中英關鍵詞 → L2 多語句向量 → (低信心) unknown        │
-│        │  {intent, score}                                                      │
+│  [M3 Matcher] 對 100 句語庫做語意向量比對 → 取最相似 top-1                      │
+│        │  {guidance_id, intent, score}  (永遠有結果, 除非完全沒語音)            │
 │        ▼                                                                       │
-│  [M4 Router] ★安全閘門★ 查問答庫白名單                                          │
-│        │   ├─ 命中且有引導 → 回 guidance_id                                     │
-│        │   └─ 未命中 / 低信心 / unknown → fallback「資料庫沒有, 無法處理」        │
+│  [M4 Router] ★安全閘門★ 只在固定問答庫內挑最接近的一句                          │
+│        │   ├─ 有聽到問句 → 回最相似的 guidance_id (永遠回一句)                  │
+│        │   └─ 完全沒聽到語音 (no_speech) → 請客人再說一次                       │
 │        ▼                                                                       │
 │  ┌──────────────┬───────────────────┐                                         │
 │  ▼              ▼                                                              │
@@ -68,7 +68,7 @@
 **架構紅線（不可違反）**
 
 - 語音助理**不連 iPrintOS 後端、不連金流、不連機台 Driver**。它是旁掛的獨立服務。
-- M4 Router 只查「固定問答庫白名單」，命不中一律走 `fallback_no_data`，**不猜、不下結論、不轉人工**。
+- M4 Router 只在「固定問答庫白名單」內挑**最接近的一句**回覆——答案永遠來自這 100 句、**不自由生成**；它**不猜事實、不下結論、不轉人工、不碰金流/機台**。模糊比對只決定「挑哪一句」，不會超出白名單。
 - M8 **只存文字與指標，永不存原始音檔**。
 - 監視系統影像只用來產生「有人進入」這一個布林訊號，**語音端不取畫面、不做人臉辨識、不存 frame**（店家原有的安防錄影是另一套系統，與此無關）。
 
@@ -81,8 +81,8 @@
 | M0 | Presence Trigger | 收店內監視系統「有人進入」訊號 → 觸發問候 | 優先 ONVIF/HTTP webhook；備援 IO 乾接點；最後備援拉 RTSP 自判 | 不存畫面、不辨識人臉 |
 | M1 | VAD 收音窗 | 問候後開 5~10s 收音，切句、去背景噪音 | `silero-vad` / `webrtcvad` + 指向性 USB 麥；最短語音長度防誤觸發 | 不做喚醒詞 |
 | M2 | ASR Adapter | 語音→文字（中/英自動偵測），輸出 text/lang/conf/latency；可插拔本地/雲端 | `faster-whisper`（本地 small/medium）；雲端 adapter 為預算備援 | 不做語意判斷 |
-| M3 | Intent Classifier | 文字→7 類意圖之一或 `unknown` | L1 中英關鍵詞 + L2 多語句向量（`bge-m3` / multilingual）；門檻以下=unknown | 不執行動作、不下結論 |
-| M4 | Router ★ | 安全閘門：查問答庫白名單 → 回 guidance_id 或 fallback | 純規則表（讀 `intents.json` + `guidance` 庫），無 LLM 決策 | **不碰金流/機台/人工** |
+| M3 | Matcher（模糊比對）| 文字→對 100 句語庫做語意相似度，**永遠回最相似 top-1** | 多語句向量（`bge-m3` / multilingual）算 cosine；**不設門檻**、記分數供調校；keywords 僅作輔助加權 | 不執行動作、不下結論 |
+| M4 | Router ★ | 安全閘門：只在問答庫白名單內挑最接近的一句 → 回 guidance_id | 純規則（讀 `intents.json` + `guidance` 庫），無 LLM 決策 | **不碰金流/機台/人工；不超出白名單** |
 | M5 | TTS | 播問候語 + 固定引導語（中/英） | 在地端 `piper`（繁中+英文）；PoC 可先用預錄音檔 | 不自由生成台詞（只播固定句庫） |
 | M8 | Event Log | 記錄全鏈路供 benchmark 與稽核 | SQLite（本地）；**不含音檔** | — |
 | M9 | Orchestrator | 串接 M0→M1→M2→M3→M4→M5 的狀態機服務 | FastAPI + WebSocket / 本地行程 | — |
@@ -93,7 +93,7 @@
 
 ## 4. Intent Schema（JSON 草案 v0.2）
 
-動作模型簡化為：命中 → `play_guidance`（指向引導語庫的 guidance group）；未命中 → `fallback_no_data`。**已移除 `needs_human` 與所有升級動作。**
+動作模型簡化為：聽到問句 → **模糊語意比對，永遠回最接近的 1 句** `play_guidance`；完全沒聽到語音 → `ask_repeat`。**已移除 `needs_human`、所有升級動作，以及「無資料就說沒資料」的 fallback。** 下方 `intents` 仍保留分群（keywords 僅作輔助/標籤），但**實際比對是跨全部 100 句語庫取最相似 top-1**，群組由勝出的那句反推。
 
 ```json
 {
@@ -157,22 +157,34 @@
       "guidance_group": "complaint"
     },
     {
-      "id": "unknown",
-      "desc": "系統保留：低信心/無法分類/雜訊",
-      "action": "fallback_no_data",
-      "note": "連續 2 次 unknown → 播『您可以直接在機台螢幕操作，或參考線上常見問題頁面』後結束"
+      "id": "no_speech",
+      "desc": "系統保留：完全沒聽到語音（VAD 無語音 / ASR 空字串 / 純噪音）。注意：這不是「問題答不出來」，而是「根本沒有問題可比對」",
+      "action": "ask_repeat",
+      "note": "連續 2 次完全沒聽到 → 播『不好意思我沒聽清楚，您可以直接在機台螢幕操作』後結束收音窗"
     }
   ],
   "routing": {
-    "min_confidence": 0.55,
-    "below_confidence_action": "fallback_no_data",
-    "fallback_no_data_tts": {
-      "zh": "抱歉，這個問題我這邊沒有資料；您可以直接在機台螢幕操作，或參考線上常見問題頁面。",
-      "en": "Sorry, I don't have that info—you can use the on-screen menu or check our online FAQ."
+    "strategy": "always_nearest",
+    "_comment": "模糊語意比對：對 100 句引導語的 trigger 做 embedding，與客人問句取 cosine 相似度，永遠回相似度最高的 top-1（不設『答不出就說沒資料』的門檻）。只要有聽到問句就一定給最接近的答案。",
+    "match_unit": "guidance_entry",
+    "return": "top1_nearest",
+    "min_confidence": null,
+    "fallback_no_data_action": "disabled",
+    "log_similarity_score": true,
+    "soft_confirm": {
+      "enabled": false,
+      "threshold": 0.40,
+      "_comment": "選用、預設關閉。若日後發現太離題的問句被硬塞答案，可開啟：相似度低於門檻時，答案前加一句『您是不是想問…？』軟性確認，仍照樣給最接近的那句。",
+      "prefix_zh": "您是不是想問：",
+      "prefix_en": "Did you mean: "
     }
   }
 }
 ```
+
+> 註 1（比對邏輯）：**模糊比對、永遠回最接近**。不要求問句與語庫完全相符；對全部 100 句的 trigger 做語意向量比對，取**最相似的 1 句**直接播出。**已移除信心門檻與「無資料」回覆**——只要客人有講出問句，就一定給一個最接近的答案。`log_similarity_score` 仍會記錄相似度，供事後調校語庫覆蓋率（哪些問句總是低分→補語料），但**不影響當下是否回答**。
+>
+> 註 2：唯一不回答的情況是 `no_speech`（根本沒收到語音/純噪音），這不是「答不出」而是「沒有問題可比對」，請客人再說一次。
 
 > 註：核心原則為**無人店「自助優先、不靠真人」**。`machine_error` → 依螢幕自助 + 改用店內另外兩台機器；`complaint`/付款爭議 → 手機操作頁面填聯絡資料自助申請；`human_help` → 語音引導 + 線上常見問題頁面。唯一外部聯絡為火災/受傷等緊急 → 119/110。**全程不導真人客服電話。**
 
@@ -185,9 +197,8 @@
 2. [M5] 播問候「您好，需要幫忙嗎?」(中) / 偵測到後續英文則切英文問候
 3. [M1] 開 8s 收音窗 → 客人說「我要印手機裡的檔案」→ 切句
 4. [M2] faster-whisper → text="我要印手機裡的檔案" lang=zh conf=0.92 latency=380ms
-5. [M3] L1 命中「手機」→ L2 相似度 0.88 (>0.55) → intent=print_mobile
-6. [M4] 查白名單 print_mobile → action=play_guidance, group="print_mobile"
-        → 選該 group 的入口引導句 PM-01
+5. [M3] 對 100 句語庫比對 → 最相似 = PM-01 (相似度 0.88) → intent=print_mobile
+6. [M4] PM-01 在白名單內 → action=play_guidance
 7. [M5] 播 PM-01「好的，請拿手機掃描機台上的 QR Code，就能上傳檔案列印。」
 8. [M8] 寫入 {ts, store_id, kiosk_id, text, intent=print_mobile, score=0.88,
         guidance_id=PM-01, asr_latency_ms=380, e2e_latency_ms=720, result=ok}
@@ -203,13 +214,12 @@
 
 ```
 1~4. 同上：收音 → ASR → text="我付款了可是沒有出紙"
-5. [M3] L1 命中「付款」「沒出紙」→ intent=payment  score=0.81
-6. [M4] 查白名單 payment → action=play_guidance, group="payment"
-        → 命中子題 PAY-07「付款後沒出紙」
+5. [M3] 對 100 句語庫比對 → 最相似 = PAY-07「付款後沒出紙」(score=0.81) → intent=payment
+6. [M4] PAY-07 在白名單內 → action=play_guidance
    ❗v1 不讀 iPrintOS reconciliation（8-a），所以不查真實出紙狀態、不判斷、不退款
-7. [M5] 播 PAY-07（固定引導，自助優先）:
-        「請先確認出紙匣並稍等約 30 秒；若仍沒出紙，您可以直接改用旁邊
-          另一台機器重印，或在手機操作頁面填寫聯絡資料申請退款處理。」
+7. [M5] 播 PAY-07（固定引導，過渡措辭，自助優先）:
+        「請先確認出紙匣並稍等約 30 秒；若仍沒出紙，請直接改用旁邊
+          另一台機器重印，未完成的列印不會扣款。」
 8. [M8] 寫入完整鏈路 (guidance_id=PAY-07)
 9. 結束
 ```
@@ -240,7 +250,7 @@
 
 > **這是兩個不同的東西，別混：**
 
-1. **100 句測試語料**（`corpus.jsonl`）：模擬**客人會講的話**，用來驗證辨識率與 intent 命中率。欄位 `text, gold_intent, lang(zh|en), style(標準|口語|台味), noise(clean|noisy)`。含 7 類各 ~13 句 + 誤觸發專組（gold=unknown）。
+1. **100 句測試語料**（`corpus.jsonl`）：模擬**客人會講的話**，用來驗證辨識率與**最近鄰命中是否合理**。欄位 `text, gold_guidance_id（最該命中的那句）, gold_intent, lang(zh|en), style(標準|口語|台味), noise(clean|noisy)`。含 7 類各 ~13 句 +「**離題/邊緣問句專組**」——因為現在**永遠回最接近的一句**，這組用來檢查離題問句被導到的最近鄰是否還算合理（top-1 命中率、人工標「可接受/不可接受」），不再有 gold=unknown。另含少量 `no_speech`（純噪音/靜音）樣本驗證「沒語音才請客人再說一次」。
 2. **100 句引導語庫**（`iPrintOS_語音引導語庫.md` → 之後轉 `guidance.jsonl`）：**系統要播給客人的固定回答**。依 7 意圖分群，每句有 `guidance_id, intent, trigger 範例, 中文引導(TTS), English guidance`。**本輪已產出**。
 
 ---
@@ -252,7 +262,7 @@
 | D1 | repo 骨架 + `intents.json` + `guidance.jsonl`（由引導語庫轉）+ Event Log schema | schema/guidance 載入測試通過 |
 | D2 | ASR Adapter（faster-whisper, 中英）+ 離線評分腳本（CER/WER/latency） | 餵 wav → 出文字+指標 |
 | D3 | Intent Classifier（L1 中英關鍵詞 + L2 多語向量）+ 100 句測試語料 + Hit Rate 報表 | Intent Hit Rate ≥ 90% |
-| D4 | Router（白名單 + fallback_no_data）+ 安全測試（不可碰金流/機台/人工/後端） | 紅線案例全綠 |
+| D4 | Router（白名單內取最近鄰，永遠回一句）+ 安全測試（不可碰金流/機台/人工/後端） | 紅線案例全綠；離題問句皆落在白名單內 |
 | D5 | Orchestrator 狀態機：Presence(先用假訊號/按鍵模擬)→問候→VAD→ASR→Intent→Router→TTS | 講一句 → 正確播引導 |
 | D6 | M0 真接監視訊號（ONVIF/HTTP/IO 擇一）+ TTS piper 中英固定句庫 | 有人進入 → 自動問候 → 對答 |
 | D7 | 噪音情境測試 + benchmark 報表 + Demo 腳本 + 規格建議（edge box） | 100 句 ≥ 90%、E2E ≤ 1s 抽測 |
@@ -266,12 +276,13 @@
 | # | 風險 | 解法 |
 |---|---|---|
 | R1 | 監視系統不支援 ONVIF/RTSP/IO，訊號接不出來 | D6 前先驗證；接不出來就退用「機台旁按鍵」觸發；最後備援拉 RTSP 自判 |
-| R2 | 收音窗內店內噪音誤辨 | 指向性 USB 麥 + VAD 能量門檻 + 最短語音長度 + 低信心走 fallback |
+| R2 | 收音窗內店內噪音誤辨 | 指向性 USB 麥 + VAD 能量門檻 + 最短語音長度；純噪音判為 `no_speech` 請客人再說一次（不硬塞答案）|
 | R3 | 落地主機算力不足達不到 500ms | 用 faster-whisper small + 收窗式（非串流）；規格不足時 ASR 改雲端備援(5) |
 | R4 | 模型越權碰金流/機台 | 架構上**根本不連** iPrintOS 後端/金流/Driver；D4 紅線測試 |
-| R5 | 客人講真問題卻被「無資料」擋掉不滿 | 引導語庫盡量覆蓋常見問題（100 句）；machine_error → 改用另一台/螢幕自助；complaint → 手機操作頁面自助申請 |
+| R5 | 客人講真問題卻被「無資料」擋掉不滿 | **已改為永遠回最接近的一句，不再有「無資料」回覆**；100 句盡量覆蓋常見問題 |
+| R5b | 永遠回最近鄰 → **離題問句被硬塞不相干答案**（過度自信）| 100 句廣覆蓋壓低離題機率；記錄相似度找出長期低分問句補語料；必要時開啟 `soft_confirm`（低分時加「您是不是想問…？」軟性確認）|
 | R9 | **語音導向的出口（退款入口、線上FAQ）尚未建置**，客人照講卻找不到地方去 | 見下方〈待開發相依清單〉；退款入口列 **P0**；FAQ 頁已由本 100 句語庫產出草稿（`docs/faq.html`）。**決策 1B：入口上線前退款類只導「改用另一台重印、不扣款」、不承諾現場退款**；扣款爭議致歉＋請客人保留交易紀錄 |
-| R6 | 連續 unknown 造成鬼打牆 | 連 2 次 unknown → 播「建議改用機台螢幕操作或參考線上常見問題頁面」後結束收音窗 |
+| R6 | 連續沒聽到語音造成鬼打牆 | 連 2 次 `no_speech` → 播「不好意思我沒聽清楚，您可以直接在機台螢幕操作」後結束收音窗 |
 | R7 | TTS 自由生成不當內容 | 只播固定句庫，模型不生成台詞 |
 | R8 | 鏡頭/音訊隱私疑慮 | 影像只取布林訊號不存 frame；音訊只存文字不存音檔；現場貼告示 |
 
@@ -298,7 +309,7 @@
 ## 11. 第一版「不做」事項（明確劃線）
 
 - ❌ 不切任何畫面（不推客人手機 session、不設輔助螢幕）
-- ❌ 不轉人工、不開升級單（無資料就停止並告知）
+- ❌ 不轉人工、不開升級單（永遠在 100 句白名單內回最接近的一句，不自由生成）
 - ❌ 不連 iPrintOS 後端（不讀付款/出紙/機台狀態）
 - ❌ 不接金流、不決定退款、不承諾賠償
 - ❌ 不操作機台、不碰 Fuji Driver / SNMP
@@ -324,8 +335,8 @@ iprintos_voice/
 │   ├── presence.py               # M0 收監視訊號（ONVIF/HTTP/IO/RTSP）
 │   ├── vad.py                    # M1 收音窗
 │   ├── asr/{base,whisper_adapter,cloud_adapter}.py   # M2 可插拔
-│   ├── intent.py                 # M3 中英 L1+L2
-│   ├── router.py                 # M4 ★白名單 + fallback_no_data★
+│   ├── matcher.py                # M3 語意向量比對，永遠回最近鄰 top-1
+│   ├── router.py                 # M4 ★白名單內取最接近的一句★
 │   ├── tts.py                    # M5 piper 固定句庫
 │   ├── event_log.py              # M8 SQLite（不存音檔）
 │   └── server.py                 # M9 狀態機
@@ -355,4 +366,4 @@ iprintos_voice/
 
 ### 給工程師的一句話
 
-> 先把「**假裝有人進入 → 問候 → 講一句 → VAD → ASR → intent → Router 白名單 → 命中播引導 / 未命中播『無資料』 → 寫 log**」這條最短主幹打通（D5 前），D6 才接真實監視訊號。**Router 紅線測試先寫**：這套東西的唯一鐵則是——它連碰錢和機台的能力都沒有。
+> 先把「**假裝有人進入 → 問候 → 講一句 → VAD → ASR → 語意比對取最近鄰 → Router 白名單內挑最接近的一句 → 播引導 → 寫 log**」這條最短主幹打通（D5 前），D6 才接真實監視訊號。**Router 紅線測試先寫**：這套東西的唯一鐵則是——它連碰錢和機台的能力都沒有，且答案永遠來自那 100 句、不自由生成。

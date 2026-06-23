@@ -12,14 +12,16 @@
 
 ---
 
-## SYS — 系統句（問候 / 無資料 / 收尾）（4）
+## SYS — 系統句（問候 / 沒聽清楚 / 收尾）（4）
+
+> 比對邏輯：**只要聽到問句就一定回最接近的一句**，沒有「無資料」回覆。SYS-03/04 只用在**完全沒聽到語音**（no_speech）的情況。
 
 | id | trigger（情境） | 中文引導（TTS） | English |
 |---|---|---|---|
 | SYS-01 | 偵測到有人進入 | 您好，歡迎光臨，需要我幫忙嗎？ | Hi, welcome. Do you need any help? |
 | SYS-02 | 客人以英文回應 | Hi! How can I help you with printing or copying today? | Hi! How can I help you with printing or copying today? |
-| SYS-03 | 比對不到 / 低信心 | 抱歉，這個問題我這邊沒有資料；您可以直接在機台螢幕操作，或參考線上常見問題頁面。 | Sorry, I don't have that info—you can use the on-screen menu or check our online FAQ. |
-| SYS-04 | 連續 2 次聽不懂 | 不好意思我沒聽清楚，您可以直接在機台螢幕操作，或參考線上常見問題頁面。 | Sorry, I didn't catch that—please use the on-screen menu or check our online FAQ. |
+| SYS-03 | 完全沒收到語音 / 純噪音（no_speech） | 不好意思，我沒聽清楚，可以請您再說一次嗎？ | Sorry, I didn't catch that—could you say it again? |
+| SYS-04 | 連續 2 次沒聽到 → 收尾 | 不好意思我還是沒聽清楚，您可以直接在機台螢幕操作。 | Sorry, I still didn't catch that—please use the on-screen menu. |
 
 ---
 
