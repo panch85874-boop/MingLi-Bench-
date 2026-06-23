@@ -71,7 +71,7 @@
 | PM-16 | Word 排版跑掉了 | Word 可免轉檔直接列印；若要排版完全一致，也可自行先轉成 PDF 再上傳。 | Word prints directly—no conversion needed; for an exact layout you may convert to PDF yourself first. |
 | PM-17 | 手機沒網路怎麼辦 | 掃機台 QR Code 上傳檔案時會自動連線傳檔，不需另外上網；其他用途請用手機行動網路。 | Scanning the QR auto-connects just to send your file—no internet needed; use mobile data for anything else. |
 | PM-18 | 上傳到一半想取消 | 直接關閉手機頁面即可取消，未付款不會列印也不會收費。 | Just close the page to cancel; nothing prints or charges before payment. |
-| PM-19 | 可以縮放或滿版嗎 | 在手機設定可選縮放或滿版列印，預覽會即時更新。 | Choose scaling or fit-to-page; the preview updates instantly. |
+| PM-19 | 可以縮放或滿版嗎 | 放大縮小提供少數固定倍率，也可選滿版或保留邊界，預覽會更新。 | Enlarge/reduce offers a few fixed ratios; you can also choose fit-to-page or margins—the preview updates. |
 | PM-20 | 列印怎麼算錢 | 系統會依頁數、黑白或彩色、紙張大小自動計價，付款前會顯示金額。 | Price is by pages, color, and size; shown before payment. |
 | PM-21 | 印一份要等多久 | 付款後通常幾秒到十幾秒就會出紙，份數多會久一點。 | Usually seconds after payment; more copies take longer. |
 | PM-22 | 我的檔案會被留下來嗎 | 您的檔案只暫存在店內主機處理，列印後會自動清除，不會上傳雲端。 | Your file is processed in-store and cleared after printing—never uploaded. |
@@ -152,7 +152,7 @@
 | SCN-14 | 掃描的檔案會留著嗎 | 掃描檔只暫存於店內主機，完成寄送或存檔後即清除，不上雲。 | Scans are processed in-store and cleared after sending. |
 | SCN-15 | 掃描到手機可以嗎 | 可選掃描到 Email，再用手機收信即可。 | Use Scan-to-Email and open it on your phone. |
 | SCN-16 | 掃描存成一個檔 | 多頁用送稿器會合成一個 PDF。 | Multiple pages in the feeder combine into one PDF. |
-| SCN-17 | 掃描書本 | 把書翻開壓在玻璃面板上逐頁掃描。 | Open the book on the glass and scan page by page. |
+| SCN-17 | 掃描書本 | 不好意思，因著作財產權問題，本店不支援掃描書本。 | Sorry—due to copyright, we don't support scanning books. |
 | SCN-18 | 掃完可以改檔名嗎 | 可在寄送前依畫面設定檔名或主旨。 | Set the file name or subject before sending. |
 
 ---
@@ -171,11 +171,11 @@
 | FN-08 | 合併多個 PDF | 上傳頁面可加入多個檔案一起列印。 | Add multiple files on the upload page to print together. |
 | FN-09 | 加浮水印 | 系統不提供浮水印，建議在原檔處理好再上傳。 | No watermark feature—add it to your file first. |
 | FN-10 | 印黑白省錢 | 在設定選黑白即可，費用較彩色低。 | Choose black-and-white to save; it's cheaper than color. |
-| FN-11 | 一頁印多頁 / 多合一 | 部分機型支援多合一，請看畫面設定。 | Some machines support N-up; check on-screen settings. |
+| FN-11 | 一頁印多頁 / 多合一 | 可在畫面選擇多合一（一頁印多頁），依設定會更新預覽。 | Choose N-up (multiple pages per sheet) on screen; the preview updates. |
 | FN-12 | 自動雙面 | 在設定選雙面列印即可。 | Choose double-sided in settings. |
 | FN-13 | 印信封 | 不好意思，本店不支援信封列印功能。 | Sorry—envelope printing isn't supported. |
 | FN-14 | 印貼紙 / 標籤紙 | 不好意思，本店目前不提供特殊紙材。 | Sorry—we don't offer special media. |
-| FN-15 | 縮放到指定比例 | 在設定輸入縮放比例，預覽會更新。 | Enter a scaling ratio in settings; the preview updates. |
+| FN-15 | 縮放到指定比例 | 放大縮小提供少數固定倍率，請在畫面選擇。 | Enlarge/reduce offers a few fixed ratios—choose one on screen. |
 | FN-16 | 邊界 / 滿版列印 | 在設定選滿版或保留邊界。 | Choose full-bleed or margins in settings. |
 
 ---
@@ -241,7 +241,7 @@
 | INV-03 | 載具怎麼設 | 本店所有消費都開電子發票；載具與發票設定是在付款時由電子支付系統處理。 | Every purchase gets an e-invoice; carrier and invoice settings are handled by the payment system at checkout. |
 | INV-04 | 統一編號 | 不好意思，電子發票目前不支援輸入統一編號。 | Sorry—the e-invoice doesn't support a business tax number. |
 | INV-05 | 發票中獎怎麼領 | 電子發票的對獎與中獎通知，依電子發票平台規定辦理。 | E-invoice prize draws follow the e-invoice platform's rules. |
-| INV-06 | 收據在哪 | 付款明細會顯示在畫面與手機操作頁面，可自行查看。 | Payment details show on screen and the phone page. |
+| INV-06 | 收據在哪 | 本店開立電子發票；付款明細也會顯示在畫面與手機操作頁面。 | We issue e-invoices; payment details also show on screen and your phone. |
 | INV-07 | 發票寄到哪 | 電子發票會依付款時電子支付系統的設定開立與通知。 | The e-invoice is issued and notified per the payment system's settings. |
 | INV-08 | 可以捐發票嗎 | 不好意思，目前沒有手機條碼自動捐贈公益的功能。 | Sorry—there's no mobile-barcode auto-donation to charity. |
 | INV-09 | 重印發票 | 電子發票可於電子發票平台查詢；付款明細也會顯示在畫面。 | E-invoices can be checked on the e-invoice platform; payment details also show on screen. |
@@ -384,6 +384,8 @@
 - **停車：無停車位** — LOC-06/07
 - **店內 WiFi：掃碼僅供傳檔到事務機，不提供一般上網** — LOC-10、PM-17
 - **加值服務：不提供護貝 / 裁切 / 相片紙 / 照片沖印 / 裝訂 / 騎馬釘 / 打孔 / 海報 / 信封 / 特殊紙材**；紙張提供 A4、A3、80 磅優良紙 — FN-01/02/03/04/06/07/13、SUP-02/03
+- **付款：多元電子支付（LINE Pay、信用卡）**，不收現金、不支援實體悠遊卡；低消 2 元；無法分開付款（每筆訂單一次付清）— PAY-02/03/04/05/06/15/18/19
+- **檔案/列印：支援 PDF 與 Word/Excel/PPT 免轉檔直印、JPG/PNG**；單檔上限 150MB；掃描僅 Email（附檔上限 15MB）、不支援 USB；因著作權不支援影印書本；放大縮小僅少數固定倍率（最大 A3）— PM-03、SCN-02/03/04、CPY-03、各放大縮小條
 - **發票：所有消費開立電子發票**（無紙本、不支援統編、無手機條碼自動捐贈公益；低消 2 元）— INV 全組、PAY-11/15/17
 
 ### 仍需店家確認 / 現場張貼
