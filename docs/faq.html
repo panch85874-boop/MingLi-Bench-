@@ -25,6 +25,12 @@
   .note{background:#fff7e6;border:1px solid #ffe1a8;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px;color:#7a5a00}
   .facts{background:#eef4ff;border:1px solid #cfe0ff;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:14px}
   .facts b{color:var(--brand)}
+  .steps{background:#fff;border:2px solid var(--brand);border-radius:12px;padding:14px 16px;margin:10px 0 16px}
+  .steps .sh{font-weight:700;color:var(--brand);font-size:16px;margin-bottom:8px}
+  .steps ol{margin:0;padding-left:22px}
+  .steps li{margin:6px 0;font-size:15px}
+  .steps li b{color:var(--ink)}
+  .steps .tip{margin:10px 0 0;background:#fff7e6;border:1px solid #ffe1a8;border-radius:8px;padding:8px 12px;font-size:14px;color:#7a5a00;font-weight:600}
   h2{font-size:17px;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--brand);scroll-margin-top:12px}
   details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
   summary{cursor:pointer;padding:13px 15px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -198,6 +204,15 @@
   <details><summary><span class="qtext"><span class="zh">我掃不到付款碼</span><span class="en">I can&#x27;t scan the payment code</span></span></summary><div class="ans"><span class="zh">請對準畫面付款 QR，或換個角度；仍不行可改用另一台。</span><span class="en">Align with the payment QR or change angle; or use an<mark>other machine</mark>.</span></div></details>
   <details><summary><span class="qtext"><span class="zh">付完可以改份數嗎</span><span class="en">Can I change copies after paying?</span></span></summary><div class="ans"><span class="zh">付款後無法更改，如需調整請重新操作。</span><span class="en">Can&#x27;t change after payment; start over to adjust.</span></div></details>
   <h2 id="sec-PRO"><span class="zh">🎟️ 優惠券 / 優惠碼</span><span class="en">Coupons / Promo Codes</span></h2>
+  <div class="steps">
+    <div class="sh"><span class="zh">優惠碼使用三步驟</span><span class="en">Use your promo code in 3 steps</span></div>
+    <ol>
+      <li><span class="zh">掃<b>機台 QR Code</b> → 上傳檔案</span><span class="en">Scan the <b>machine QR code</b> → upload your file</span></li>
+      <li><span class="zh">付款前，在<b>手機頁面</b>輸入優惠碼</span><span class="en">Before paying, enter the promo code <b>on your phone</b></span></li>
+      <li><span class="zh">確認<b>折扣後金額</b>，再付款</span><span class="en">Check the <b>discounted total</b>, then pay</span></li>
+    </ol>
+    <p class="tip"><span class="zh">⚠️ 機台不掃券，優惠碼一律在手機頁面輸入。</span><span class="en">⚠️ The machine doesn&#x27;t scan coupons—always enter codes on your phone.</span></p>
+  </div>
   <details><summary><span class="qtext"><span class="zh">有優惠券嗎 / 有折扣嗎</span><span class="en">Any coupons or discounts?</span></span></summary><div class="ans"><span class="zh">有的，若您有優惠碼，可在手機操作頁面輸入折抵。</span><span class="en">Yes—if you have a promo code, enter it on the phone page to get the discount.</span></div></details>
   <details><summary><span class="qtext"><span class="zh">優惠碼怎麼用</span><span class="en">How do I use a promo code?</span></span></summary><div class="ans"><span class="zh">在手機付款前的頁面找到優惠碼欄位，輸入那串代碼就會套用折扣。</span><span class="en">On the phone page before payment, enter your promo code to apply the discount.</span></div></details>
   <details><summary><span class="qtext"><span class="zh">優惠券要在機台掃描嗎</span><span class="en">Do I scan the coupon at the machine?</span></span></summary><div class="ans"><span class="zh">不好意思，機台沒有掃描功能，優惠請改在手機頁面輸入優惠碼。</span><span class="en">Sorry—the machine can&#x27;t scan; enter your promo code on the phone page instead.</span></div></details>
