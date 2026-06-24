@@ -29,7 +29,8 @@
   .foot{margin-top:auto;padding-top:34px;display:flex;align-items:center;justify-content:space-between;gap:24px}
   .foot .info{font-size:16px;color:var(--sub);line-height:1.6}
   .foot .info b{color:var(--ink)}
-  .qr{flex:none;width:150px;height:150px;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:var(--sub);padding:10px}
+  .qr{flex:none;width:150px;height:150px;border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+  .qr img{width:100%;height:100%;display:block}
   @media print{
     html,body{background:#fff}
     .toolbar{display:none}
@@ -80,7 +81,7 @@
       掃右方 QR 看完整使用說明 FAQ<br>
       Open 24/7 · 3 machines · Scan for full FAQ
     </div>
-    <div class="qr">（貼上 FAQ 網址<br>QR Code）<br>FAQ URL QR</div>
+    <div class="qr"><img src="faq_qr.svg" alt="FAQ QR Code — https://iprinter.com.tw/faq.html"></div>
   </div>
 </div>
 
