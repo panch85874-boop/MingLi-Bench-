@@ -1,4 +1,4 @@
-# iPrintOS 語音引導語庫｜中英雙語（v0.4 擴充版 · 約 230 句）
+# iPrintOS 語音引導語庫｜中英雙語（v0.4 擴充版 · 約 237 句）
 
 > 用途：語音助理**比對後要播給客人的固定引導語**（封閉問答庫的答案側）。
 > 對應規劃文件 `iPrintOS_語音PoC_工程規劃.md`。
@@ -231,6 +231,22 @@
 
 ---
 
+## PRO — promo｜優惠券 / 優惠碼（7）
+
+> 門市有優惠/折扣，以「優惠碼」(一串代碼)形式；在**手機操作頁面輸入優惠碼**折抵，**機台無掃描功能**。
+
+| id | trigger | 中文引導（TTS） | English |
+|---|---|---|---|
+| PRO-01 | 有優惠券嗎 / 有折扣嗎 | 有的，若您有優惠碼，可在手機操作頁面輸入折抵。 | Yes—if you have a promo code, enter it on the phone page to get the discount. |
+| PRO-02 | 優惠碼怎麼用 | 在手機付款前的頁面找到優惠碼欄位，輸入那串代碼就會套用折扣。 | On the phone page before payment, enter your promo code to apply the discount. |
+| PRO-03 | 優惠券要在機台掃描嗎 | 不好意思，機台沒有掃描功能，優惠請改在手機頁面輸入優惠碼。 | Sorry—the machine can't scan; enter your promo code on the phone page instead. |
+| PRO-04 | 優惠碼在哪裡輸入 | 在手機操作頁面、付款前會有優惠碼欄位，輸入後金額會更新。 | There's a promo-code field on the phone page before payment; the amount updates after you enter it. |
+| PRO-05 | 優惠碼無效 / 用不了 | 請確認優惠碼輸入正確且仍在有效期內；若仍無法使用，可能已過期或不符使用條件。 | Check the code is correct and still valid; if it still won't work, it may be expired or not eligible. |
+| PRO-06 | 折扣有套用到嗎 | 輸入優惠碼後，付款前畫面會顯示折扣後金額，確認後再付款。 | After entering the code, the discounted total shows before payment—check it, then pay. |
+| PRO-07 | 優惠券哪裡拿 / 怎麼領 | 優惠活動與優惠碼的取得方式，請參考現場告示或我們的活動公告。 | For promotions and how to get codes, see the in-store notices or our announcements. |
+
+---
+
 ## INV — invoice｜發票 / 收據（10）
 
 | id | trigger | 中文引導（TTS） | English |
@@ -370,13 +386,14 @@
 | advanced_func 進階功能 | 16 |
 | supplies 紙張耗材 | 14 |
 | payment 付款 | 22 |
+| promo 優惠券 | 7 |
 | invoice 發票收據 | 10 |
 | machine_error 機台狀況 | 20 |
 | store_info 店務資訊 | 18 |
 | human_help 求助 | 12 |
 | complaint 客訴 | 12 |
 | privacy 隱私 | 6 |
-| **合計** | **230** |
+| **合計** | **237** |
 
 ### 已確認的門市事實（v0.4.1）
 - **營業時間：24 小時、全年無休** — LOC-01/02/03、HLP-03
@@ -386,6 +403,7 @@
 - **付款：多元電子支付（LINE Pay、信用卡）**，不收現金、不支援實體悠遊卡；低消 2 元；無法分開付款（每筆訂單一次付清）— PAY-02/03/04/05/06/15/18/19
 - **檔案/列印：支援 PDF 與 Word/Excel/PPT 免轉檔直印、JPG/PNG**；單檔上限 150MB；掃描僅 Email（附檔上限 15MB）、不支援 USB；因著作權不支援影印書本；放大縮小僅少數固定倍率（最大 A3）— PM-03、SCN-02/03/04、CPY-03、各放大縮小條
 - **發票：所有消費開立電子發票**（無紙本、不支援統編、無手機條碼自動捐贈公益；低消 2 元）— INV 全組、PAY-11/15/17
+- **優惠：有優惠/折扣，以「優惠碼」(一串代碼)在手機操作頁面輸入折抵；機台無掃描功能** — PRO 全組
 
 ### 仍需店家確認 / 現場張貼
 - （無）門市事實已全數確認；地址統一導向「地圖定位 / 門口告示」，不另填入。
@@ -395,3 +413,4 @@
 - **收錄範圍限定 iPrintOS 無人門市相關**：與營業無關的閒聊（年齡/時間/天氣/純聊天）不收，無關發問由 GEN-16 拉回主題。
 - 全程沿用既定決策：自助優先、不靠真人、退款過渡(1B)、三台機器、無廁所/洗手、檔案不上雲、永遠回最接近一句。
 - 系統負擔評估見規劃文件 §13：句數對效能影響可忽略。
+- **v0.4.2**：依門市規格修正既有事實（發票/紙張/付款/掃描/進階/放大縮小），並新增 **PRO（優惠券 / 優惠碼）** 群組 7 句，合計 237 句。

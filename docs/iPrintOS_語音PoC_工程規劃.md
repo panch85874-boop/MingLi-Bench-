@@ -160,6 +160,7 @@
     { "id": "copy_doc",       "desc": "一般文件影印（非證件）", "action": "play_guidance", "guidance_group": "copy_doc" },
     { "id": "advanced_func",  "desc": "進階功能（名片/多合一/雙面/PDF 處理；裝訂・騎馬釘・打孔・海報・信封皆不提供）", "action": "play_guidance", "guidance_group": "advanced_func" },
     { "id": "supplies",       "desc": "紙張/耗材/品質（A3、彩色、磅數、碳粉淡）", "action": "play_guidance", "guidance_group": "supplies" },
+    { "id": "promo",          "desc": "優惠券/優惠碼（手機操作頁面輸入優惠碼折抵；機台無掃描功能）", "action": "play_guidance", "guidance_group": "promo" },
     { "id": "invoice",        "desc": "發票/收據（所有消費開電子發票；無紙本、不支援統編、無手機條碼自動捐贈）", "action": "play_guidance", "guidance_group": "invoice" },
     { "id": "store_info",     "desc": "店務/環境（營業時間、停車、廁所、幾台機器…）", "action": "play_guidance", "guidance_group": "store_info" },
     { "id": "privacy",        "desc": "隱私/資料安全（檔案是否保留、會否外洩）", "action": "play_guidance", "guidance_group": "privacy" },
