@@ -12,10 +12,21 @@
 - 本專案為 **iPrintOS 無人影印店「現場語音主動協助」PoC**。
 - 主要文件在 `docs/`：
   - `iPrintOS_語音PoC_工程規劃.md` — 工程規劃
-  - `iPrintOS_語音引導語庫.md` — 約 230 句中英雙語引導語庫（語音答案來源）
+  - `iPrintOS_語音引導語庫.md` — 語音引導語庫 **v0.5 四語（中/英/越/印）·237 句**（語音答案來源）
+  - `iPrintOS_FAQ_四語對照.md` — Obsidian 友善的四語 FAQ 對照筆記（由 JSON 生成）
   - `iPrintOS_比對模擬.md` — 比對效果乾跑
-  - `faq.html` — 由語庫程式化生成的對外 FAQ 網頁
+  - `faq.html` — **資料驅動生成**的對外 FAQ 網頁（四語，可下拉切換）
 - 開發分支：`claude/iprintos-voice-poc-acn2c4`（所有變更提交與推送到此分支）。
+
+### 專案現況（FAQ 多語系統，已完成）
+- **單一資料來源**：`data/faq_content.json`（14 區、217 題，每題含 zh/en/vi/id）。改內容只改這份。
+- **生成器**：`scripts/build_faq.py`（→ `docs/faq.html`）、`scripts/build_faq_md.py`（→ Obsidian 筆記）。
+- **一鍵更新**：`bash scripts/update_faq.sh`（重生成）；加 `--deploy` 在本機上傳官網主機。
+- **新增語言**：在 `faq_content.json` 的 `langs` 加一筆、各題補該語言欄位即可，免改 HTML；未填欄位自動遞補英文。
+- **線上網址**：`https://iprinter.com.tw/faq.html`（已上線）。
+- **部署**：官網=Cloudflare→DO 新加坡 Nginx，檔案放 `/var/www/html/`，由有 SSH 金鑰的本機 `scp` 上傳（雲端 session 連不到主機，只能交付指令；金鑰絕不進公開 repo）。
+- **店內宣導物**：`docs/qr_sign.html`（掃碼看 FAQ 貼紙）、`docs/poster_coupon.html`（優惠碼三步驟告示）、`docs/faq_qr.svg/png`（FAQ QR）。
+- **待辦**：`config/guidance.jsonl` 補 tts_vi/tts_id（語音實作用）；退款自助入口 D-A（P0）。
 
 ### 已拍板的關鍵決策
 - 自助優先、**不靠真人**：硬體問題導「改用店內另外兩台機器（三台、間隔約 1 公尺、未完成不扣款）」。
