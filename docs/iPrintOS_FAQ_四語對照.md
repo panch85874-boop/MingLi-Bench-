@@ -7,7 +7,7 @@ source: data/faq_content.json
 generators: [scripts/build_faq.py, scripts/build_faq_md.py]
 sections: 14
 items: 217
-updated: 2026-06-24
+updated: 2026-06-29
 ---
 
 # iPrintOS 四語 FAQ 對照（中 / 英 / 越 / 印）
