@@ -159,6 +159,10 @@ Each run writes three artifacts under `--output-dir` (default `logs/`):
 
 ---
 
+## Other tools in this repo
+
+- [meeting-scribe/](./meeting-scribe/) — a separate, self-contained CLI for local-first meeting recording, transcription, AI summarization and full-text search. Unrelated to the benchmark; see its own README.
+
 ## License
 
 Released under the [MIT License](./LICENSE).

@@ -1,0 +1,5 @@
+# Optional extra for speaker diarization (who-said-what).
+# Requires a free Hugging Face account + accepting the pyannote model license:
+#   https://huggingface.co/pyannote/speaker-diarization-3.1
+pyannote.audio>=3.1.0
+torch>=2.1.0
