@@ -19,6 +19,35 @@
   <meta property="og:url" content="https://iprinter.com.tw/game/" />
   <meta name="description" content="台股千金股隨機選股遊戲,黑猩猩射飛鏢模擬器。純屬娛樂,不構成投資建議。" />
 
+  <!-- 這支 index.html 同時存在於 GitHub raw / GitHub Pages / 正式站,canonical 統一導向正式站,避免重複內容分散排名權重 -->
+  <link rel="canonical" href="https://iprinter.com.tw/game/" />
+
+  <!-- X / Twitter 分享預覽卡 -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="🐵 台股千金俄羅斯輪盤 · 黑猩猩射飛鏢" />
+  <meta name="twitter:description" content="當一隻矇眼黑猩猩,射飛鏢隨機選台股千金股!轉動輪盤、聽音效、看落點放大顯示股名與建議股數。純娛樂模擬。" />
+  <meta name="twitter:image" content="https://iprinter.com.tw/game/promo-poster.png" />
+
+  <!-- 結構化資料:讓搜尋引擎與生成式 AI 引擎能正確判讀這是誰做的小遊戲、屬於哪個品牌 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "台股千金俄羅斯輪盤 · 黑猩猩射飛鏢",
+    "description": "台股千金股隨機選股遊戲,黑猩猩射飛鏢模擬器。純屬娛樂,不構成投資建議。",
+    "url": "https://iprinter.com.tw/game/",
+    "image": "https://iprinter.com.tw/game/promo-poster.png",
+    "inLanguage": "zh-Hant-TW",
+    "isAccessibleForFree": true,
+    "genre": "娛樂模擬",
+    "publisher": {
+      "@type": "Organization",
+      "name": "愛印 iPrint",
+      "url": "https://iprinter.com.tw/"
+    }
+  }
+  </script>
+
   <style>
     :root {
       --bg-1: #0f0c29; --bg-2: #302b63; --bg-3: #24243e;
@@ -159,6 +188,7 @@
     .history li .h-shares { color: var(--gold); }
     .disclaimer { margin: 16px 0 0; font-size: 12px; opacity: 0.6; }
     .brand-logo { margin-top: 14px; text-align: center; }
+    .brand-logo a { display: inline-block; }
     .brand-logo img { width: 78%; max-width: 260px; border-radius: 10px; display: inline-block; }
 
     .reveal-overlay {
@@ -415,7 +445,7 @@
   <div class="intro-overlay" id="intro" role="button" tabindex="0" aria-label="點擊開始射飛鏢">
     <div class="intro-card">
       <div class="intro-emoji">🐵🎯</div>
-      <h1 class="intro-title">黑猩猩射飛鏢</h1>
+      <h2 class="intro-title">黑猩猩射飛鏢</h2>
       <p class="intro-sub">台股千金俄羅斯輪盤</p>
       <p class="quote">矇眼黑猩猩射飛鏢選股,長期績效未必輸給專業經理人。<br>—— 馬基爾《漫步華爾街》</p>
       <p class="intro-closing">換你當這隻猩猩,體會「隨機」的力量。</p>
@@ -468,7 +498,7 @@
           <button class="sound-toggle" id="shareBtn">📤 分享</button>
         </div>
         <p class="disclaimer">⚠️ 純屬娛樂模擬,不構成任何投資建議。</p>
-        <div class="brand-logo" id="brandLogo"><img id="brandImgEl" alt="愛印 iPrint" /></div>
+        <div class="brand-logo" id="brandLogo"><a href="https://iprinter.com.tw/" target="_blank" rel="noopener" aria-label="前往愛印 iPrint 官網"><img id="brandImgEl" alt="愛印 iPrint" /></a></div>
       </aside>
     </main>
   </div>
