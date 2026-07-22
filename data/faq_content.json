@@ -1,0 +1,3304 @@
+{
+  "langs": [
+    {
+      "code": "zh",
+      "label": "中文"
+    },
+    {
+      "code": "en",
+      "label": "English"
+    },
+    {
+      "code": "vi",
+      "label": "Tiếng Việt"
+    },
+    {
+      "code": "id",
+      "label": "Bahasa Indonesia"
+    }
+  ],
+  "ui": {
+    "title": {
+      "zh": "iPrintOS 自助列印 — 常見問題",
+      "en": "iPrintOS Self-service — FAQ",
+      "vi": "iPrintOS Tự phục vụ — Câu hỏi thường gặp",
+      "id": "iPrintOS Layanan Mandiri — FAQ"
+    },
+    "subtitle": {
+      "zh": "無人自助門市 · 列印 / 影印 / 掃描 / 付款 一次搞懂",
+      "en": "Self-service store · Print / Copy / Scan / Pay",
+      "vi": "Cửa hàng tự phục vụ không người · In / Photocopy / Quét / Thanh toán",
+      "id": "Toko swalayan tanpa petugas · Cetak / Fotokopi / Pindai / Bayar"
+    },
+    "search": {
+      "zh": "搜尋關鍵字",
+      "en": "Search keyword",
+      "vi": "Tìm từ khóa",
+      "id": "Cari kata kunci"
+    },
+    "note": {
+      "zh": "本店為無人自助門市，現場沒有專人。機台問題時，店內共三台機器（每台間隔約一公尺），可直接改用旁邊另一台，未完成的列印不會扣款。",
+      "en": "This is an unmanned self-service store. If a machine has an issue, there are three machines about 1m apart—just use another one; unfinished jobs aren't charged.",
+      "vi": "Đây là cửa hàng tự phục vụ không người, tại chỗ không có nhân viên. Khi máy gặp sự cố, trong cửa hàng có ba máy (mỗi máy cách nhau khoảng một mét), bạn có thể chuyển sang dùng máy bên cạnh; bản in chưa hoàn thành sẽ không bị tính phí.",
+      "id": "Ini adalah toko swalayan tanpa petugas di lokasi. Jika mesin bermasalah, di toko ada tiga mesin (jarak antar mesin sekitar satu meter), Anda bisa langsung beralih ke mesin lain di sebelahnya; cetakan yang belum selesai tidak akan ditagih."
+    },
+    "facts": {
+      "zh": "門市資訊：24 小時營業、全年無休｜無停車位｜店內掃碼網路僅供傳檔、不提供上網｜紙張提供 A4/A3/80磅，不提供護貝/裁切/相片紙/照片沖印/裝訂/海報/信封｜開立電子發票（無紙本、不支援統編；低消 2 元）｜多元電子支付，不收現金",
+      "en": "Store info: Open 24/7 all year｜No parking｜In-store QR network is for file transfer only, no internet｜Paper: A4/A3/80gsm; no lamination/cutting/photo paper/photo developing/binding/posters/envelopes｜E-invoice issued (no paper invoice or tax number; NT$2 min.)｜Multiple e-payments, no cash",
+      "vi": "Thông tin cửa hàng: Mở cửa 24/7, quanh năm｜Không có chỗ đậu xe｜Mạng quét QR trong cửa hàng chỉ để truyền tệp, không cung cấp Internet｜Giấy có A4/A3/80gsm, không có ép plastic/cắt xén/giấy ảnh/rửa ảnh/đóng gáy/áp phích/phong bì｜Xuất hóa đơn điện tử (không có hóa đơn giấy, không hỗ trợ mã số thuế; mức tối thiểu NT$2)｜Đa dạng thanh toán điện tử, không nhận tiền mặt",
+      "id": "Info toko: Buka 24/7, sepanjang tahun｜Tidak ada parkir｜Jaringan pindai QR di toko hanya untuk transfer file, tidak menyediakan Internet｜Kertas tersedia A4/A3/80gsm, tidak tersedia laminating/pemotongan/kertas foto/cetak foto/penjilidan/poster/amplop｜Menerbitkan faktur elektronik (tanpa faktur kertas, tidak mendukung NPWP; minimum NT$2)｜Beragam pembayaran elektronik, tidak menerima uang tunai"
+    },
+    "steps_title": {
+      "zh": "優惠碼使用三步驟",
+      "en": "Use your promo code in 3 steps",
+      "vi": "Dùng mã khuyến mãi trong 3 bước",
+      "id": "Gunakan kode promo dalam 3 langkah"
+    },
+    "steps": [
+      {
+        "zh": "掃機台 QR Code → 上傳檔案",
+        "en": "Scan the machine QR code → upload your file",
+        "vi": "Quét mã QR trên máy → tải tệp lên",
+        "id": "Pindai kode QR mesin → unggah file Anda"
+      },
+      {
+        "zh": "付款前，在手機頁面輸入優惠碼",
+        "en": "Before paying, enter the promo code on your phone",
+        "vi": "Trước khi thanh toán, nhập mã khuyến mãi trên trang điện thoại",
+        "id": "Sebelum membayar, masukkan kode promo di halaman ponsel"
+      },
+      {
+        "zh": "確認折扣後金額，再付款",
+        "en": "Check the discounted total, then pay",
+        "vi": "Kiểm tra số tiền sau giảm giá, rồi thanh toán",
+        "id": "Periksa total setelah diskon, lalu bayar"
+      }
+    ],
+    "steps_tip": {
+      "zh": "機台不掃券，優惠碼一律在手機頁面輸入。",
+      "en": "The machine doesn't scan coupons—always enter codes on your phone.",
+      "vi": "Máy không quét phiếu giảm giá, mã khuyến mãi luôn nhập trên trang điện thoại.",
+      "id": "Mesin tidak memindai kupon, kode promo selalu dimasukkan di halaman ponsel."
+    },
+    "footer": {
+      "zh": "iPrintOS 自助列印 · 24 小時營業 · 本頁僅供參考，實際以機台畫面為準",
+      "en": "iPrintOS Self-service · Open 24/7 · For reference; the machine screen prevails",
+      "vi": "iPrintOS Tự phục vụ · Mở cửa 24/7 · Trang này chỉ để tham khảo, lấy màn hình máy làm chuẩn",
+      "id": "iPrintOS Layanan Mandiri · Buka 24/7 · Halaman ini hanya untuk referensi, mengikuti layar mesin"
+    },
+    "qr_caption": {
+      "zh": "掃我看完整 FAQ",
+      "en": "Scan for full FAQ",
+      "vi": "Quét tôi để xem FAQ đầy đủ",
+      "id": "Pindai untuk FAQ lengkap"
+    }
+  },
+  "sections": [
+    {
+      "id": "PM",
+      "icon": "📱",
+      "title": {
+        "zh": "手機 / 雲端列印",
+        "en": "Mobile / Cloud Print",
+        "vi": "In từ điện thoại / đám mây",
+        "id": "Cetak dari Ponsel / Cloud"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我要印手機裡的檔案",
+            "en": "Print a file from my phone",
+            "vi": "Tôi muốn in tệp trong điện thoại",
+            "id": "Saya mau mencetak file dari ponsel"
+          },
+          "a": {
+            "zh": "好的，請拿手機掃描機台上的 QR Code，就能上傳檔案列印。",
+            "en": "Scan the QR code on the machine to upload and print.",
+            "vi": "Vâng, vui lòng dùng điện thoại quét mã QR trên máy để tải tệp lên và in.",
+            "id": "Baik, silakan pindai kode QR di mesin dengan ponsel untuk mengunggah file dan mencetak."
+          }
+        },
+        {
+          "q": {
+            "zh": "QR Code 在哪裡",
+            "en": "Where is the QR code?",
+            "vi": "Mã QR ở đâu",
+            "id": "Di mana kode QR-nya?"
+          },
+          "a": {
+            "zh": "QR Code 在機台螢幕或機身貼紙上，掃描後手機會打開上傳頁面。",
+            "en": "The QR code is on the screen or a sticker; scanning opens the upload page.",
+            "vi": "Mã QR ở trên màn hình máy hoặc nhãn dán trên thân máy; quét xong điện thoại sẽ mở trang tải lên.",
+            "id": "Kode QR ada di layar mesin atau stiker di badan mesin; setelah dipindai, ponsel akan membuka halaman unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "支援什麼檔案格式",
+            "en": "What file formats are supported?",
+            "vi": "Hỗ trợ những định dạng tệp nào",
+            "id": "Format file apa saja yang didukung?"
+          },
+          "a": {
+            "zh": "支援 PDF 與 Word、Excel、PPT 等 Office 檔，免轉檔直接列印；也支援 JPG、PNG 圖片。單檔上限 150MB。",
+            "en": "We support PDF and Office files (Word, Excel, PPT)—no conversion needed—plus JPG/PNG images. Max 150MB per file.",
+            "vi": "Hỗ trợ PDF và tệp Office như Word, Excel, PPT, in trực tiếp không cần chuyển đổi; cũng hỗ trợ ảnh JPG, PNG. Mỗi tệp tối đa 150MB.",
+            "id": "Mendukung PDF dan file Office (Word, Excel, PPT), cetak langsung tanpa konversi; juga mendukung gambar JPG, PNG. Maksimal 150MB per file."
+          }
+        },
+        {
+          "q": {
+            "zh": "LINE 的檔案怎麼印",
+            "en": "How do I print a file from LINE?",
+            "vi": "In tệp từ LINE thế nào",
+            "id": "Bagaimana mencetak file dari LINE?"
+          },
+          "a": {
+            "zh": "先在 LINE 把檔案存到手機，再掃 QR Code 從上傳頁選那個檔案。",
+            "en": "Save the file from LINE first, then upload after scanning the QR code.",
+            "vi": "Trước tiên lưu tệp từ LINE vào điện thoại, rồi quét mã QR và chọn tệp đó từ trang tải lên.",
+            "id": "Simpan dulu file dari LINE ke ponsel, lalu pindai kode QR dan pilih file itu di halaman unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要印照片",
+            "en": "I want to print a photo",
+            "vi": "Tôi muốn in ảnh",
+            "id": "Saya mau mencetak foto"
+          },
+          "a": {
+            "zh": "掃 QR Code 後上傳照片，可選彩色與尺寸列印於一般紙張；本店不提供相片紙與照片沖印。",
+            "en": "Scan the QR, upload your photo, pick color and size to print on plain paper; we don't offer photo paper or photo developing.",
+            "vi": "Quét mã QR rồi tải ảnh lên, có thể chọn in màu và kích thước trên giấy thường; cửa hàng không cung cấp giấy ảnh và rửa ảnh.",
+            "id": "Pindai kode QR lalu unggah foto, bisa pilih warna dan ukuran cetak di kertas biasa; toko tidak menyediakan kertas foto dan cetak foto."
+          }
+        },
+        {
+          "q": {
+            "zh": "要選黑白還是彩色",
+            "en": "Black-and-white or color?",
+            "vi": "Chọn đen trắng hay màu",
+            "id": "Hitam-putih atau warna?"
+          },
+          "a": {
+            "zh": "上傳後在手機頁面可切換黑白或彩色，彩色費用較高。",
+            "en": "Switch black-and-white or color on your phone; color costs more.",
+            "vi": "Sau khi tải lên, trên trang điện thoại có thể chuyển giữa đen trắng hoặc màu; in màu có phí cao hơn.",
+            "id": "Setelah diunggah, di halaman ponsel bisa beralih antara hitam-putih atau warna; cetak warna lebih mahal."
+          }
+        },
+        {
+          "q": {
+            "zh": "怎麼設定份數",
+            "en": "How do I set the number of copies?",
+            "vi": "Cài đặt số bản in thế nào",
+            "id": "Bagaimana mengatur jumlah salinan?"
+          },
+          "a": {
+            "zh": "在手機預覽頁面可調整份數，確認後再付款。",
+            "en": "Set the number of copies on the preview page, then pay.",
+            "vi": "Trên trang xem trước ở điện thoại có thể điều chỉnh số bản, xác nhận xong rồi thanh toán.",
+            "id": "Di halaman pratinjau ponsel bisa atur jumlah salinan, lalu konfirmasi dan bayar."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以雙面印嗎",
+            "en": "Can I print double-sided?",
+            "vi": "Có in 2 mặt được không",
+            "id": "Bisa cetak bolak-balik?"
+          },
+          "a": {
+            "zh": "可以，在手機設定頁面選「雙面列印」即可。",
+            "en": "Yes—choose double-sided in the settings.",
+            "vi": "Được, chọn \"in 2 mặt\" trên trang cài đặt ở điện thoại là được.",
+            "id": "Bisa, pilih \"cetak bolak-balik\" di halaman pengaturan ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙張大小怎麼選",
+            "en": "How do I choose paper size?",
+            "vi": "Chọn khổ giấy thế nào",
+            "id": "Bagaimana memilih ukuran kertas?"
+          },
+          "a": {
+            "zh": "可選 A4 或 A3，在手機頁面的紙張設定切換。",
+            "en": "Choose A4 or A3 under paper settings.",
+            "vi": "Có thể chọn A4 hoặc A3, chuyển đổi ở phần cài đặt giấy trên trang điện thoại.",
+            "id": "Bisa pilih A4 atau A3 di pengaturan kertas pada halaman ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "印之前可以先看嗎",
+            "en": "Can I preview before printing?",
+            "vi": "Trước khi in có xem trước được không",
+            "id": "Bisa pratinjau sebelum mencetak?"
+          },
+          "a": {
+            "zh": "可以，付款前手機會顯示預覽，確認沒問題再付款。",
+            "en": "Yes—you'll see a preview before paying.",
+            "vi": "Được, trước khi thanh toán điện thoại sẽ hiển thị bản xem trước, xác nhận không vấn đề rồi mới thanh toán.",
+            "id": "Bisa, sebelum membayar ponsel akan menampilkan pratinjau, konfirmasi tidak ada masalah baru bayar."
+          }
+        },
+        {
+          "q": {
+            "zh": "檔案太大傳不上去",
+            "en": "My file is too big to upload",
+            "vi": "Tệp quá lớn không tải lên được",
+            "id": "File terlalu besar untuk diunggah"
+          },
+          "a": {
+            "zh": "檔案較大請稍等上傳完成，或先壓縮、分次上傳。",
+            "en": "For large files, wait or compress and split.",
+            "vi": "Tệp lớn vui lòng đợi tải lên xong, hoặc nén lại, tải theo nhiều lần.",
+            "id": "Untuk file besar, tunggu hingga selesai diunggah, atau kompres dan unggah secara bertahap."
+          }
+        },
+        {
+          "q": {
+            "zh": "上傳後找不到檔案",
+            "en": "Can't find my file after uploading",
+            "vi": "Tải lên xong không tìm thấy tệp",
+            "id": "Tidak menemukan file setelah diunggah"
+          },
+          "a": {
+            "zh": "請確認上傳完成的提示，沒有的話重新掃 QR Code 再上傳一次。",
+            "en": "Check the upload-complete prompt; if missing, rescan and upload again.",
+            "vi": "Vui lòng kiểm tra thông báo tải lên hoàn tất; nếu không có, quét lại mã QR và tải lên một lần nữa.",
+            "id": "Periksa pemberitahuan unggah selesai; jika tidak ada, pindai ulang kode QR dan unggah sekali lagi."
+          }
+        },
+        {
+          "q": {
+            "zh": "上傳完怎麼付款",
+            "en": "How do I pay after uploading?",
+            "vi": "Tải lên xong thanh toán thế nào",
+            "id": "Bagaimana membayar setelah mengunggah?"
+          },
+          "a": {
+            "zh": "確認預覽後點付款，依畫面用電子支付或掃碼完成即可。",
+            "en": "After the preview, tap pay and complete via mobile payment.",
+            "vi": "Xác nhận bản xem trước rồi nhấn thanh toán, theo màn hình dùng thanh toán điện tử hoặc quét mã để hoàn tất.",
+            "id": "Konfirmasi pratinjau lalu tekan bayar, ikuti layar dengan pembayaran elektronik atau pindai kode untuk menyelesaikan."
+          }
+        },
+        {
+          "q": {
+            "zh": "印好的紙在哪裡拿",
+            "en": "Where do I collect my prints?",
+            "vi": "Lấy giấy đã in ở đâu",
+            "id": "Di mana mengambil hasil cetak?"
+          },
+          "a": {
+            "zh": "付款完成後紙張會從出紙匣送出，請到出紙口拿取。",
+            "en": "Collect your prints from the output tray after payment.",
+            "vi": "Sau khi thanh toán xong, giấy sẽ ra từ khay giấy, vui lòng lấy ở khe ra giấy.",
+            "id": "Setelah pembayaran selesai, kertas akan keluar dari baki keluaran, silakan ambil di lubang keluaran kertas."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以一次印很多檔案嗎",
+            "en": "Can I print many files at once?",
+            "vi": "Có in nhiều tệp cùng lúc được không",
+            "id": "Bisa mencetak banyak file sekaligus?"
+          },
+          "a": {
+            "zh": "可以，上傳頁面能加入多個檔案，會一起計算份數與價格。",
+            "en": "Yes—add multiple files; they're priced together.",
+            "vi": "Được, trang tải lên có thể thêm nhiều tệp, sẽ tính chung số bản và giá.",
+            "id": "Bisa, halaman unggah dapat menambahkan beberapa file, jumlah salinan dan harga dihitung bersama."
+          }
+        },
+        {
+          "q": {
+            "zh": "Word 排版跑掉了",
+            "en": "My Word layout is messed up",
+            "vi": "Bố cục Word bị lệch",
+            "id": "Tata letak Word jadi berantakan"
+          },
+          "a": {
+            "zh": "Word 可免轉檔直接列印；若要排版完全一致，也可自行先轉成 PDF 再上傳。",
+            "en": "Word prints directly—no conversion needed; for an exact layout you may convert to PDF yourself first.",
+            "vi": "Word in trực tiếp không cần chuyển đổi; nếu muốn bố cục hoàn toàn khớp, bạn cũng có thể tự chuyển sang PDF rồi tải lên.",
+            "id": "Word dicetak langsung tanpa konversi; jika ingin tata letak persis sama, Anda juga bisa mengubahnya ke PDF sendiri dulu lalu unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "手機沒網路怎麼辦",
+            "en": "What if my phone has no internet?",
+            "vi": "Điện thoại không có mạng thì sao",
+            "id": "Bagaimana jika ponsel tidak ada internet?"
+          },
+          "a": {
+            "zh": "掃機台 QR Code 上傳檔案時會自動連線傳檔，不需另外上網；其他用途請用手機行動網路。",
+            "en": "Scanning the QR auto-connects just to send your file—no internet needed; use mobile data for anything else.",
+            "vi": "Khi quét mã QR trên máy để tải tệp lên sẽ tự động kết nối gửi tệp, không cần lên mạng riêng; các nhu cầu khác vui lòng dùng mạng di động của điện thoại.",
+            "id": "Saat memindai kode QR mesin untuk mengunggah file, akan otomatis terhubung untuk mengirim file, tidak perlu internet lain; untuk keperluan lain gunakan data seluler ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "上傳到一半想取消",
+            "en": "Cancel an upload in progress",
+            "vi": "Đang tải lên muốn hủy",
+            "id": "Ingin membatalkan unggahan yang sedang berjalan"
+          },
+          "a": {
+            "zh": "直接關閉手機頁面即可取消，未付款不會列印也不會收費。",
+            "en": "Just close the page to cancel; nothing prints or charges before payment.",
+            "vi": "Chỉ cần đóng trang trên điện thoại là hủy được; chưa thanh toán thì sẽ không in và không thu phí.",
+            "id": "Cukup tutup halaman di ponsel untuk membatalkan; sebelum dibayar tidak akan mencetak dan tidak dikenai biaya."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以縮放或滿版嗎",
+            "en": "Can I scale or fit to page?",
+            "vi": "Có thể thu phóng hoặc tràn lề không",
+            "id": "Bisa skala atau penuh halaman?"
+          },
+          "a": {
+            "zh": "放大縮小提供少數固定倍率，也可選滿版或保留邊界，預覽會更新。",
+            "en": "Enlarge/reduce offers a few fixed ratios; you can also choose fit-to-page or margins—the preview updates.",
+            "vi": "Phóng to thu nhỏ có một số tỷ lệ cố định, cũng có thể chọn tràn lề hoặc giữ lề, bản xem trước sẽ cập nhật.",
+            "id": "Pembesaran/pengecilan tersedia beberapa rasio tetap, juga bisa pilih penuh halaman atau pertahankan margin, pratinjau akan diperbarui."
+          }
+        },
+        {
+          "q": {
+            "zh": "列印怎麼算錢",
+            "en": "How is printing priced?",
+            "vi": "In tính tiền thế nào",
+            "id": "Bagaimana harga cetak dihitung?"
+          },
+          "a": {
+            "zh": "系統會依頁數、黑白或彩色、紙張大小自動計價，付款前會顯示金額。",
+            "en": "Price is by pages, color, and size; shown before payment.",
+            "vi": "Hệ thống sẽ tự tính giá theo số trang, đen trắng hay màu, khổ giấy; trước khi thanh toán sẽ hiển thị số tiền.",
+            "id": "Sistem akan menghitung harga otomatis berdasarkan jumlah halaman, hitam-putih atau warna, dan ukuran kertas; jumlahnya ditampilkan sebelum pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "印一份要等多久",
+            "en": "How long does one print take?",
+            "vi": "In một bản đợi bao lâu",
+            "id": "Berapa lama mencetak satu kali?"
+          },
+          "a": {
+            "zh": "付款後通常幾秒到十幾秒就會出紙，份數多會久一點。",
+            "en": "Usually seconds after payment; more copies take longer.",
+            "vi": "Sau khi thanh toán thường vài giây đến hơn chục giây sẽ ra giấy, nhiều bản thì lâu hơn một chút.",
+            "id": "Setelah membayar biasanya beberapa detik hingga belasan detik kertas keluar, lebih banyak salinan agak lebih lama."
+          }
+        },
+        {
+          "q": {
+            "zh": "我的檔案會被留下來嗎",
+            "en": "Will my file be kept?",
+            "vi": "Tệp của tôi có bị lưu lại không",
+            "id": "Apakah file saya akan disimpan?"
+          },
+          "a": {
+            "zh": "您的檔案只暫存在店內主機處理，列印後會自動清除，不會上傳雲端。",
+            "en": "Your file is processed in-store and cleared after printing—never uploaded.",
+            "vi": "Tệp của bạn chỉ lưu tạm trên máy chủ trong cửa hàng để xử lý, in xong sẽ tự động xóa, không tải lên đám mây.",
+            "id": "File Anda hanya disimpan sementara di server dalam toko untuk diproses, setelah dicetak akan otomatis dihapus, tidak diunggah ke cloud."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以用平板印嗎",
+            "en": "Can I print from a tablet?",
+            "vi": "Có in từ máy tính bảng được không",
+            "id": "Bisa mencetak dari tablet?"
+          },
+          "a": {
+            "zh": "可以，平板一樣掃 QR Code 上傳即可。",
+            "en": "Yes—tablets can scan the QR code and upload too.",
+            "vi": "Được, máy tính bảng cũng quét mã QR và tải lên là được.",
+            "id": "Bisa, tablet juga cukup pindai kode QR dan unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "電腦檔案可以印嗎",
+            "en": "Can I print computer files?",
+            "vi": "Tệp trên máy tính có in được không",
+            "id": "Bisa mencetak file dari komputer?"
+          },
+          "a": {
+            "zh": "可以，把檔案傳到手機或用手機開雲端，再掃 QR Code 上傳。",
+            "en": "Yes—move it to your phone or open it from the cloud, then upload.",
+            "vi": "Được, chuyển tệp sang điện thoại hoặc mở đám mây trên điện thoại, rồi quét mã QR tải lên.",
+            "id": "Bisa, pindahkan file ke ponsel atau buka dari cloud di ponsel, lalu pindai kode QR dan unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "雲端硬碟的檔案怎麼印",
+            "en": "How do I print a file from cloud storage?",
+            "vi": "In tệp trên ổ đĩa đám mây thế nào",
+            "id": "Bagaimana mencetak file dari penyimpanan cloud?"
+          },
+          "a": {
+            "zh": "先在手機開啟雲端把檔案下載，再掃 QR Code 上傳。",
+            "en": "Download it from the cloud on your phone first, then upload.",
+            "vi": "Trước tiên mở đám mây trên điện thoại để tải tệp xuống, rồi quét mã QR tải lên.",
+            "id": "Buka cloud di ponsel dulu untuk mengunduh file, lalu pindai kode QR dan unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "Email 附件怎麼印",
+            "en": "How do I print an email attachment?",
+            "vi": "In tệp đính kèm Email thế nào",
+            "id": "Bagaimana mencetak lampiran email?"
+          },
+          "a": {
+            "zh": "在手機把附件存下來，再掃 QR Code 從上傳頁選它。",
+            "en": "Save the attachment on your phone, then upload it.",
+            "vi": "Lưu tệp đính kèm vào điện thoại, rồi quét mã QR và chọn nó từ trang tải lên.",
+            "id": "Simpan lampiran ke ponsel, lalu pindai kode QR dan pilih dari halaman unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "印簡報 / PPT",
+            "en": "Print a presentation / PPT",
+            "vi": "In bài thuyết trình / PPT",
+            "id": "Cetak presentasi / PPT"
+          },
+          "a": {
+            "zh": "支援，PPT 可免轉檔直接列印。",
+            "en": "Supported—PPT prints directly, no conversion needed.",
+            "vi": "Có hỗ trợ, PPT in trực tiếp không cần chuyển đổi.",
+            "id": "Didukung, PPT dicetak langsung tanpa konversi."
+          }
+        },
+        {
+          "q": {
+            "zh": "印 Excel 表格",
+            "en": "Print an Excel spreadsheet",
+            "vi": "In bảng tính Excel",
+            "id": "Cetak spreadsheet Excel"
+          },
+          "a": {
+            "zh": "支援，Excel 可免轉檔直接列印，列印前可在畫面確認範圍。",
+            "en": "Supported—Excel prints directly; check the print range on screen first.",
+            "vi": "Có hỗ trợ, Excel in trực tiếp không cần chuyển đổi, trước khi in có thể xác nhận phạm vi trên màn hình.",
+            "id": "Didukung, Excel dicetak langsung tanpa konversi, sebelum mencetak bisa cek rentang di layar dulu."
+          }
+        },
+        {
+          "q": {
+            "zh": "網頁怎麼印",
+            "en": "How do I print a webpage?",
+            "vi": "In trang web thế nào",
+            "id": "Bagaimana mencetak halaman web?"
+          },
+          "a": {
+            "zh": "在手機把網頁存成 PDF，再掃 QR Code 上傳。",
+            "en": "Save the webpage as PDF on your phone, then upload.",
+            "vi": "Lưu trang web thành PDF trên điện thoại, rồi quét mã QR tải lên.",
+            "id": "Simpan halaman web sebagai PDF di ponsel, lalu pindai kode QR dan unggah."
+          }
+        },
+        {
+          "q": {
+            "zh": "只想印其中幾頁",
+            "en": "Print only certain pages",
+            "vi": "Chỉ muốn in vài trang",
+            "id": "Hanya ingin mencetak beberapa halaman tertentu"
+          },
+          "a": {
+            "zh": "在手機預覽頁可選列印頁數範圍，再確認付款。",
+            "en": "Choose the page range on the preview, then pay.",
+            "vi": "Trên trang xem trước ở điện thoại có thể chọn phạm vi trang cần in, rồi xác nhận thanh toán.",
+            "id": "Di halaman pratinjau ponsel bisa pilih rentang halaman yang akan dicetak, lalu konfirmasi dan bayar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CID",
+      "icon": "🪪",
+      "title": {
+        "zh": "證件影印",
+        "en": "ID Copy",
+        "vi": "Sao chép giấy tờ tùy thân",
+        "id": "Fotokopi Dokumen Identitas"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我要影印身分證",
+            "en": "I want to copy my ID card",
+            "vi": "Tôi muốn sao chép thẻ căn cước",
+            "id": "Saya ingin memfotokopi KTP"
+          },
+          "a": {
+            "zh": "請把證件放在玻璃面板上，蓋上蓋子，依畫面操作影印。",
+            "en": "Place your ID on the glass, close the lid, and follow the screen.",
+            "vi": "Đặt giấy tờ lên mặt kính, đóng nắp lại và làm theo màn hình.",
+            "id": "Letakkan dokumen di atas kaca, tutup penutupnya, lalu ikuti layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "正反面印同一張",
+            "en": "Both sides on one sheet",
+            "vi": "In cả hai mặt trên cùng một tờ",
+            "id": "Kedua sisi pada satu lembar"
+          },
+          "a": {
+            "zh": "可選「證件影印」模式，會把正反面合印在同一張紙上。",
+            "en": "Choose ID-copy mode to print both sides on one sheet.",
+            "vi": "Chọn chế độ \"sao chép giấy tờ\" để in cả hai mặt lên cùng một tờ giấy.",
+            "id": "Pilih mode fotokopi dokumen untuk mencetak kedua sisi pada satu lembar."
+          }
+        },
+        {
+          "q": {
+            "zh": "證件要放哪裡",
+            "en": "Where do I place the ID?",
+            "vi": "Đặt giấy tờ ở đâu",
+            "id": "Di mana saya meletakkan dokumen?"
+          },
+          "a": {
+            "zh": "放在玻璃面板左上角對齊標示線，印好再翻面印背面。",
+            "en": "Align to the top-left mark; flip to copy the back.",
+            "vi": "Đặt vào góc trên bên trái mặt kính theo vạch chỉ dẫn, in xong rồi lật mặt sau.",
+            "id": "Sejajarkan dengan tanda kiri atas; balik untuk fotokopi sisi belakang."
+          }
+        },
+        {
+          "q": {
+            "zh": "健保卡 / 駕照可以印嗎",
+            "en": "Can I copy a health card or driver's license?",
+            "vi": "Có in được thẻ bảo hiểm y tế / bằng lái xe không",
+            "id": "Bisakah memfotokopi kartu kesehatan atau SIM?"
+          },
+          "a": {
+            "zh": "可以，健保卡、駕照都用同樣的證件影印方式。",
+            "en": "Yes—health cards and licenses use the same steps.",
+            "vi": "Được, thẻ bảo hiểm y tế và bằng lái xe đều dùng cùng cách sao chép giấy tờ.",
+            "id": "Bisa—kartu kesehatan dan SIM menggunakan langkah yang sama."
+          }
+        },
+        {
+          "q": {
+            "zh": "護照怎麼印",
+            "en": "How do I copy a passport?",
+            "vi": "In hộ chiếu thế nào",
+            "id": "Bagaimana memfotokopi paspor?"
+          },
+          "a": {
+            "zh": "護照翻到資料頁，平放在玻璃面板上影印即可。",
+            "en": "Open to the photo page and place it flat on the glass.",
+            "vi": "Mở hộ chiếu đến trang thông tin, đặt phẳng lên mặt kính rồi sao chép.",
+            "id": "Buka ke halaman foto dan letakkan rata di atas kaca."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以放大嗎",
+            "en": "Can I enlarge it?",
+            "vi": "Có phóng to được không",
+            "id": "Bisakah diperbesar?"
+          },
+          "a": {
+            "zh": "可以，放大縮小提供少數固定倍率，請依畫面選擇。",
+            "en": "Yes—enlarge/reduce offers a few fixed ratios; pick one on screen.",
+            "vi": "Được, phóng to/thu nhỏ có một số tỷ lệ cố định, hãy chọn trên màn hình.",
+            "id": "Bisa—perbesar/perkecil menyediakan beberapa rasio tetap; pilih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "要黑白還是彩色",
+            "en": "Black-and-white or color?",
+            "vi": "In đen trắng hay màu",
+            "id": "Hitam-putih atau berwarna?"
+          },
+          "a": {
+            "zh": "證件可選黑白或彩色，彩色費用較高。",
+            "en": "Choose black-and-white or color (color costs more).",
+            "vi": "Giấy tờ có thể chọn đen trắng hoặc màu, in màu phí cao hơn.",
+            "id": "Pilih hitam-putih atau berwarna (berwarna lebih mahal)."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要印好幾份",
+            "en": "I want several copies",
+            "vi": "Tôi muốn in nhiều bản",
+            "id": "Saya ingin beberapa salinan"
+          },
+          "a": {
+            "zh": "在畫面設定份數後再確認影印。",
+            "en": "Set the number of copies, then confirm.",
+            "vi": "Đặt số bản trên màn hình rồi xác nhận sao chép.",
+            "id": "Atur jumlah salinan, lalu konfirmasi."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印證件多少錢",
+            "en": "How much to copy an ID?",
+            "vi": "Sao chép giấy tờ giá bao nhiêu",
+            "id": "Berapa biaya memfotokopi dokumen?"
+          },
+          "a": {
+            "zh": "系統會依黑白彩色與份數計價，畫面會顯示金額。",
+            "en": "Price depends on color and copies; shown on screen.",
+            "vi": "Hệ thống tính giá theo đen trắng/màu và số bản, màn hình sẽ hiển thị số tiền.",
+            "id": "Harga tergantung warna dan jumlah salinan; ditampilkan di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印也要先付款嗎",
+            "en": "Do I have to pay first for copying?",
+            "vi": "Sao chép cũng phải trả tiền trước à",
+            "id": "Apakah harus bayar dulu untuk fotokopi?"
+          },
+          "a": {
+            "zh": "是的，系統會先預覽報價，付款後才印出。",
+            "en": "Yes—preview and price first, then it prints after payment.",
+            "vi": "Đúng vậy, hệ thống xem trước báo giá, thanh toán xong mới in ra.",
+            "id": "Ya—pratinjau dan harga dulu, lalu mencetak setelah pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "印出來歪歪的",
+            "en": "The copy comes out crooked",
+            "vi": "Bản in ra bị lệch",
+            "id": "Hasil fotokopi miring"
+          },
+          "a": {
+            "zh": "請把證件對齊玻璃面板角落的標示線，再重印一次。",
+            "en": "Align to the corner mark and copy again.",
+            "vi": "Hãy căn giấy tờ theo vạch chỉ dẫn ở góc mặt kính rồi in lại.",
+            "id": "Sejajarkan dengan tanda di sudut lalu fotokopi lagi."
+          }
+        },
+        {
+          "q": {
+            "zh": "我有好幾張證件",
+            "en": "I have several ID cards",
+            "vi": "Tôi có nhiều giấy tờ",
+            "id": "Saya punya beberapa KTP"
+          },
+          "a": {
+            "zh": "可以一張一張放上去分別影印，或用證件影印模式逐張處理。",
+            "en": "Copy them one at a time or use ID-copy mode for each.",
+            "vi": "Có thể đặt từng tờ để sao chép riêng, hoặc dùng chế độ sao chép giấy tờ xử lý từng tờ.",
+            "id": "Fotokopi satu per satu atau gunakan mode fotokopi dokumen untuk masing-masing."
+          }
+        },
+        {
+          "q": {
+            "zh": "印好的在哪拿",
+            "en": "Where do I collect my copies?",
+            "vi": "Lấy bản in ở đâu",
+            "id": "Di mana saya mengambil salinan?"
+          },
+          "a": {
+            "zh": "付款完成後請到機台出紙口拿取。",
+            "en": "Collect from the output tray after payment.",
+            "vi": "Thanh toán xong hãy lấy ở khe ra giấy của máy.",
+            "id": "Ambil dari baki keluaran setelah pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "證件影印要多久",
+            "en": "How long does ID copying take?",
+            "vi": "Sao chép giấy tờ mất bao lâu",
+            "id": "Berapa lama fotokopi dokumen?"
+          },
+          "a": {
+            "zh": "通常幾秒就會出紙。",
+            "en": "Usually a few seconds.",
+            "vi": "Thường vài giây là ra giấy.",
+            "id": "Biasanya beberapa detik."
+          }
+        },
+        {
+          "q": {
+            "zh": "居留證可以印嗎",
+            "en": "Can I copy a residence permit?",
+            "vi": "Có in được thẻ cư trú không",
+            "id": "Bisakah memfotokopi kartu izin tinggal?"
+          },
+          "a": {
+            "zh": "可以，居留證用證件影印方式操作即可。",
+            "en": "Yes—residence permits use ID-copy mode.",
+            "vi": "Được, thẻ cư trú dùng cách sao chép giấy tờ để thao tác.",
+            "id": "Bisa—kartu izin tinggal menggunakan mode fotokopi dokumen."
+          }
+        },
+        {
+          "q": {
+            "zh": "學生證 / 員工證",
+            "en": "Student / staff card",
+            "vi": "Thẻ học sinh / thẻ nhân viên",
+            "id": "Kartu pelajar / kartu karyawan"
+          },
+          "a": {
+            "zh": "可以，一樣用證件影印模式操作。",
+            "en": "Yes—student/staff cards use ID-copy mode too.",
+            "vi": "Được, cũng dùng chế độ sao chép giấy tờ để thao tác.",
+            "id": "Bisa—kartu pelajar/karyawan juga menggunakan mode fotokopi dokumen."
+          }
+        },
+        {
+          "q": {
+            "zh": "證件要彩色才清楚",
+            "en": "ID needs color to be clear",
+            "vi": "Giấy tờ phải in màu mới rõ",
+            "id": "Dokumen perlu warna agar jelas"
+          },
+          "a": {
+            "zh": "建議選彩色，畫面可切換，彩色費用較高。",
+            "en": "Color is clearer—switch on screen; color costs more.",
+            "vi": "Nên chọn màu, màn hình có thể chuyển đổi, in màu phí cao hơn.",
+            "id": "Berwarna lebih jelas—ganti di layar; berwarna lebih mahal."
+          }
+        },
+        {
+          "q": {
+            "zh": "兩張證件印一張紙",
+            "en": "Two IDs on one sheet",
+            "vi": "Hai giấy tờ in trên một tờ giấy",
+            "id": "Dua dokumen pada satu lembar"
+          },
+          "a": {
+            "zh": "用證件影印模式可把正反或兩張併在同一張。",
+            "en": "ID-copy mode can fit both on one sheet.",
+            "vi": "Chế độ sao chép giấy tờ có thể ghép cả hai mặt hoặc hai tờ vào cùng một tờ.",
+            "id": "Mode fotokopi dokumen bisa memuat keduanya pada satu lembar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CPY",
+      "icon": "📄",
+      "title": {
+        "zh": "文件影印",
+        "en": "Document Copy",
+        "vi": "Sao chép tài liệu",
+        "id": "Fotokopi Dokumen"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我要影印文件",
+            "en": "I want to copy a document",
+            "vi": "Tôi muốn sao chép tài liệu",
+            "id": "Saya ingin fotokopi dokumen"
+          },
+          "a": {
+            "zh": "請把文件放上玻璃面板或送稿器，依畫面選影印。",
+            "en": "Place your document on the glass or feeder and follow the screen.",
+            "vi": "Đặt tài liệu lên mặt kính hoặc bộ nạp tài liệu, chọn sao chép theo màn hình.",
+            "id": "Letakkan dokumen di atas kaca atau pengumpan dokumen, lalu pilih fotokopi sesuai layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印一疊文件",
+            "en": "Copy a stack of documents",
+            "vi": "Sao chép một xấp tài liệu",
+            "id": "Fotokopi setumpuk dokumen"
+          },
+          "a": {
+            "zh": "用上方送稿器一次放多張，依畫面開始影印。",
+            "en": "Use the top feeder for multiple pages and start.",
+            "vi": "Dùng bộ nạp tài liệu phía trên để đặt nhiều tờ một lúc, bắt đầu sao chép theo màn hình.",
+            "id": "Gunakan pengumpan dokumen di atas untuk beberapa lembar sekaligus, lalu mulai fotokopi sesuai layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印書本",
+            "en": "Copy a book",
+            "vi": "Sao chép sách",
+            "id": "Fotokopi buku"
+          },
+          "a": {
+            "zh": "不好意思，因著作財產權問題，本店不支援影印書本。",
+            "en": "Sorry—due to copyright, we don't support copying books.",
+            "vi": "Xin lỗi, vì vấn đề bản quyền, cửa hàng không hỗ trợ sao chép sách.",
+            "id": "Maaf, karena masalah hak cipta, kami tidak mendukung fotokopi buku."
+          }
+        },
+        {
+          "q": {
+            "zh": "放大影印",
+            "en": "Enlarge when copying",
+            "vi": "Sao chép phóng to",
+            "id": "Fotokopi diperbesar"
+          },
+          "a": {
+            "zh": "放大提供少數固定倍率，請在畫面選擇。",
+            "en": "Enlarging offers a few fixed ratios—choose one on screen.",
+            "vi": "Phóng to chỉ có vài tỷ lệ cố định, vui lòng chọn trên màn hình.",
+            "id": "Perbesar hanya tersedia beberapa rasio tetap, silakan pilih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "縮小影印",
+            "en": "Reduce when copying",
+            "vi": "Sao chép thu nhỏ",
+            "id": "Fotokopi diperkecil"
+          },
+          "a": {
+            "zh": "縮小提供少數固定倍率，請在畫面選擇。",
+            "en": "Reducing offers a few fixed ratios—choose one on screen.",
+            "vi": "Thu nhỏ chỉ có vài tỷ lệ cố định, vui lòng chọn trên màn hình.",
+            "id": "Perkecil hanya tersedia beberapa rasio tetap, silakan pilih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "A4 印成 A3",
+            "en": "Copy A4 onto A3",
+            "vi": "In A4 thành A3",
+            "id": "Fotokopi A4 ke A3"
+          },
+          "a": {
+            "zh": "在畫面選放大到 A3 的固定倍率即可。",
+            "en": "Choose the fixed A4-to-A3 enlarge ratio on screen.",
+            "vi": "Chỉ cần chọn tỷ lệ cố định phóng to lên A3 trên màn hình.",
+            "id": "Cukup pilih rasio tetap perbesar ke A3 di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "雙面影印",
+            "en": "Double-sided copying",
+            "vi": "Sao chép 2 mặt",
+            "id": "Fotokopi bolak-balik"
+          },
+          "a": {
+            "zh": "用送稿器並在畫面選雙面影印。",
+            "en": "Use the feeder and select double-sided.",
+            "vi": "Dùng bộ nạp tài liệu và chọn sao chép 2 mặt trên màn hình.",
+            "id": "Gunakan pengumpan dokumen dan pilih fotokopi bolak-balik di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印彩色",
+            "en": "Color copying",
+            "vi": "Sao chép màu",
+            "id": "Fotokopi warna"
+          },
+          "a": {
+            "zh": "在畫面選彩色，彩色費用較高。",
+            "en": "Choose color on screen; color costs more.",
+            "vi": "Chọn màu trên màn hình, in màu có phí cao hơn.",
+            "id": "Pilih warna di layar, fotokopi warna lebih mahal."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印多份",
+            "en": "Multiple copies",
+            "vi": "Sao chép nhiều bản",
+            "id": "Fotokopi beberapa rangkap"
+          },
+          "a": {
+            "zh": "在畫面設定份數後確認。",
+            "en": "Set copies on screen, then confirm.",
+            "vi": "Đặt số bản trên màn hình rồi xác nhận.",
+            "id": "Atur jumlah salinan di layar lalu konfirmasi."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印多少錢",
+            "en": "How much does copying cost?",
+            "vi": "Sao chép bao nhiêu tiền",
+            "id": "Berapa biaya fotokopi?"
+          },
+          "a": {
+            "zh": "依黑白彩色、紙張與份數計價，畫面會顯示金額。",
+            "en": "Priced by color, paper, and copies; shown on screen.",
+            "vi": "Tính theo đen trắng/màu, giấy và số bản; màn hình sẽ hiển thị giá.",
+            "id": "Dihitung berdasarkan hitam-putih/warna, kertas, dan jumlah salinan; harga tampil di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "印出來太黑 / 太淡",
+            "en": "Copy comes out too dark / too light",
+            "vi": "Bản in ra quá đậm / quá nhạt",
+            "id": "Hasil terlalu gelap / terlalu terang"
+          },
+          "a": {
+            "zh": "在畫面調整濃淡後重印。",
+            "en": "Adjust the darkness on screen and copy again.",
+            "vi": "Điều chỉnh độ đậm nhạt trên màn hình rồi in lại.",
+            "id": "Sesuaikan kegelapan di layar lalu fotokopi lagi."
+          }
+        },
+        {
+          "q": {
+            "zh": "只印中間一部分",
+            "en": "Copy only part of the page",
+            "vi": "Chỉ in một phần ở giữa",
+            "id": "Hanya fotokopi sebagian halaman"
+          },
+          "a": {
+            "zh": "可調整擺放位置或選固定放大倍率，再影印。",
+            "en": "Reposition the page or choose a fixed enlarge ratio, then copy.",
+            "vi": "Có thể chỉnh vị trí đặt hoặc chọn tỷ lệ phóng to cố định rồi sao chép.",
+            "id": "Bisa atur posisi peletakan atau pilih rasio perbesar tetap, lalu fotokopi."
+          }
+        },
+        {
+          "q": {
+            "zh": "原稿拿回去了嗎",
+            "en": "Did I leave my original behind?",
+            "vi": "Tôi có để quên bản gốc không",
+            "id": "Apakah saya meninggalkan dokumen asli?"
+          },
+          "a": {
+            "zh": "影印後請記得從玻璃面板或送稿器取回原稿。",
+            "en": "Remember to take your original from the glass or feeder.",
+            "vi": "Sau khi sao chép, nhớ lấy lại bản gốc từ mặt kính hoặc bộ nạp tài liệu.",
+            "id": "Setelah fotokopi, ingat ambil kembali dokumen asli dari kaca atau pengumpan dokumen."
+          }
+        },
+        {
+          "q": {
+            "zh": "影印要先付款嗎",
+            "en": "Do I pay first to copy?",
+            "vi": "Sao chép có phải trả tiền trước không",
+            "id": "Apakah harus bayar dulu untuk fotokopi?"
+          },
+          "a": {
+            "zh": "是的，畫面會先報價，付款後印出。",
+            "en": "Yes—price shows first, then it prints after payment.",
+            "vi": "Đúng vậy, màn hình sẽ báo giá trước, thanh toán xong mới in ra.",
+            "id": "Ya, layar menampilkan harga dulu, lalu dicetak setelah pembayaran."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SCN",
+      "icon": "🖨️",
+      "title": {
+        "zh": "掃描",
+        "en": "Scan",
+        "vi": "Quét",
+        "id": "Pindai"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我要掃描文件",
+            "en": "I want to scan a document",
+            "vi": "Tôi muốn quét tài liệu",
+            "id": "Saya ingin memindai dokumen"
+          },
+          "a": {
+            "zh": "請把文件放上玻璃面板或送稿器，在畫面選掃描方式。",
+            "en": "Place your document on the glass or feeder and choose a scan option.",
+            "vi": "Đặt tài liệu lên mặt kính hoặc khay nạp giấy, rồi chọn cách quét trên màn hình.",
+            "id": "Letakkan dokumen di kaca atau pengumpan dokumen, lalu pilih opsi pindai di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要掃描到信箱",
+            "en": "Scan to my email",
+            "vi": "Tôi muốn quét gửi vào email",
+            "id": "Pindai ke email saya"
+          },
+          "a": {
+            "zh": "選「掃描到 Email」，輸入您的信箱，掃描後檔案會寄過去；Email 附檔最大 15MB。",
+            "en": "Choose Scan-to-Email and enter your address; email attachments are up to 15MB.",
+            "vi": "Chọn \"quét sang Email\", nhập email của bạn, sau khi quét tệp sẽ được gửi tới; tệp đính kèm Email tối đa 15MB.",
+            "id": "Pilih \"pindai ke Email\", masukkan email Anda, setelah dipindai file akan dikirim; lampiran Email maksimal 15MB."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要掃到 USB",
+            "en": "Scan to USB",
+            "vi": "Tôi muốn quét vào USB",
+            "id": "Pindai ke USB"
+          },
+          "a": {
+            "zh": "不好意思，本店掃描不支援 USB 隨身碟，只能選「掃描到 Email」寄送。",
+            "en": "Sorry—scan-to-USB isn't supported; we can only email the scan.",
+            "vi": "Xin lỗi, cửa hàng không hỗ trợ quét sang USB, chỉ có thể chọn \"quét sang Email\" để gửi.",
+            "id": "Maaf, toko tidak mendukung pindai ke USB drive, hanya bisa pilih \"pindai ke Email\" untuk mengirim."
+          }
+        },
+        {
+          "q": {
+            "zh": "USB 插哪裡",
+            "en": "Where do I plug in the USB?",
+            "vi": "Cắm USB ở đâu",
+            "id": "Di mana saya colok USB?"
+          },
+          "a": {
+            "zh": "不好意思，本店不支援 USB 隨身碟，掃描請改用「掃描到 Email」。",
+            "en": "We don't support USB drives; please use Scan-to-Email instead.",
+            "vi": "Xin lỗi, cửa hàng không hỗ trợ USB drive, vui lòng quét bằng \"quét sang Email\".",
+            "id": "Maaf, toko tidak mendukung USB drive, untuk memindai silakan gunakan \"pindai ke Email\"."
+          }
+        },
+        {
+          "q": {
+            "zh": "Email 沒收到",
+            "en": "I didn't get the email",
+            "vi": "Không nhận được Email",
+            "id": "Saya tidak menerima email"
+          },
+          "a": {
+            "zh": "請確認信箱輸入正確並查看垃圾信件匣，必要時重新掃描寄送。",
+            "en": "Check the address and spam folder, then resend if needed.",
+            "vi": "Vui lòng kiểm tra email nhập đúng chưa và xem hộp thư rác, nếu cần thì quét gửi lại.",
+            "id": "Periksa apakah alamat email benar dan cek folder spam, jika perlu pindai dan kirim ulang."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以掃很多頁嗎",
+            "en": "Can I scan many pages?",
+            "vi": "Quét được nhiều trang không",
+            "id": "Bisa pindai banyak halaman?"
+          },
+          "a": {
+            "zh": "可以，用上方送稿器一次放多張，會合成一個檔案。",
+            "en": "Yes—use the feeder; pages combine into one file.",
+            "vi": "Được, dùng khay nạp giấy phía trên đặt nhiều tờ một lần, sẽ gộp thành một tệp.",
+            "id": "Bisa, gunakan pengumpan dokumen di atas untuk banyak lembar sekaligus, akan digabung jadi satu file."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃彩色還是黑白",
+            "en": "Scan in color or black-and-white?",
+            "vi": "Quét màu hay đen trắng",
+            "id": "Pindai warna atau hitam-putih?"
+          },
+          "a": {
+            "zh": "可在畫面選彩色或黑白掃描。",
+            "en": "Choose color or black-and-white on screen.",
+            "vi": "Có thể chọn quét màu hoặc đen trắng trên màn hình.",
+            "id": "Pilih pindai warna atau hitam-putih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃成 PDF 還是圖片",
+            "en": "Scan as PDF or image?",
+            "vi": "Quét thành PDF hay ảnh",
+            "id": "Pindai jadi PDF atau gambar?"
+          },
+          "a": {
+            "zh": "可選 PDF 或 JPG，多頁文件建議選 PDF。",
+            "en": "Choose PDF or JPG; PDF for multi-page.",
+            "vi": "Có thể chọn PDF hoặc JPG, tài liệu nhiều trang nên chọn PDF.",
+            "id": "Bisa pilih PDF atau JPG, untuk dokumen banyak halaman disarankan PDF."
+          }
+        },
+        {
+          "q": {
+            "zh": "原稿放哪",
+            "en": "Where do I put the original?",
+            "vi": "Đặt bản gốc ở đâu",
+            "id": "Di mana saya taruh dokumen asli?"
+          },
+          "a": {
+            "zh": "單張放玻璃面板，多張放上方送稿器。",
+            "en": "Single on the glass; multiple in the feeder.",
+            "vi": "Một tờ đặt lên mặt kính, nhiều tờ đặt vào khay nạp giấy phía trên.",
+            "id": "Satu lembar di kaca, banyak lembar di pengumpan dokumen di atas."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描要錢嗎",
+            "en": "Does scanning cost money?",
+            "vi": "Quét có tốn tiền không",
+            "id": "Apakah memindai berbayar?"
+          },
+          "a": {
+            "zh": "掃描費用依機台設定，畫面會顯示是否收費與金額。",
+            "en": "Scan fees depend on the machine; shown on screen.",
+            "vi": "Phí quét tùy theo cài đặt của máy, màn hình sẽ hiển thị có thu phí và số tiền hay không.",
+            "id": "Biaya pindai tergantung pengaturan mesin, layar akan menampilkan apakah berbayar dan jumlahnya."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以調解析度嗎",
+            "en": "Can I adjust the resolution?",
+            "vi": "Điều chỉnh độ phân giải được không",
+            "id": "Bisa atur resolusi?"
+          },
+          "a": {
+            "zh": "可以，在畫面選解析度，越高檔案越大。",
+            "en": "Yes—choose resolution; higher means larger files.",
+            "vi": "Được, chọn độ phân giải trên màn hình, càng cao thì tệp càng lớn.",
+            "id": "Bisa, pilih resolusi di layar, makin tinggi makin besar filenya."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以雙面掃嗎",
+            "en": "Can I scan double-sided?",
+            "vi": "Quét hai mặt được không",
+            "id": "Bisa pindai dua sisi?"
+          },
+          "a": {
+            "zh": "可以，用送稿器並在畫面選雙面掃描。",
+            "en": "Yes—use the feeder and select double-sided.",
+            "vi": "Được, dùng khay nạp giấy và chọn quét hai mặt trên màn hình.",
+            "id": "Bisa, gunakan pengumpan dokumen dan pilih pindai dua sisi di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "檔案太大寄不出去",
+            "en": "File too big to email",
+            "vi": "Tệp quá lớn không gửi được",
+            "id": "File terlalu besar untuk dikirim email"
+          },
+          "a": {
+            "zh": "Email 附檔上限 15MB，請降低解析度或分次掃描讓檔案變小。",
+            "en": "Email attachments are capped at 15MB—lower the resolution or split the scan.",
+            "vi": "Tệp đính kèm Email tối đa 15MB, vui lòng giảm độ phân giải hoặc quét chia nhiều lần để tệp nhỏ lại.",
+            "id": "Lampiran Email maksimal 15MB, turunkan resolusi atau pindai secara terpisah agar filenya lebih kecil."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描的檔案會留著嗎",
+            "en": "Will my scanned file be kept?",
+            "vi": "Tệp đã quét có được lưu lại không",
+            "id": "Apakah file hasil pindai disimpan?"
+          },
+          "a": {
+            "zh": "掃描檔只暫存於店內主機，完成寄送或存檔後即清除，不上雲。",
+            "en": "Scans are processed in-store and cleared after sending.",
+            "vi": "Tệp quét chỉ lưu tạm trên máy chủ trong cửa hàng, sau khi gửi hoặc lưu xong sẽ xóa, không lên đám mây.",
+            "id": "File pindai hanya disimpan sementara di server toko, dihapus setelah dikirim atau disimpan, tidak naik ke cloud."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描到手機可以嗎",
+            "en": "Can I scan to my phone?",
+            "vi": "Quét vào điện thoại được không",
+            "id": "Bisa pindai ke ponsel saya?"
+          },
+          "a": {
+            "zh": "可選掃描到 Email，再用手機收信即可。",
+            "en": "Use Scan-to-Email and open it on your phone.",
+            "vi": "Có thể chọn quét sang Email, rồi dùng điện thoại nhận thư là được.",
+            "id": "Bisa pilih pindai ke Email, lalu buka emailnya di ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描存成一個檔",
+            "en": "Save the scan as one file",
+            "vi": "Lưu bản quét thành một tệp",
+            "id": "Simpan hasil pindai jadi satu file"
+          },
+          "a": {
+            "zh": "多頁用送稿器會合成一個 PDF。",
+            "en": "Multiple pages in the feeder combine into one PDF.",
+            "vi": "Nhiều trang dùng khay nạp giấy sẽ gộp thành một PDF.",
+            "id": "Banyak halaman dengan pengumpan dokumen akan digabung jadi satu PDF."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描書本",
+            "en": "Scan a book",
+            "vi": "Quét sách",
+            "id": "Pindai buku"
+          },
+          "a": {
+            "zh": "不好意思，因著作財產權問題，本店不支援掃描書本。",
+            "en": "Sorry—due to copyright, we don't support scanning books.",
+            "vi": "Xin lỗi, vì vấn đề bản quyền, cửa hàng không hỗ trợ quét sách.",
+            "id": "Maaf, karena masalah hak cipta, toko tidak mendukung pindai buku."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃完可以改檔名嗎",
+            "en": "Can I rename the file after scanning?",
+            "vi": "Quét xong đổi tên tệp được không",
+            "id": "Bisa ganti nama file setelah dipindai?"
+          },
+          "a": {
+            "zh": "可在寄送前依畫面設定檔名或主旨。",
+            "en": "Set the file name or subject before sending.",
+            "vi": "Có thể đặt tên tệp hoặc tiêu đề theo màn hình trước khi gửi.",
+            "id": "Bisa atur nama file atau subjek di layar sebelum mengirim."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FN",
+      "icon": "🛠️",
+      "title": {
+        "zh": "進階功能",
+        "en": "Advanced",
+        "vi": "Tính năng nâng cao",
+        "id": "Fitur Lanjutan"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "可以裝訂嗎 / 釘起來",
+            "en": "Can you staple it?",
+            "vi": "Có đóng ghim được không?",
+            "id": "Bisa di-staples?"
+          },
+          "a": {
+            "zh": "不好意思，本店不提供裝訂、騎馬釘與打孔功能。",
+            "en": "Sorry—we don't offer binding, saddle-stitch, or hole-punching.",
+            "vi": "Xin lỗi, cửa hàng không cung cấp đóng tập, ghim giữa và đục lỗ.",
+            "id": "Maaf, kami tidak menyediakan penjilidan, jahit kawat tengah, dan pelubangan."
+          }
+        },
+        {
+          "q": {
+            "zh": "騎馬釘 / 做成冊子",
+            "en": "Saddle-stitch / make a booklet",
+            "vi": "Ghim giữa / làm thành tập sách",
+            "id": "Jahit kawat tengah / membuat buklet"
+          },
+          "a": {
+            "zh": "不好意思，本店不提供騎馬釘與裝訂功能。",
+            "en": "Sorry—saddle-stitch and binding aren't available.",
+            "vi": "Xin lỗi, cửa hàng không cung cấp ghim giữa và đóng tập.",
+            "id": "Maaf, jahit kawat tengah dan penjilidan tidak tersedia."
+          }
+        },
+        {
+          "q": {
+            "zh": "打洞",
+            "en": "Hole-punching",
+            "vi": "Đục lỗ",
+            "id": "Pelubangan"
+          },
+          "a": {
+            "zh": "不好意思，本店不提供打孔功能。",
+            "en": "Sorry—hole-punching isn't available.",
+            "vi": "Xin lỗi, cửa hàng không cung cấp đục lỗ.",
+            "id": "Maaf, pelubangan tidak tersedia."
+          }
+        },
+        {
+          "q": {
+            "zh": "印海報 / 大張",
+            "en": "Print a poster / large size",
+            "vi": "In áp phích / khổ lớn",
+            "id": "Cetak poster / ukuran besar"
+          },
+          "a": {
+            "zh": "不好意思，本店不提供海報列印，最大列印尺寸為 A3。",
+            "en": "Sorry—poster printing isn't available; the largest size is A3.",
+            "vi": "Xin lỗi, cửa hàng không in áp phích, khổ in lớn nhất là A3.",
+            "id": "Maaf, cetak poster tidak tersedia; ukuran terbesar adalah A3."
+          }
+        },
+        {
+          "q": {
+            "zh": "印名片",
+            "en": "Print business cards",
+            "vi": "In danh thiếp",
+            "id": "Cetak kartu nama"
+          },
+          "a": {
+            "zh": "可上傳名片檔列印，建議用 PDF 並設定尺寸。",
+            "en": "Upload a card file as PDF and set the size.",
+            "vi": "Có thể tải tệp danh thiếp lên để in, nên dùng PDF và đặt kích thước.",
+            "id": "Unggah file kartu sebagai PDF dan atur ukurannya."
+          }
+        },
+        {
+          "q": {
+            "zh": "護貝",
+            "en": "Lamination",
+            "vi": "Cán màng (ép plastic)",
+            "id": "Laminasi"
+          },
+          "a": {
+            "zh": "不好意思，本店目前<mark>不提供</mark>護貝服務。",
+            "en": "Sorry—we don't offer lamination.",
+            "vi": "Xin lỗi, hiện cửa hàng không cung cấp dịch vụ cán màng.",
+            "id": "Maaf, saat ini kami tidak menyediakan laminasi."
+          }
+        },
+        {
+          "q": {
+            "zh": "裁切",
+            "en": "Cutting",
+            "vi": "Cắt xén",
+            "id": "Pemotongan"
+          },
+          "a": {
+            "zh": "不好意思，本店目前<mark>不提供</mark>裁切服務。",
+            "en": "Sorry—we don't offer cutting.",
+            "vi": "Xin lỗi, hiện cửa hàng không cung cấp dịch vụ cắt xén.",
+            "id": "Maaf, saat ini kami tidak menyediakan pemotongan."
+          }
+        },
+        {
+          "q": {
+            "zh": "合併多個 PDF",
+            "en": "Merge multiple PDFs",
+            "vi": "Gộp nhiều PDF",
+            "id": "Gabung beberapa PDF"
+          },
+          "a": {
+            "zh": "上傳頁面可加入多個檔案一起列印。",
+            "en": "Add multiple files on the upload page to print together.",
+            "vi": "Trên trang tải lên có thể thêm nhiều tệp để in cùng nhau.",
+            "id": "Tambahkan beberapa file di halaman unggah untuk dicetak bersama."
+          }
+        },
+        {
+          "q": {
+            "zh": "加浮水印",
+            "en": "Add a watermark",
+            "vi": "Thêm hình mờ (watermark)",
+            "id": "Tambah watermark"
+          },
+          "a": {
+            "zh": "系統<mark>不提供</mark>浮水印，建議在原檔處理好再上傳。",
+            "en": "No watermark feature—add it to your file first.",
+            "vi": "Hệ thống không có hình mờ, nên xử lý sẵn trong tệp gốc trước khi tải lên.",
+            "id": "Tidak ada fitur watermark; tambahkan ke file Anda terlebih dahulu."
+          }
+        },
+        {
+          "q": {
+            "zh": "印黑白省錢",
+            "en": "Print black-and-white to save money",
+            "vi": "In đen trắng cho tiết kiệm",
+            "id": "Cetak hitam-putih untuk hemat"
+          },
+          "a": {
+            "zh": "在設定選黑白即可，費用較彩色低。",
+            "en": "Choose black-and-white to save; it's cheaper than color.",
+            "vi": "Chọn đen trắng trong cài đặt, chi phí thấp hơn in màu.",
+            "id": "Pilih hitam-putih untuk hemat; lebih murah dari warna."
+          }
+        },
+        {
+          "q": {
+            "zh": "一頁印多頁 / 多合一",
+            "en": "Multiple pages per sheet / N-up",
+            "vi": "In nhiều trang trên một tờ / nhiều trang một mặt",
+            "id": "Beberapa halaman per lembar / N-up"
+          },
+          "a": {
+            "zh": "可在畫面選擇多合一（一頁印多頁），依設定會更新預覽。",
+            "en": "Choose N-up (multiple pages per sheet) on screen; the preview updates.",
+            "vi": "Có thể chọn nhiều trang một tờ trên màn hình, bản xem trước sẽ cập nhật theo cài đặt.",
+            "id": "Pilih N-up (beberapa halaman per lembar) di layar; pratinjau diperbarui."
+          }
+        },
+        {
+          "q": {
+            "zh": "自動雙面",
+            "en": "Automatic double-sided",
+            "vi": "In 2 mặt tự động",
+            "id": "Bolak-balik otomatis"
+          },
+          "a": {
+            "zh": "在設定選雙面列印即可。",
+            "en": "Choose double-sided in settings.",
+            "vi": "Chỉ cần chọn in 2 mặt trong cài đặt.",
+            "id": "Pilih bolak-balik di pengaturan."
+          }
+        },
+        {
+          "q": {
+            "zh": "印信封",
+            "en": "Print envelopes",
+            "vi": "In phong bì",
+            "id": "Cetak amplop"
+          },
+          "a": {
+            "zh": "不好意思，本店不支援信封列印功能。",
+            "en": "Sorry—envelope printing isn't supported.",
+            "vi": "Xin lỗi, cửa hàng không hỗ trợ in phong bì.",
+            "id": "Maaf, cetak amplop tidak didukung."
+          }
+        },
+        {
+          "q": {
+            "zh": "印貼紙 / 標籤紙",
+            "en": "Print stickers / labels",
+            "vi": "In nhãn dán / giấy nhãn",
+            "id": "Cetak stiker / label"
+          },
+          "a": {
+            "zh": "不好意思，本店目前<mark>不提供</mark>特殊紙材。",
+            "en": "Sorry—we don't offer special media.",
+            "vi": "Xin lỗi, hiện cửa hàng không cung cấp vật liệu giấy đặc biệt.",
+            "id": "Maaf, saat ini kami tidak menyediakan media khusus."
+          }
+        },
+        {
+          "q": {
+            "zh": "縮放到指定比例",
+            "en": "Scale to a specific ratio",
+            "vi": "Thu phóng theo tỷ lệ chỉ định",
+            "id": "Skala ke rasio tertentu"
+          },
+          "a": {
+            "zh": "放大縮小提供少數固定倍率，請在畫面選擇。",
+            "en": "Enlarge/reduce offers a few fixed ratios—choose one on screen.",
+            "vi": "Phóng to/thu nhỏ chỉ có vài tỷ lệ cố định, vui lòng chọn trên màn hình.",
+            "id": "Perbesar/perkecil hanya menawarkan beberapa rasio tetap—pilih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "邊界 / 滿版列印",
+            "en": "Margins / full-bleed printing",
+            "vi": "Lề / in tràn lề (full-bleed)",
+            "id": "Margin / cetak full-bleed"
+          },
+          "a": {
+            "zh": "在設定選滿版或保留邊界。",
+            "en": "Choose full-bleed or margins in settings.",
+            "vi": "Chọn in tràn lề hoặc giữ lề trong cài đặt.",
+            "id": "Pilih full-bleed atau margin di pengaturan."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUP",
+      "icon": "📦",
+      "title": {
+        "zh": "紙張 / 耗材",
+        "en": "Paper / Supplies",
+        "vi": "Giấy / Vật tư",
+        "id": "Kertas / Perlengkapan"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "有 A3 嗎",
+            "en": "Do you have A3?",
+            "vi": "Có khổ A3 không?",
+            "id": "Apakah ada A3?"
+          },
+          "a": {
+            "zh": "有，列印或影印時在畫面選 A3。",
+            "en": "Yes—choose A3 when printing or copying.",
+            "vi": "Có—chọn A3 khi in hoặc photocopy.",
+            "id": "Ada—pilih A3 saat mencetak atau memfotokopi."
+          }
+        },
+        {
+          "q": {
+            "zh": "有相片紙嗎",
+            "en": "Do you have photo paper?",
+            "vi": "Có giấy ảnh không?",
+            "id": "Apakah ada kertas foto?"
+          },
+          "a": {
+            "zh": "不好意思，本店目前<mark>不提供</mark>相片紙。",
+            "en": "Sorry—we don't offer photo paper.",
+            "vi": "Xin lỗi—cửa hàng hiện không cung cấp giấy ảnh.",
+            "id": "Maaf—kami tidak menyediakan kertas foto."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙張厚度 / 磅數",
+            "en": "Paper thickness / weight",
+            "vi": "Độ dày / định lượng giấy",
+            "id": "Ketebalan / berat kertas"
+          },
+          "a": {
+            "zh": "本店提供 A4、A3 的 80 磅優良影印紙；目前不提供其他規格紙材。",
+            "en": "We provide quality 80gsm paper in A4 and A3; no other paper types at this time.",
+            "vi": "Cửa hàng cung cấp giấy photocopy chất lượng 80gsm khổ A4, A3; hiện không có loại giấy khác.",
+            "id": "Kami menyediakan kertas berkualitas 80gsm dalam A4 dan A3; saat ini tidak ada jenis kertas lain."
+          }
+        },
+        {
+          "q": {
+            "zh": "有彩色嗎",
+            "en": "Do you have color?",
+            "vi": "Có in màu không?",
+            "id": "Apakah ada warna?"
+          },
+          "a": {
+            "zh": "有，列印影印都可選彩色，費用較高。",
+            "en": "Yes—color is available; it costs more.",
+            "vi": "Có—in và photocopy đều chọn được màu, phí cao hơn.",
+            "id": "Ada—warna tersedia; biayanya lebih mahal."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙質不好",
+            "en": "The paper quality is poor",
+            "vi": "Chất lượng giấy kém",
+            "id": "Kualitas kertas buruk"
+          },
+          "a": {
+            "zh": "若對紙質有疑問，可<mark>改用旁邊另一台</mark>機器試印。",
+            "en": "If unsatisfied, try one of the <mark>other machine</mark>s.",
+            "vi": "Nếu không hài lòng về giấy, hãy thử in ở một máy khác bên cạnh.",
+            "id": "Jika tidak puas dengan kertasnya, coba salah satu mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以用我自己的紙嗎",
+            "en": "Can I use my own paper?",
+            "vi": "Tôi dùng giấy của mình được không?",
+            "id": "Bolehkah saya memakai kertas sendiri?"
+          },
+          "a": {
+            "zh": "不好意思，機台使用內建紙張，無法放自備紙張。",
+            "en": "Sorry—machines use built-in paper; you can't load your own.",
+            "vi": "Xin lỗi—máy dùng giấy có sẵn, không thể nạp giấy tự mang.",
+            "id": "Maaf—mesin memakai kertas bawaan; Anda tidak bisa memasang kertas sendiri."
+          }
+        },
+        {
+          "q": {
+            "zh": "顏色很淡 / 沒碳粉",
+            "en": "Color too faint / out of toner",
+            "vi": "Màu rất nhạt / hết mực",
+            "id": "Warna terlalu pudar / kehabisan toner"
+          },
+          "a": {
+            "zh": "若列印偏淡，建議<mark>改用旁邊另一台</mark>機器。",
+            "en": "If prints are faded, use one of the <mark>other machine</mark>s.",
+            "vi": "Nếu bản in bị nhạt, hãy chuyển sang một máy khác bên cạnh.",
+            "id": "Jika hasil cetak pudar, gunakan salah satu mesin lain."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙用完會自動補嗎",
+            "en": "Is paper refilled automatically?",
+            "vi": "Hết giấy có tự nạp lại không?",
+            "id": "Apakah kertas diisi otomatis?"
+          },
+          "a": {
+            "zh": "缺紙時可依螢幕指示補紙，或<mark>改用旁邊另一台</mark>機器。",
+            "en": "Refill per on-screen steps, or use an<mark>other machine</mark>.",
+            "vi": "Khi hết giấy, nạp giấy theo hướng dẫn trên màn hình, hoặc chuyển sang một máy khác bên cạnh.",
+            "id": "Saat kehabisan kertas, isi sesuai langkah di layar, atau gunakan mesin lain."
+          }
+        },
+        {
+          "q": {
+            "zh": "怎麼印品質比較好",
+            "en": "How do I get better print quality?",
+            "vi": "Làm sao để in đẹp hơn?",
+            "id": "Bagaimana agar hasil cetak lebih baik?"
+          },
+          "a": {
+            "zh": "用 PDF 上傳並選彩色，品質較穩定。",
+            "en": "Upload PDF and choose color for stable quality.",
+            "vi": "Tải lên PDF và chọn màu để chất lượng ổn định hơn.",
+            "id": "Unggah PDF dan pilih warna agar kualitas stabil."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙卡卡的 / 皺",
+            "en": "Paper is jamming / wrinkled",
+            "vi": "Giấy bị kẹt / nhăn",
+            "id": "Kertas macet / kusut"
+          },
+          "a": {
+            "zh": "紙張異常請<mark>改用旁邊另一台</mark>機器。",
+            "en": "If paper is faulty, use one of the <mark>other machine</mark>s.",
+            "vi": "Nếu giấy có vấn đề, hãy chuyển sang một máy khác bên cạnh.",
+            "id": "Jika kertas bermasalah, gunakan salah satu mesin lain."
+          }
+        },
+        {
+          "q": {
+            "zh": "雙面會不會透",
+            "en": "Does double-sided show through?",
+            "vi": "In hai mặt có bị thấu không?",
+            "id": "Apakah cetak bolak-balik tembus?"
+          },
+          "a": {
+            "zh": "一般影印紙雙面略有透色屬正常。",
+            "en": "Slight show-through on standard paper is normal.",
+            "vi": "Giấy photocopy thường hơi thấu màu hai mặt là bình thường.",
+            "id": "Sedikit tembus pandang pada kertas standar adalah normal."
+          }
+        },
+        {
+          "q": {
+            "zh": "最大印到多大",
+            "en": "What's the largest size?",
+            "vi": "In được khổ lớn nhất là bao nhiêu?",
+            "id": "Ukuran terbesar berapa?"
+          },
+          "a": {
+            "zh": "一般最大為 A3。",
+            "en": "The maximum is usually A3.",
+            "vi": "Lớn nhất thường là A3.",
+            "id": "Maksimum biasanya A3."
+          }
+        },
+        {
+          "q": {
+            "zh": "最小印到多小",
+            "en": "What's the smallest size?",
+            "vi": "In được khổ nhỏ nhất là bao nhiêu?",
+            "id": "Ukuran terkecil berapa?"
+          },
+          "a": {
+            "zh": "縮小提供少數固定倍率，請依畫面選擇。",
+            "en": "Reducing offers a few fixed ratios—choose one on screen.",
+            "vi": "Thu nhỏ có vài tỷ lệ cố định, hãy chọn trên màn hình.",
+            "id": "Perkecil tersedia beberapa rasio tetap—pilih di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "有哪些紙張尺寸",
+            "en": "What paper sizes are available?",
+            "vi": "Có những khổ giấy nào?",
+            "id": "Ukuran kertas apa saja yang tersedia?"
+          },
+          "a": {
+            "zh": "常見為 A4 與 A3，畫面可選。",
+            "en": "A4 and A3 are available on screen.",
+            "vi": "Thường có A4 và A3, chọn trên màn hình.",
+            "id": "A4 dan A3 tersedia di layar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAY",
+      "icon": "💳",
+      "title": {
+        "zh": "付款",
+        "en": "Payment",
+        "vi": "Thanh toán",
+        "id": "Pembayaran"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "怎麼付款",
+            "en": "How do I pay?",
+            "vi": "Thanh toán thế nào?",
+            "id": "Bagaimana cara membayar?"
+          },
+          "a": {
+            "zh": "確認預覽後點付款，依畫面用電子支付或掃碼完成。",
+            "en": "After the preview, tap pay and complete via mobile payment.",
+            "vi": "Sau khi xem trước, nhấn thanh toán và hoàn tất bằng thanh toán điện tử hoặc quét mã.",
+            "id": "Setelah pratinjau, ketuk bayar dan selesaikan dengan pembayaran elektronik atau scan to pay."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以用什麼付款",
+            "en": "What payment methods can I use?",
+            "vi": "Có thể thanh toán bằng gì?",
+            "id": "Metode pembayaran apa yang bisa digunakan?"
+          },
+          "a": {
+            "zh": "本店為多元電子支付，支援 LINE Pay、信用卡等掃碼/電子支付；不收現金與實體悠遊卡。",
+            "en": "We accept multiple e-payments—LINE Pay, credit card and other scan/e-payments; no cash or physical EasyCard.",
+            "vi": "Cửa hàng dùng nhiều loại thanh toán điện tử, hỗ trợ LINE Pay, thẻ tín dụng và quét mã; không nhận tiền mặt và thẻ EasyCard vật lý.",
+            "id": "Kami menerima beragam pembayaran elektronik—LINE Pay, kartu kredit dan scan to pay; tidak menerima tunai maupun EasyCard fisik."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以用 LINE Pay 嗎",
+            "en": "Can I use LINE Pay?",
+            "vi": "Có dùng được LINE Pay không?",
+            "id": "Bisakah pakai LINE Pay?"
+          },
+          "a": {
+            "zh": "可以，本店多元支付支援 LINE Pay，依畫面掃碼付款即可。",
+            "en": "Yes—LINE Pay is supported; just scan to pay on screen.",
+            "vi": "Được, cửa hàng hỗ trợ LINE Pay, chỉ cần quét mã trên màn hình để thanh toán.",
+            "id": "Bisa—LINE Pay didukung; cukup scan to pay di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以刷悠遊卡嗎",
+            "en": "Can I use an EasyCard?",
+            "vi": "Có quẹt được thẻ EasyCard không?",
+            "id": "Bisakah pakai EasyCard?"
+          },
+          "a": {
+            "zh": "不好意思，本店不支援實體悠遊卡，可改用 LINE Pay 或信用卡。",
+            "en": "Sorry—physical EasyCard isn't accepted; use LINE Pay or credit card instead.",
+            "vi": "Xin lỗi, cửa hàng không hỗ trợ thẻ EasyCard vật lý, vui lòng dùng LINE Pay hoặc thẻ tín dụng.",
+            "id": "Maaf—EasyCard fisik tidak diterima; gunakan LINE Pay atau kartu kredit."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以刷卡嗎",
+            "en": "Can I pay by credit card?",
+            "vi": "Có quẹt thẻ được không?",
+            "id": "Bisakah bayar pakai kartu kredit?"
+          },
+          "a": {
+            "zh": "可以，本店多元支付支援信用卡，依畫面操作即可。",
+            "en": "Yes—credit card is supported; just follow the on-screen steps.",
+            "vi": "Được, cửa hàng hỗ trợ thẻ tín dụng, chỉ cần làm theo màn hình.",
+            "id": "Bisa—kartu kredit didukung; cukup ikuti langkah di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以投現金嗎",
+            "en": "Can I pay with cash?",
+            "vi": "Có thể trả tiền mặt không?",
+            "id": "Bisakah bayar tunai?"
+          },
+          "a": {
+            "zh": "不好意思，本店不收現金，僅支援電子支付（如 LINE Pay、信用卡）。",
+            "en": "Sorry—no cash; we accept e-payments only (e.g., LINE Pay, credit card).",
+            "vi": "Xin lỗi, cửa hàng không nhận tiền mặt, chỉ hỗ trợ thanh toán điện tử (như LINE Pay, thẻ tín dụng).",
+            "id": "Maaf—tidak menerima tunai; hanya pembayaran elektronik (mis. LINE Pay, kartu kredit)."
+          }
+        },
+        {
+          "q": {
+            "zh": "付款了卻沒出紙",
+            "en": "I paid but nothing printed",
+            "vi": "Đã thanh toán nhưng không ra giấy",
+            "id": "Sudah bayar tapi tidak tercetak"
+          },
+          "a": {
+            "zh": "請先確認出紙匣並稍等約 30 秒；若仍沒出紙，請直接<mark>改用旁邊另一台</mark>機器重印，<mark>未完成的列印不會扣款</mark>。",
+            "en": "Check the tray and wait ~30s; if nothing prints, reprint on an<mark>other machine</mark>—unfinished jobs aren't charged.",
+            "vi": "Vui lòng kiểm tra khay giấy và chờ khoảng 30 giây; nếu vẫn không ra giấy, hãy <mark>chuyển sang máy bên cạnh</mark> để in lại, <mark>bản in chưa hoàn tất sẽ không bị tính tiền</mark>.",
+            "id": "Periksa baki kertas dan tunggu sekitar 30 detik; jika tetap tidak tercetak, <mark>pakai mesin lain di sebelah</mark> untuk cetak ulang—pekerjaan yang belum selesai tidak ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "我好像被扣兩次",
+            "en": "I think I was charged twice",
+            "vi": "Hình như tôi bị trừ tiền hai lần",
+            "id": "Sepertinya saya ditagih dua kali"
+          },
+          "a": {
+            "zh": "不好意思造成困擾；目前現場無法直接處理重複扣款，請先保留交易紀錄，線上退款申請功能即將開放。",
+            "en": "Sorry—double charges can't be handled on-site yet; keep your record, online refunds are coming soon.",
+            "vi": "Xin lỗi đã gây phiền; hiện tại không thể xử lý trừ tiền trùng tại chỗ, vui lòng giữ lại lịch sử giao dịch, chức năng yêu cầu hoàn tiền trực tuyến sắp ra mắt.",
+            "id": "Maaf—penagihan ganda belum bisa ditangani di tempat; simpan catatan transaksi Anda, pengajuan refund online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "付款失敗",
+            "en": "Payment failed",
+            "vi": "Thanh toán thất bại",
+            "id": "Pembayaran gagal"
+          },
+          "a": {
+            "zh": "請稍候再試一次，或換一種付款方式；也可以<mark>改用旁邊另一台</mark>機器。",
+            "en": "Try again or another method; you can also use an<mark>other machine</mark>.",
+            "vi": "Vui lòng chờ một lát rồi thử lại, hoặc đổi cách thanh toán khác; bạn cũng có thể <mark>chuyển sang máy bên cạnh</mark>.",
+            "id": "Coba lagi atau metode lain; Anda juga bisa <mark>pakai mesin lain di sebelah</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "付款的 QR 在哪",
+            "en": "Where is the payment QR code?",
+            "vi": "Mã QR thanh toán ở đâu?",
+            "id": "Di mana kode QR pembayaran?"
+          },
+          "a": {
+            "zh": "確認預覽後，付款 QR 會顯示在手機或機台畫面上。",
+            "en": "After the preview, the payment QR appears on your phone or screen.",
+            "vi": "Sau khi xem trước, mã QR thanh toán sẽ hiện trên điện thoại hoặc màn hình máy.",
+            "id": "Setelah pratinjau, QR pembayaran muncul di ponsel atau layar Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "有收據或發票嗎",
+            "en": "Is there a receipt or invoice?",
+            "vi": "Có biên lai hay hóa đơn không?",
+            "id": "Apakah ada struk atau faktur?"
+          },
+          "a": {
+            "zh": "本店所有消費都開立電子發票；付款明細也會顯示在畫面與手機操作頁面。",
+            "en": "Every purchase gets an e-invoice; payment details also show on screen and your phone.",
+            "vi": "Mọi giao dịch tại cửa hàng đều xuất hóa đơn điện tử; chi tiết thanh toán cũng hiện trên màn hình và trang thao tác điện thoại.",
+            "id": "Setiap pembelian mendapat faktur elektronik; detail pembayaran juga tampil di layar dan ponsel Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "金額好像不對",
+            "en": "The amount seems wrong",
+            "vi": "Hình như số tiền không đúng",
+            "id": "Jumlahnya sepertinya salah"
+          },
+          "a": {
+            "zh": "金額依頁數、彩色與紙張自動計算，付款前畫面會先顯示；有疑問請保留交易紀錄。",
+            "en": "The amount is auto-calculated and shown before payment; keep your record if in doubt.",
+            "vi": "Số tiền tự động tính theo số trang, màu sắc và loại giấy, sẽ hiện trên màn hình trước khi thanh toán; nếu thắc mắc vui lòng giữ lại lịch sử giao dịch.",
+            "id": "Jumlah dihitung otomatis dan ditampilkan sebelum pembayaran; simpan catatan Anda jika ragu."
+          }
+        },
+        {
+          "q": {
+            "zh": "付到一半中斷了",
+            "en": "Payment was interrupted halfway",
+            "vi": "Thanh toán bị gián đoạn giữa chừng",
+            "id": "Pembayaran terputus di tengah"
+          },
+          "a": {
+            "zh": "未完成付款不會列印也不會扣款，請重新操作一次。",
+            "en": "An incomplete payment won't print or charge; start again.",
+            "vi": "Thanh toán chưa hoàn tất sẽ không in và không bị trừ tiền, vui lòng thao tác lại.",
+            "id": "Pembayaran yang tidak selesai tidak akan mencetak atau menagih; mulai lagi."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要退款",
+            "en": "I want a refund",
+            "vi": "Tôi muốn hoàn tiền",
+            "id": "Saya ingin refund"
+          },
+          "a": {
+            "zh": "不好意思，若付款後沒印出來，您可以<mark>改用旁邊另一台</mark>機器重印，<mark>未完成不扣款</mark>；線上退款申請即將開放。",
+            "en": "Sorry—if a paid job didn't print, reprint on an<mark>other machine</mark> (no charge); online refunds coming soon.",
+            "vi": "Xin lỗi, nếu đã thanh toán mà không in ra, bạn có thể <mark>chuyển sang máy bên cạnh</mark> để in lại, <mark>chưa hoàn tất sẽ không bị tính tiền</mark>; chức năng yêu cầu hoàn tiền trực tuyến sắp ra mắt.",
+            "id": "Maaf—jika pekerjaan berbayar tidak tercetak, <mark>cetak ulang di mesin lain di sebelah</mark> (tidak ditagih); refund online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "有找零或低消嗎",
+            "en": "Is there change or a minimum charge?",
+            "vi": "Có thối tiền hay mức tiêu tối thiểu không?",
+            "id": "Apakah ada kembalian atau minimum belanja?"
+          },
+          "a": {
+            "zh": "本店僅電子支付、無找零；低消為 2 元，付款前畫面會顯示金額。",
+            "en": "E-payment only, no change; the minimum charge is NT$2 and the amount shows before payment.",
+            "vi": "Cửa hàng chỉ thanh toán điện tử, không thối tiền; mức tiêu tối thiểu là 2 NT$, số tiền sẽ hiện trên màn hình trước khi thanh toán.",
+            "id": "Hanya pembayaran elektronik, tanpa kembalian; minimum charge NT$2 dan jumlah tampil sebelum pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "付款後多久會印",
+            "en": "How soon does it print after payment?",
+            "vi": "Sau khi thanh toán bao lâu thì in?",
+            "id": "Berapa lama mencetak setelah bayar?"
+          },
+          "a": {
+            "zh": "付款成功後通常幾秒內就會開始出紙。",
+            "en": "Printing starts within seconds after payment.",
+            "vi": "Sau khi thanh toán thành công, thường vài giây sau là bắt đầu ra giấy.",
+            "id": "Pencetakan dimulai dalam hitungan detik setelah pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以開統編嗎",
+            "en": "Can I add a business tax number?",
+            "vi": "Có thể ghi mã số thuế doanh nghiệp không?",
+            "id": "Bisakah menambahkan nomor pajak usaha?"
+          },
+          "a": {
+            "zh": "不好意思，電子發票目前不支援輸入統一編號。",
+            "en": "Sorry—the e-invoice doesn't support a business tax number.",
+            "vi": "Xin lỗi, hóa đơn điện tử hiện không hỗ trợ nhập mã số thuế doanh nghiệp.",
+            "id": "Maaf—faktur elektronik tidak mendukung nomor pajak usaha."
+          }
+        },
+        {
+          "q": {
+            "zh": "有最低消費嗎",
+            "en": "Is there a minimum charge?",
+            "vi": "Có mức tiêu tối thiểu không?",
+            "id": "Apakah ada minimum belanja?"
+          },
+          "a": {
+            "zh": "有，低消為 2 元，付款前畫面會顯示金額。",
+            "en": "Yes—the minimum charge is NT$2; the amount shows before payment.",
+            "vi": "Có, mức tiêu tối thiểu là 2 NT$, số tiền sẽ hiện trên màn hình trước khi thanh toán.",
+            "id": "Ya—minimum charge NT$2; jumlah tampil sebelum pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以分開付嗎",
+            "en": "Can I pay separately?",
+            "vi": "Có thể trả riêng từng phần không?",
+            "id": "Bisakah bayar terpisah?"
+          },
+          "a": {
+            "zh": "不好意思，無法分開付款，每筆訂單就是一次付款，請依畫面金額付清。",
+            "en": "Sorry—payments can't be split; each order is a single payment for the amount shown.",
+            "vi": "Xin lỗi, không thể tách thanh toán, mỗi đơn hàng là một lần thanh toán, vui lòng trả đủ theo số tiền trên màn hình.",
+            "id": "Maaf—pembayaran tidak bisa dipisah; tiap pesanan satu kali pembayaran sesuai jumlah yang tampil."
+          }
+        },
+        {
+          "q": {
+            "zh": "付款畫面卡住",
+            "en": "The payment screen is frozen",
+            "vi": "Màn hình thanh toán bị treo",
+            "id": "Layar pembayaran macet"
+          },
+          "a": {
+            "zh": "請稍候重整或重新操作；也可<mark>改用旁邊另一台</mark>機器。",
+            "en": "Wait and retry, or use one of the <mark>other machine</mark>s.",
+            "vi": "Vui lòng chờ rồi tải lại hoặc thao tác lại; cũng có thể <mark>chuyển sang máy bên cạnh</mark>.",
+            "id": "Tunggu lalu coba lagi, atau <mark>pakai mesin lain di sebelah</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "我掃不到付款碼",
+            "en": "I can't scan the payment code",
+            "vi": "Tôi quét không được mã thanh toán",
+            "id": "Saya tidak bisa scan kode pembayaran"
+          },
+          "a": {
+            "zh": "請對準畫面付款 QR，或換個角度；仍不行可改用另一台。",
+            "en": "Align with the payment QR or change angle; or use an<mark>other machine</mark>.",
+            "vi": "Vui lòng canh đúng mã QR thanh toán trên màn hình, hoặc đổi góc; nếu vẫn không được có thể chuyển sang máy khác.",
+            "id": "Sejajarkan dengan QR pembayaran atau ubah sudut; atau <mark>pakai mesin lain</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "付完可以改份數嗎",
+            "en": "Can I change copies after paying?",
+            "vi": "Sau khi trả tiền có đổi số bản không?",
+            "id": "Bisakah ubah jumlah salinan setelah bayar?"
+          },
+          "a": {
+            "zh": "付款後無法更改，如需調整請重新操作。",
+            "en": "Can't change after payment; start over to adjust.",
+            "vi": "Sau khi thanh toán không thể thay đổi, nếu cần điều chỉnh vui lòng thao tác lại.",
+            "id": "Tidak bisa diubah setelah pembayaran; mulai ulang untuk menyesuaikan."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRO",
+      "icon": "🎟️",
+      "title": {
+        "zh": "優惠券 / 優惠碼",
+        "en": "Coupons / Promo Codes",
+        "vi": "Phiếu giảm giá / Mã khuyến mãi",
+        "id": "Kupon / Kode Promo"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "有優惠券嗎 / 有折扣嗎",
+            "en": "Any coupons or discounts?",
+            "vi": "Có phiếu giảm giá không / có giảm giá không?",
+            "id": "Ada kupon atau diskon?"
+          },
+          "a": {
+            "zh": "有的，若您有優惠碼，可在手機操作頁面輸入折抵。",
+            "en": "Yes—if you have a promo code, enter it on the phone page to get the discount.",
+            "vi": "Có. Nếu bạn có mã khuyến mãi, hãy nhập trên trang điện thoại để được giảm giá.",
+            "id": "Ada. Jika punya kode promo, masukkan di halaman ponsel untuk mendapat diskon."
+          }
+        },
+        {
+          "q": {
+            "zh": "優惠碼怎麼用",
+            "en": "How do I use a promo code?",
+            "vi": "Dùng mã khuyến mãi thế nào?",
+            "id": "Bagaimana cara pakai kode promo?"
+          },
+          "a": {
+            "zh": "在手機付款前的頁面找到優惠碼欄位，輸入那串代碼就會套用折扣。",
+            "en": "On the phone page before payment, enter your promo code to apply the discount.",
+            "vi": "Trên trang điện thoại trước khi thanh toán, nhập mã khuyến mãi để áp dụng giảm giá.",
+            "id": "Di halaman ponsel sebelum pembayaran, masukkan kode promo untuk menerapkan diskon."
+          }
+        },
+        {
+          "q": {
+            "zh": "優惠券要在機台掃描嗎",
+            "en": "Do I scan the coupon at the machine?",
+            "vi": "Có cần quét phiếu giảm giá ở máy không?",
+            "id": "Apakah kupon dipindai di mesin?"
+          },
+          "a": {
+            "zh": "不好意思，機台沒有掃描功能，優惠請改在手機頁面輸入優惠碼。",
+            "en": "Sorry—the machine can't scan; enter your promo code on the phone page instead.",
+            "vi": "Xin lỗi, máy không quét được; hãy nhập mã khuyến mãi trên trang điện thoại.",
+            "id": "Maaf, mesin tidak bisa memindai; masukkan kode promo di halaman ponsel saja."
+          }
+        },
+        {
+          "q": {
+            "zh": "優惠碼在哪裡輸入",
+            "en": "Where do I enter the promo code?",
+            "vi": "Nhập mã khuyến mãi ở đâu?",
+            "id": "Di mana memasukkan kode promo?"
+          },
+          "a": {
+            "zh": "在手機操作頁面、付款前會有優惠碼欄位，輸入後金額會更新。",
+            "en": "There's a promo-code field on the phone page before payment; the amount updates after you enter it.",
+            "vi": "Có ô mã khuyến mãi trên trang điện thoại trước khi thanh toán; số tiền sẽ cập nhật sau khi nhập.",
+            "id": "Ada kolom kode promo di halaman ponsel sebelum pembayaran; jumlahnya diperbarui setelah dimasukkan."
+          }
+        },
+        {
+          "q": {
+            "zh": "優惠碼無效 / 用不了",
+            "en": "The code doesn't work",
+            "vi": "Mã khuyến mãi không hợp lệ / không dùng được",
+            "id": "Kode tidak berfungsi"
+          },
+          "a": {
+            "zh": "請確認優惠碼輸入正確且仍在有效期內；若仍無法使用，可能已過期或不符使用條件。",
+            "en": "Check the code is correct and still valid; if it still won't work, it may be expired or not eligible.",
+            "vi": "Hãy kiểm tra mã nhập đúng và còn trong thời hạn; nếu vẫn không dùng được, có thể đã hết hạn hoặc không đủ điều kiện.",
+            "id": "Periksa kode sudah benar dan masih berlaku; jika tetap tidak bisa, mungkin sudah kedaluwarsa atau tidak memenuhi syarat."
+          }
+        },
+        {
+          "q": {
+            "zh": "折扣有套用到嗎",
+            "en": "Was the discount applied?",
+            "vi": "Đã áp dụng giảm giá chưa?",
+            "id": "Apakah diskonnya sudah diterapkan?"
+          },
+          "a": {
+            "zh": "輸入優惠碼後，付款前畫面會顯示折扣後金額，確認後再付款。",
+            "en": "After entering the code, the discounted total shows before payment—check it, then pay.",
+            "vi": "Sau khi nhập mã, màn hình trước khi thanh toán sẽ hiển thị số tiền sau giảm giá; kiểm tra rồi thanh toán.",
+            "id": "Setelah memasukkan kode, total setelah diskon muncul sebelum pembayaran; periksa lalu bayar."
+          }
+        },
+        {
+          "q": {
+            "zh": "優惠券哪裡拿 / 怎麼領",
+            "en": "Where do I get coupons?",
+            "vi": "Lấy phiếu giảm giá ở đâu / nhận thế nào?",
+            "id": "Di mana mendapatkan kupon?"
+          },
+          "a": {
+            "zh": "優惠活動與優惠碼的取得方式，請參考現場告示或我們的活動公告。",
+            "en": "For promotions and how to get codes, see the in-store notices or our announcements.",
+            "vi": "Về các chương trình khuyến mãi và cách nhận mã, xin xem thông báo tại cửa hàng hoặc thông báo hoạt động của chúng tôi.",
+            "id": "Untuk promosi dan cara mendapatkan kode, lihat pengumuman di toko atau pengumuman acara kami."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INV",
+      "icon": "🧾",
+      "title": {
+        "zh": "發票 / 收據",
+        "en": "Invoice / Receipt",
+        "vi": "Hóa đơn / Biên lai",
+        "id": "Faktur / Tanda terima"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "有發票嗎",
+            "en": "Do you have invoices?",
+            "vi": "Có hóa đơn không?",
+            "id": "Apakah ada faktur?"
+          },
+          "a": {
+            "zh": "有，本店所有消費都開立電子發票。",
+            "en": "Yes—every purchase gets an e-invoice.",
+            "vi": "Có—mọi giao dịch đều xuất hóa đơn điện tử.",
+            "id": "Ya—setiap pembelian mendapat faktur elektronik."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要紙本發票",
+            "en": "I want a paper invoice",
+            "vi": "Tôi muốn hóa đơn giấy",
+            "id": "Saya mau faktur kertas"
+          },
+          "a": {
+            "zh": "不好意思，本店只開電子發票，不提供紙本發票。",
+            "en": "Sorry—we issue e-invoices only, no paper invoices.",
+            "vi": "Xin lỗi—chúng tôi chỉ xuất hóa đơn điện tử, không có hóa đơn giấy.",
+            "id": "Maaf—kami hanya menerbitkan faktur elektronik, tidak ada faktur kertas."
+          }
+        },
+        {
+          "q": {
+            "zh": "載具怎麼設",
+            "en": "How do I set up a carrier?",
+            "vi": "Cài đặt invoice carrier thế nào?",
+            "id": "Cara mengatur invoice carrier?"
+          },
+          "a": {
+            "zh": "本店所有消費都開電子發票；載具與發票設定是在付款時由電子支付系統處理。",
+            "en": "Every purchase gets an e-invoice; carrier and invoice settings are handled by the payment system at checkout.",
+            "vi": "Mọi giao dịch đều xuất hóa đơn điện tử; invoice carrier và cài đặt hóa đơn do hệ thống thanh toán xử lý khi thanh toán.",
+            "id": "Setiap pembelian mendapat faktur elektronik; invoice carrier dan pengaturan faktur ditangani sistem pembayaran saat checkout."
+          }
+        },
+        {
+          "q": {
+            "zh": "統一編號",
+            "en": "Business tax number",
+            "vi": "Business tax number",
+            "id": "Business tax number"
+          },
+          "a": {
+            "zh": "不好意思，電子發票目前不支援輸入統一編號。",
+            "en": "Sorry—the e-invoice doesn't support a business tax number.",
+            "vi": "Xin lỗi—hóa đơn điện tử hiện không hỗ trợ nhập business tax number.",
+            "id": "Maaf—faktur elektronik tidak mendukung business tax number."
+          }
+        },
+        {
+          "q": {
+            "zh": "發票中獎怎麼領",
+            "en": "How do I claim an invoice prize?",
+            "vi": "Trúng thưởng hóa đơn lãnh thế nào?",
+            "id": "Cara klaim hadiah faktur?"
+          },
+          "a": {
+            "zh": "電子發票的對獎與中獎通知，依電子發票平台規定辦理。",
+            "en": "E-invoice prize draws follow the e-invoice platform's rules.",
+            "vi": "Việc dò và thông báo invoice prize theo quy định của nền tảng hóa đơn điện tử.",
+            "id": "Pengundian invoice prize mengikuti aturan platform faktur elektronik."
+          }
+        },
+        {
+          "q": {
+            "zh": "收據在哪",
+            "en": "Where is the receipt?",
+            "vi": "Biên lai ở đâu?",
+            "id": "Tanda terima di mana?"
+          },
+          "a": {
+            "zh": "本店開立電子發票；付款明細也會顯示在畫面與手機操作頁面。",
+            "en": "We issue e-invoices; payment details also show on screen and your phone.",
+            "vi": "Chúng tôi xuất hóa đơn điện tử; chi tiết thanh toán cũng hiện trên màn hình và trang thao tác điện thoại.",
+            "id": "Kami menerbitkan faktur elektronik; rincian pembayaran juga tampil di layar dan ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "發票寄到哪",
+            "en": "Where is the invoice sent?",
+            "vi": "Hóa đơn gửi đến đâu?",
+            "id": "Faktur dikirim ke mana?"
+          },
+          "a": {
+            "zh": "電子發票會依付款時電子支付系統的設定開立與通知。",
+            "en": "The e-invoice is issued and notified per the payment system's settings.",
+            "vi": "Hóa đơn điện tử được xuất và thông báo theo cài đặt của hệ thống thanh toán khi thanh toán.",
+            "id": "Faktur elektronik diterbitkan dan diberitahukan sesuai pengaturan sistem pembayaran."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以捐發票嗎",
+            "en": "Can I donate the invoice?",
+            "vi": "Tôi có thể quyên góp hóa đơn không?",
+            "id": "Bisakah saya mendonasikan faktur?"
+          },
+          "a": {
+            "zh": "不好意思，目前沒有手機條碼自動捐贈公益的功能。",
+            "en": "Sorry—there's no mobile-barcode auto-donation to charity.",
+            "vi": "Xin lỗi—hiện không có chức năng tự động quyên góp từ thiện bằng mã vạch điện thoại.",
+            "id": "Maaf—tidak ada donasi otomatis ke amal lewat barcode ponsel."
+          }
+        },
+        {
+          "q": {
+            "zh": "重印發票",
+            "en": "Reprint an invoice",
+            "vi": "In lại hóa đơn",
+            "id": "Cetak ulang faktur"
+          },
+          "a": {
+            "zh": "電子發票可於電子發票平台查詢；付款明細也會顯示在畫面。",
+            "en": "E-invoices can be checked on the e-invoice platform; payment details also show on screen.",
+            "vi": "Hóa đơn điện tử có thể tra trên nền tảng hóa đơn điện tử; chi tiết thanh toán cũng hiện trên màn hình.",
+            "id": "Faktur elektronik bisa dicek di platform faktur elektronik; rincian pembayaran juga tampil di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "發票金額不對",
+            "en": "Invoice amount is wrong",
+            "vi": "Số tiền trên hóa đơn không đúng",
+            "id": "Jumlah pada faktur salah"
+          },
+          "a": {
+            "zh": "金額依實際列印計算，付款前畫面會顯示；電子發票依該金額開立。",
+            "en": "The amount reflects actual printing and shows before payment; the e-invoice is issued for that amount.",
+            "vi": "Số tiền tính theo bản in thực tế và hiện trước khi thanh toán; hóa đơn điện tử xuất theo số tiền đó.",
+            "id": "Jumlah dihitung sesuai cetakan sebenarnya dan tampil sebelum pembayaran; faktur elektronik diterbitkan untuk jumlah itu."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ERR",
+      "icon": "⚠️",
+      "title": {
+        "zh": "機台狀況",
+        "en": "Machine Issues",
+        "vi": "Sự cố máy",
+        "id": "Masalah Mesin"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "卡紙了",
+            "en": "Paper jam",
+            "vi": "Kẹt giấy",
+            "id": "Kertas macet"
+          },
+          "a": {
+            "zh": "請依機台螢幕圖示打開紙匣、取出卡住的紙張即可；不想自行處理，旁邊還有另外兩台可直接用，<mark>未完成不扣款</mark>。",
+            "en": "Follow the on-screen diagram to clear the jam, or use the other two machines—unfinished jobs aren't charged.",
+            "vi": "Hãy làm theo hình trên màn hình để mở khay và lấy giấy kẹt ra; nếu không muốn tự xử lý, bên cạnh còn hai máy khác dùng được ngay, công việc chưa hoàn thành không bị trừ tiền.",
+            "id": "Ikuti gambar di layar untuk membuka baki dan mengeluarkan kertas yang macet; jika tak ingin menangani sendiri, ada dua mesin lain di sebelah yang bisa langsung dipakai, pekerjaan yang belum selesai tidak ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "沒紙了",
+            "en": "Out of paper",
+            "vi": "Hết giấy",
+            "id": "Kertas habis"
+          },
+          "a": {
+            "zh": "請依機台螢幕指示打開紙匣補充紙張；或直接<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。",
+            "en": "Refill paper per the screen, or use an<mark>other machine</mark>—no charge for unfinished jobs.",
+            "vi": "Hãy làm theo hướng dẫn trên màn hình để mở khay và thêm giấy; hoặc đổi sang máy khác bên cạnh, công việc chưa hoàn thành không bị trừ tiền.",
+            "id": "Ikuti petunjuk di layar untuk membuka baki dan menambah kertas; atau ganti ke mesin lain di sebelah, pekerjaan yang belum selesai tidak ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "印出來是空白的",
+            "en": "Prints come out blank",
+            "vi": "In ra bị trắng trơn",
+            "id": "Hasil cetak kosong"
+          },
+          "a": {
+            "zh": "通常是檔案或設定問題，請檢查原始檔案後重印，或<mark>改用旁邊另一台</mark>試試。",
+            "en": "Usually a file/setting issue—check and reprint, or try an<mark>other machine</mark>.",
+            "vi": "Thường là do file hoặc cài đặt, hãy kiểm tra file gốc rồi in lại, hoặc thử đổi sang máy khác bên cạnh.",
+            "id": "Biasanya masalah file atau pengaturan, periksa file asli lalu cetak ulang, atau coba ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "印出來有條紋很髒",
+            "en": "Prints have streaks / are dirty",
+            "vi": "Bản in có sọc, bị bẩn",
+            "id": "Hasil cetak bergaris / kotor"
+          },
+          "a": {
+            "zh": "列印品質不佳時，建議直接<mark>改用旁邊另一台</mark>機器。",
+            "en": "For poor quality, use one of the <mark>other machine</mark>s.",
+            "vi": "Khi chất lượng in kém, nên đổi sang máy khác bên cạnh.",
+            "id": "Jika kualitas cetak buruk, sebaiknya ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "機器沒反應 / 當機",
+            "en": "Machine is unresponsive / crashed",
+            "vi": "Máy không phản hồi / bị đơ",
+            "id": "Mesin tidak merespons / hang"
+          },
+          "a": {
+            "zh": "請直接<mark>改用旁邊另一台</mark>機器操作，未完成的訂單不會扣款。",
+            "en": "Use one of the <mark>other machine</mark>s—unfinished jobs aren't charged.",
+            "vi": "Hãy đổi sang máy khác bên cạnh để thao tác, đơn chưa hoàn thành sẽ không bị trừ tiền.",
+            "id": "Silakan ganti ke mesin lain di sebelah, pesanan yang belum selesai tidak akan ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "螢幕黑掉了",
+            "en": "The screen went black",
+            "vi": "Màn hình bị đen",
+            "id": "Layar menjadi hitam"
+          },
+          "a": {
+            "zh": "這台螢幕沒反應時，請<mark>改用旁邊另一台</mark>機器。",
+            "en": "If the screen is dead, use one of the <mark>other machine</mark>s.",
+            "vi": "Khi màn hình máy này không phản hồi, hãy đổi sang máy khác bên cạnh.",
+            "id": "Jika layar mesin ini tidak merespons, ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "印到一半停住",
+            "en": "Stopped halfway through printing",
+            "vi": "In nửa chừng thì dừng",
+            "id": "Berhenti di tengah pencetakan"
+          },
+          "a": {
+            "zh": "請稍候幾秒；若沒有恢復，可<mark>改用旁邊另一台</mark>重印。",
+            "en": "Wait a few seconds; if it doesn't resume, reprint on an<mark>other machine</mark>.",
+            "vi": "Hãy chờ vài giây; nếu không tiếp tục, có thể đổi sang máy khác bên cạnh để in lại.",
+            "id": "Tunggu beberapa detik; jika tidak lanjut, bisa ganti ke mesin lain di sebelah untuk cetak ulang."
+          }
+        },
+        {
+          "q": {
+            "zh": "顏色很淡 / 沒碳粉",
+            "en": "Color too faint / out of toner",
+            "vi": "Màu rất nhạt / hết mực",
+            "id": "Warna terlalu pudar / toner habis"
+          },
+          "a": {
+            "zh": "列印偏淡時，建議<mark>改用旁邊另一台</mark>機器。",
+            "en": "If faded, use one of the <mark>other machine</mark>s.",
+            "vi": "Khi bản in bị nhạt, nên đổi sang máy khác bên cạnh.",
+            "id": "Jika cetakan pudar, sebaiknya ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "我可以自己拉紙嗎",
+            "en": "Can I pull out the paper myself?",
+            "vi": "Tôi tự rút giấy ra được không",
+            "id": "Bolehkah saya menarik kertas sendiri?"
+          },
+          "a": {
+            "zh": "可以，請依螢幕圖示慢慢取出卡紙，不要硬拉；不確定就<mark>改用旁邊另一台</mark>。",
+            "en": "Yes—follow the diagram and gently remove it; if unsure, use an<mark>other machine</mark>.",
+            "vi": "Được, hãy làm theo hình trên màn hình để từ từ lấy giấy kẹt ra, đừng kéo mạnh; nếu không chắc thì đổi sang máy khác bên cạnh.",
+            "id": "Boleh, ikuti gambar di layar dan keluarkan kertas macet perlahan, jangan ditarik paksa; jika ragu, ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "紙要怎麼補",
+            "en": "How do I refill paper?",
+            "vi": "Thêm giấy như thế nào",
+            "id": "Bagaimana cara menambah kertas?"
+          },
+          "a": {
+            "zh": "請依機台螢幕指示打開紙匣，放入紙張即可。",
+            "en": "Follow the on-screen steps to open the tray and add paper.",
+            "vi": "Hãy làm theo hướng dẫn trên màn hình để mở khay và cho giấy vào.",
+            "id": "Ikuti petunjuk di layar untuk membuka baki dan memasukkan kertas."
+          }
+        },
+        {
+          "q": {
+            "zh": "我印錯了",
+            "en": "I printed the wrong thing",
+            "vi": "Tôi in nhầm rồi",
+            "id": "Saya salah cetak"
+          },
+          "a": {
+            "zh": "已印出的內容無法收回；如需重印請重新操作，或<mark>改用旁邊另一台</mark>。",
+            "en": "Printed pages can't be undone; reprint here or on an<mark>other machine</mark>.",
+            "vi": "Nội dung đã in không thể thu hồi; nếu cần in lại hãy thao tác lại, hoặc đổi sang máy khác bên cạnh.",
+            "id": "Halaman yang sudah dicetak tidak bisa ditarik kembali; jika perlu cetak ulang silakan ulangi, atau ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "機器有怪聲音",
+            "en": "The machine makes a strange noise",
+            "vi": "Máy có tiếng lạ",
+            "id": "Mesin mengeluarkan suara aneh"
+          },
+          "a": {
+            "zh": "機台有異常聲響時，請停止使用這台，<mark>改用旁邊另一台</mark>。",
+            "en": "If it makes odd noises, stop and switch to an<mark>other machine</mark>.",
+            "vi": "Khi máy có tiếng động bất thường, hãy ngừng dùng máy này và đổi sang máy khác bên cạnh.",
+            "id": "Jika mesin mengeluarkan suara tidak normal, hentikan mesin ini dan ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "蓋子 / 送稿器卡住",
+            "en": "Lid / feeder is stuck",
+            "vi": "Nắp / bộ nạp giấy bị kẹt",
+            "id": "Penutup / pengumpan macet"
+          },
+          "a": {
+            "zh": "請依螢幕指示輕輕復位，不要強行扳動；不確定就<mark>改用旁邊另一台</mark>。",
+            "en": "Follow the screen to gently reset it; if unsure, use an<mark>other machine</mark>.",
+            "vi": "Hãy làm theo hướng dẫn trên màn hình để nhẹ nhàng đưa về vị trí, đừng cố cạy mạnh; nếu không chắc thì đổi sang máy khác bên cạnh.",
+            "id": "Ikuti petunjuk di layar untuk menyetel ulang perlahan, jangan dipaksa; jika ragu, ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "機器壞掉了",
+            "en": "The machine is broken",
+            "vi": "Máy bị hỏng",
+            "id": "Mesin rusak"
+          },
+          "a": {
+            "zh": "這台無法使用時，請直接<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。",
+            "en": "If it's broken, use one of the <mark>other machine</mark>s—no charge for unfinished jobs.",
+            "vi": "Khi máy này không dùng được, hãy đổi sang máy khác bên cạnh, công việc chưa hoàn thành không bị trừ tiền.",
+            "id": "Jika mesin ini tidak bisa dipakai, ganti ke mesin lain di sebelah, pekerjaan yang belum selesai tidak ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "出紙口卡住",
+            "en": "Output tray is jammed",
+            "vi": "Khe ra giấy bị kẹt",
+            "id": "Saluran keluar kertas macet"
+          },
+          "a": {
+            "zh": "請依螢幕指示輕輕取出，不要硬拉；不確定<mark>改用旁邊另一台</mark>。",
+            "en": "Gently remove it per the screen; if unsure, use an<mark>other machine</mark>.",
+            "vi": "Hãy làm theo hướng dẫn trên màn hình để nhẹ nhàng lấy ra, đừng kéo mạnh; nếu không chắc đổi sang máy khác bên cạnh.",
+            "id": "Ikuti petunjuk di layar untuk mengeluarkan perlahan, jangan ditarik paksa; jika ragu ganti ke mesin lain di sebelah."
+          }
+        },
+        {
+          "q": {
+            "zh": "印一半沒紙了",
+            "en": "Ran out of paper mid-print",
+            "vi": "In nửa chừng thì hết giấy",
+            "id": "Kertas habis di tengah pencetakan"
+          },
+          "a": {
+            "zh": "依螢幕補紙後可續印，或<mark>改用旁邊另一台</mark>重印。",
+            "en": "Refill to continue, or reprint on an<mark>other machine</mark>.",
+            "vi": "Thêm giấy theo màn hình rồi in tiếp, hoặc đổi sang máy khác bên cạnh để in lại.",
+            "id": "Tambahkan kertas sesuai layar lalu lanjut cetak, atau ganti ke mesin lain di sebelah untuk cetak ulang."
+          }
+        },
+        {
+          "q": {
+            "zh": "螢幕觸控沒反應",
+            "en": "Touchscreen is unresponsive",
+            "vi": "Màn hình cảm ứng không phản hồi",
+            "id": "Layar sentuh tidak merespons"
+          },
+          "a": {
+            "zh": "請<mark>改用旁邊另一台</mark>機器操作。",
+            "en": "Use one of the <mark>other machine</mark>s.",
+            "vi": "Hãy đổi sang máy khác bên cạnh để thao tác.",
+            "id": "Silakan ganti ke mesin lain di sebelah untuk dioperasikan."
+          }
+        },
+        {
+          "q": {
+            "zh": "機器一直轉沒動作",
+            "en": "Machine keeps spinning, doing nothing",
+            "vi": "Máy cứ quay mà không làm gì",
+            "id": "Mesin terus berputar tanpa aksi"
+          },
+          "a": {
+            "zh": "請稍候；若沒反應<mark>改用旁邊另一台</mark>，<mark>未完成不扣款</mark>。",
+            "en": "Wait; if nothing happens, use an<mark>other machine</mark>—no charge.",
+            "vi": "Hãy chờ một chút; nếu không phản hồi thì đổi sang máy khác bên cạnh, công việc chưa hoàn thành không bị trừ tiền.",
+            "id": "Tunggu sebentar; jika tidak merespons ganti ke mesin lain di sebelah, pekerjaan yang belum selesai tidak ditagih."
+          }
+        },
+        {
+          "q": {
+            "zh": "印出來歪斜",
+            "en": "Prints come out skewed",
+            "vi": "Bản in bị lệch",
+            "id": "Hasil cetak miring"
+          },
+          "a": {
+            "zh": "文件或證件請對齊標示線；或<mark>改用旁邊另一台</mark>重印。",
+            "en": "Align to the marks, or reprint on an<mark>other machine</mark>.",
+            "vi": "Hãy canh tài liệu hoặc giấy tờ theo vạch chỉ dẫn; hoặc đổi sang máy khác bên cạnh để in lại.",
+            "id": "Sejajarkan dokumen sesuai garis penanda; atau ganti ke mesin lain di sebelah untuk cetak ulang."
+          }
+        },
+        {
+          "q": {
+            "zh": "重複印了好幾張",
+            "en": "It printed several copies by mistake",
+            "vi": "In lặp lại nhiều bản",
+            "id": "Tercetak beberapa salinan tanpa sengaja"
+          },
+          "a": {
+            "zh": "請檢查份數設定，確認份數後再重印。",
+            "en": "Check the copy count and reprint after confirming.",
+            "vi": "Hãy kiểm tra cài đặt số bản, xác nhận số bản rồi in lại.",
+            "id": "Periksa pengaturan jumlah salinan, konfirmasi lalu cetak ulang."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOC",
+      "icon": "🏪",
+      "title": {
+        "zh": "店務 / 環境",
+        "en": "Store Info",
+        "vi": "Thông tin cửa hàng / Môi trường",
+        "id": "Info Toko / Lingkungan"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "幾點營業",
+            "en": "What are your opening hours?",
+            "vi": "Mấy giờ mở cửa?",
+            "id": "Jam berapa buka?"
+          },
+          "a": {
+            "zh": "本店 <mark>24 小時營業、全年無休</mark>。",
+            "en": "We're open 24 hours, every day of the year.",
+            "vi": "Cửa hàng <mark>mở cửa 24 giờ, suốt cả năm</mark>.",
+            "id": "Toko <mark>buka 24 jam, sepanjang tahun</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "開到幾點",
+            "en": "How late are you open?",
+            "vi": "Mở cửa đến mấy giờ?",
+            "id": "Buka sampai jam berapa?"
+          },
+          "a": {
+            "zh": "本店 24 小時營業，全天候開放。",
+            "en": "We're open 24 hours a day.",
+            "vi": "Cửa hàng mở cửa 24 giờ, suốt cả ngày.",
+            "id": "Toko buka 24 jam sehari."
+          }
+        },
+        {
+          "q": {
+            "zh": "假日有開嗎",
+            "en": "Are you open on holidays?",
+            "vi": "Ngày lễ có mở không?",
+            "id": "Hari libur buka tidak?"
+          },
+          "a": {
+            "zh": "有，本店全年無休、24 小時營業。",
+            "en": "Yes—open 24 hours, every day, all year.",
+            "vi": "Có, cửa hàng mở cửa suốt cả năm, 24 giờ.",
+            "id": "Ya, toko buka 24 jam, setiap hari, sepanjang tahun."
+          }
+        },
+        {
+          "q": {
+            "zh": "地址在哪",
+            "en": "What's the address?",
+            "vi": "Địa chỉ ở đâu?",
+            "id": "Alamatnya di mana?"
+          },
+          "a": {
+            "zh": "地址請參考門口告示或您的地圖定位。",
+            "en": "The address is on the door notice or your map app.",
+            "vi": "Vui lòng xem địa chỉ trên bảng thông báo ở cửa hoặc ứng dụng bản đồ của bạn.",
+            "id": "Lihat alamat di pengumuman pintu atau aplikasi peta Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "怎麼去 / 在哪裡",
+            "en": "How do I get here / where are you?",
+            "vi": "Đi đến đây bằng cách nào / ở đâu?",
+            "id": "Cara ke sini / di mana lokasinya?"
+          },
+          "a": {
+            "zh": "位置請參考您手機的地圖定位。",
+            "en": "Please check your map app for the location.",
+            "vi": "Vui lòng xem vị trí trên ứng dụng bản đồ của điện thoại.",
+            "id": "Silakan cek lokasi di aplikasi peta ponsel Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "有停車位嗎",
+            "en": "Is there parking?",
+            "vi": "Có chỗ đậu xe không?",
+            "id": "Ada tempat parkir tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店<mark>沒有提供</mark>停車位。",
+            "en": "Sorry—we don't have parking.",
+            "vi": "Xin lỗi, cửa hàng <mark>không có</mark> chỗ đậu xe.",
+            "id": "Maaf, toko <mark>tidak menyediakan</mark> parkir."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以停哪",
+            "en": "Where can I park?",
+            "vi": "Đậu xe ở đâu được?",
+            "id": "Bisa parkir di mana?"
+          },
+          "a": {
+            "zh": "本店沒有專用停車位，請利用周邊合法停車空間。",
+            "en": "We have no parking; please use nearby legal parking.",
+            "vi": "Cửa hàng không có chỗ đậu xe riêng, vui lòng dùng chỗ đậu xe hợp pháp gần đó.",
+            "id": "Toko tidak punya parkir; silakan gunakan parkir legal di sekitar."
+          }
+        },
+        {
+          "q": {
+            "zh": "有廁所嗎",
+            "en": "Is there a restroom?",
+            "vi": "Có nhà vệ sinh không?",
+            "id": "Ada toilet tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店是無人門市，<mark>沒有提供</mark>廁所與洗手設備。",
+            "en": "Sorry—this unmanned store has <mark>no restroom</mark> or handwashing.",
+            "vi": "Xin lỗi, đây là cửa hàng không người, <mark>không có</mark> nhà vệ sinh và chỗ rửa tay.",
+            "id": "Maaf, toko tanpa staf ini <mark>tidak ada toilet</mark> atau tempat cuci tangan."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以洗手嗎",
+            "en": "Can I wash my hands?",
+            "vi": "Có rửa tay được không?",
+            "id": "Bisa cuci tangan tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店<mark>沒有提供</mark>洗手設備。",
+            "en": "Sorry—no handwashing facilities here.",
+            "vi": "Xin lỗi, cửa hàng <mark>không có</mark> chỗ rửa tay.",
+            "id": "Maaf, tidak ada fasilitas cuci tangan di sini."
+          }
+        },
+        {
+          "q": {
+            "zh": "有 wifi 嗎",
+            "en": "Is there WiFi?",
+            "vi": "Có WiFi không?",
+            "id": "Ada WiFi tidak?"
+          },
+          "a": {
+            "zh": "店內掃碼連線僅用於傳送檔案到事務機，<mark>不提供</mark>一般上網；需上網請用手機行動網路。",
+            "en": "The in-store QR connection is only for sending files to the machine, not general internet—use mobile data for browsing.",
+            "vi": "Kết nối quét QR trong cửa hàng chỉ dùng để gửi tệp đến máy, <mark>không có</mark> internet thông thường; cần lên mạng vui lòng dùng dữ liệu di động.",
+            "id": "Koneksi QR di toko hanya untuk mengirim file ke mesin, <mark>tidak ada</mark> internet umum; gunakan data seluler untuk berselancar."
+          }
+        },
+        {
+          "q": {
+            "zh": "有冷氣嗎",
+            "en": "Is there air conditioning?",
+            "vi": "Có máy lạnh không?",
+            "id": "Ada AC tidak?"
+          },
+          "a": {
+            "zh": "環境相關以現場為準。",
+            "en": "Please refer to the on-site environment.",
+            "vi": "Về môi trường vui lòng xem tình hình tại chỗ.",
+            "id": "Untuk lingkungan, mohon mengacu pada kondisi di tempat."
+          }
+        },
+        {
+          "q": {
+            "zh": "有幾台機器",
+            "en": "How many machines are there?",
+            "vi": "Có mấy máy?",
+            "id": "Ada berapa mesin?"
+          },
+          "a": {
+            "zh": "本店有三台機器，可任選使用。",
+            "en": "There are three machines; use any of them.",
+            "vi": "Cửa hàng có ba máy, bạn có thể chọn dùng bất kỳ máy nào.",
+            "id": "Ada tiga mesin; gunakan yang mana saja."
+          }
+        },
+        {
+          "q": {
+            "zh": "哪一台比較好",
+            "en": "Which machine is better?",
+            "vi": "Máy nào tốt hơn?",
+            "id": "Mesin mana yang lebih baik?"
+          },
+          "a": {
+            "zh": "三台功能相同，任選一台即可；某台有狀況可換另一台。",
+            "en": "All three are the same; switch if one has an issue.",
+            "vi": "Ba máy có chức năng giống nhau, chọn máy nào cũng được; nếu một máy có vấn đề thì đổi sang máy khác.",
+            "id": "Ketiganya sama; ganti jika satu bermasalah."
+          }
+        },
+        {
+          "q": {
+            "zh": "有監視器嗎",
+            "en": "Are there security cameras?",
+            "vi": "Có camera giám sát không?",
+            "id": "Ada kamera keamanan tidak?"
+          },
+          "a": {
+            "zh": "店內設有監視以維護安全，影像僅作安全用途。",
+            "en": "There's security monitoring for safety only.",
+            "vi": "Cửa hàng có lắp giám sát để đảm bảo an toàn, hình ảnh chỉ dùng cho mục đích an toàn.",
+            "id": "Ada pemantauan keamanan hanya untuk keselamatan."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以坐著休息嗎",
+            "en": "Can I sit and rest?",
+            "vi": "Có chỗ ngồi nghỉ không?",
+            "id": "Bisa duduk istirahat tidak?"
+          },
+          "a": {
+            "zh": "本店為自助操作空間，沒有休息座位。",
+            "en": "This is a self-service space with no seating.",
+            "vi": "Cửa hàng là không gian tự phục vụ, không có chỗ ngồi nghỉ.",
+            "id": "Ini ruang swalayan tanpa tempat duduk."
+          }
+        },
+        {
+          "q": {
+            "zh": "有賣文具嗎",
+            "en": "Do you sell stationery?",
+            "vi": "Có bán văn phòng phẩm không?",
+            "id": "Jual alat tulis tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店只提供列印、影印與掃描，不販售文具。",
+            "en": "Sorry—we only offer printing, copying, and scanning.",
+            "vi": "Xin lỗi, cửa hàng chỉ cung cấp in, photocopy và scan, không bán văn phòng phẩm.",
+            "id": "Maaf, kami hanya menyediakan cetak, fotokopi, dan pindai."
+          }
+        },
+        {
+          "q": {
+            "zh": "可以換零錢嗎",
+            "en": "Can I get change for cash?",
+            "vi": "Có đổi tiền lẻ không?",
+            "id": "Bisa tukar uang receh tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店<mark>不提供</mark>換鈔，付款請用畫面顯示的方式。",
+            "en": "Sorry—no change service; pay via the on-screen methods.",
+            "vi": "Xin lỗi, cửa hàng <mark>không</mark> đổi tiền, vui lòng thanh toán theo cách hiển thị trên màn hình.",
+            "id": "Maaf, tidak ada layanan tukar uang; bayar melalui metode di layar."
+          }
+        },
+        {
+          "q": {
+            "zh": "有飲水機嗎",
+            "en": "Is there a water dispenser?",
+            "vi": "Có máy lọc nước không?",
+            "id": "Ada dispenser air tidak?"
+          },
+          "a": {
+            "zh": "不好意思，本店<mark>沒有提供</mark>飲水設備。",
+            "en": "Sorry—no water facilities here.",
+            "vi": "Xin lỗi, cửa hàng <mark>không có</mark> thiết bị nước uống.",
+            "id": "Maaf, tidak ada fasilitas air di sini."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLP",
+      "icon": "🙋",
+      "title": {
+        "zh": "需要協助",
+        "en": "Help",
+        "vi": "Cần trợ giúp",
+        "id": "Butuh bantuan"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "有沒有人可以幫我",
+            "en": "Is there someone who can help me?",
+            "vi": "Có ai giúp tôi được không?",
+            "id": "Apakah ada yang bisa membantu saya?"
+          },
+          "a": {
+            "zh": "這是無人自助門市，我可以直接引導您操作，請告訴我您的需求。",
+            "en": "This is a self-service store—I can guide you; tell me what you need.",
+            "vi": "Đây là cửa hàng tự phục vụ không người, tôi có thể hướng dẫn bạn thao tác, hãy cho tôi biết bạn cần gì.",
+            "id": "Ini toko swalayan tanpa staf, saya bisa memandu Anda; beri tahu apa yang Anda butuhkan."
+          }
+        },
+        {
+          "q": {
+            "zh": "哪裡有更多說明",
+            "en": "Where can I find more instructions?",
+            "vi": "Tìm thêm hướng dẫn ở đâu?",
+            "id": "Di mana saya bisa menemukan petunjuk lebih lanjut?"
+          },
+          "a": {
+            "zh": "機台螢幕都有操作指引，我也可以一步步引導您。",
+            "en": "The screen has guidance, and I can walk you through it.",
+            "vi": "Màn hình máy đều có hướng dẫn thao tác, tôi cũng có thể hướng dẫn bạn từng bước.",
+            "id": "Layar mesin ada panduannya, dan saya juga bisa memandu Anda langkah demi langkah."
+          }
+        },
+        {
+          "q": {
+            "zh": "你們幾點營業",
+            "en": "What are your opening hours?",
+            "vi": "Cửa hàng mở cửa lúc mấy giờ?",
+            "id": "Jam buka toko kapan?"
+          },
+          "a": {
+            "zh": "本店 <mark>24 小時營業、全年無休</mark>。",
+            "en": "We're open 24 hours, every day of the year.",
+            "vi": "Cửa hàng mở cửa <mark>24 giờ, suốt năm không nghỉ</mark>.",
+            "id": "Toko buka <mark>24 jam, setiap hari sepanjang tahun</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "現場都沒有店員嗎",
+            "en": "Is there really no staff on-site?",
+            "vi": "Tại đây thật sự không có nhân viên à?",
+            "id": "Apakah benar-benar tidak ada staf di tempat?"
+          },
+          "a": {
+            "zh": "對，這是無人門市，全部自助操作，我可以引導您。",
+            "en": "Yes—it's fully self-service, and I can help guide you.",
+            "vi": "Đúng vậy, đây là cửa hàng không người, hoàn toàn tự phục vụ, tôi có thể hướng dẫn bạn.",
+            "id": "Ya, ini toko tanpa staf, sepenuhnya swalayan, dan saya bisa memandu Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "我不會用，可以教我嗎",
+            "en": "I don't know how to use it, can you teach me?",
+            "vi": "Tôi không biết dùng, dạy tôi được không?",
+            "id": "Saya tidak tahu cara pakainya, bisakah ajari saya?"
+          },
+          "a": {
+            "zh": "沒問題，請告訴我您要列印、影印還是掃描，我一步步引導您。",
+            "en": "Of course—tell me what you need and I'll guide you step by step.",
+            "vi": "Không sao, hãy cho tôi biết bạn muốn in, photocopy hay quét, tôi sẽ hướng dẫn từng bước.",
+            "id": "Tentu, beri tahu apakah Anda mau mencetak, fotokopi, atau pindai, saya pandu langkah demi langkah."
+          }
+        },
+        {
+          "q": {
+            "zh": "我遇到緊急狀況",
+            "en": "I have an emergency",
+            "vi": "Tôi gặp tình huống khẩn cấp",
+            "id": "Saya mengalami keadaan darurat"
+          },
+          "a": {
+            "zh": "若是火災、有人受傷等緊急狀況，請立即撥打 <mark>119 或 110</mark>。",
+            "en": "For a fire or injury, call <mark>119 or 110</mark> immediately.",
+            "vi": "Nếu có hỏa hoạn, có người bị thương hay tình huống khẩn cấp, hãy gọi ngay <mark>119 hoặc 110</mark>.",
+            "id": "Jika ada kebakaran atau orang terluka, segera hubungi <mark>119 atau 110</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "廁所 / 洗手 / 其他問題",
+            "en": "Restroom / handwashing / other questions",
+            "vi": "Nhà vệ sinh / rửa tay / câu hỏi khác",
+            "id": "Toilet / cuci tangan / pertanyaan lain"
+          },
+          "a": {
+            "zh": "不好意思，本店是無人門市，<mark>沒有提供</mark>廁所與洗手設備；其他問題請參考現場告示。",
+            "en": "Sorry—<mark>no restroom</mark> or handwashing; for other questions see the in-store notices.",
+            "vi": "Xin lỗi, đây là cửa hàng không người, <mark>không có</mark> nhà vệ sinh và chỗ rửa tay; câu hỏi khác xin xem bảng thông báo tại chỗ.",
+            "id": "Maaf, ini toko tanpa staf, <mark>tidak ada</mark> toilet atau tempat cuci tangan; pertanyaan lain lihat pengumuman di toko."
+          }
+        },
+        {
+          "q": {
+            "zh": "我已經試很多次了",
+            "en": "I've tried many times already",
+            "vi": "Tôi đã thử rất nhiều lần rồi",
+            "id": "Saya sudah mencoba berkali-kali"
+          },
+          "a": {
+            "zh": "不好意思造成不便，您可以<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。",
+            "en": "Sorry for the trouble—use an<mark>other machine</mark>; unfinished jobs aren't charged.",
+            "vi": "Xin lỗi vì sự bất tiện, bạn có thể <mark>chuyển sang máy bên cạnh</mark>, <mark>chưa hoàn thành sẽ không bị trừ tiền</mark>.",
+            "id": "Maaf atas ketidaknyamanannya, Anda bisa <mark>pakai mesin lain</mark> di sebelah; <mark>yang belum selesai tidak ditagih</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "我看不懂螢幕",
+            "en": "I can't understand the screen",
+            "vi": "Tôi không hiểu màn hình",
+            "id": "Saya tidak mengerti layarnya"
+          },
+          "a": {
+            "zh": "沒問題，告訴我您要列印、影印還是掃描，我一步步帶您。",
+            "en": "No problem—tell me what you need and I'll guide you.",
+            "vi": "Không sao, cho tôi biết bạn muốn in, photocopy hay quét, tôi sẽ hướng dẫn từng bước.",
+            "id": "Tidak masalah, beri tahu apakah Anda mau mencetak, fotokopi, atau pindai, saya pandu langkah demi langkah."
+          }
+        },
+        {
+          "q": {
+            "zh": "卡在付款這一步",
+            "en": "Stuck at the payment step",
+            "vi": "Bị kẹt ở bước thanh toán",
+            "id": "Tersangkut di langkah pembayaran"
+          },
+          "a": {
+            "zh": "確認預覽後依畫面付款；卡住可重新操作或<mark>改用旁邊另一台</mark>。",
+            "en": "Pay per the screen after the preview; if stuck, retry or use an<mark>other machine</mark>.",
+            "vi": "Sau khi xem trước hãy thanh toán theo màn hình; nếu kẹt có thể thao tác lại hoặc <mark>chuyển sang máy bên cạnh</mark>.",
+            "id": "Setelah pratinjau, bayar sesuai layar; jika tersangkut, ulangi atau <mark>pakai mesin lain</mark>."
+          }
+        },
+        {
+          "q": {
+            "zh": "我東西不見了",
+            "en": "I've lost something",
+            "vi": "Tôi bị mất đồ",
+            "id": "Saya kehilangan sesuatu"
+          },
+          "a": {
+            "zh": "請檢查出紙口與玻璃面板、送稿器是否留下原稿或成品。",
+            "en": "Check the output tray, glass, and feeder for your original or prints.",
+            "vi": "Hãy kiểm tra khay ra giấy, mặt kính và khay nạp giấy xem có còn bản gốc hoặc bản in không.",
+            "id": "Periksa baki keluar kertas, kaca, dan pengumpan dokumen apakah ada dokumen asli atau hasil cetak Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "操作太複雜",
+            "en": "It's too complicated to use",
+            "vi": "Thao tác quá phức tạp",
+            "id": "Pengoperasiannya terlalu rumit"
+          },
+          "a": {
+            "zh": "別擔心，跟著螢幕步驟走，需要時我可以一步步引導您。",
+            "en": "Don't worry—follow the screen, and I can guide you step by step.",
+            "vi": "Đừng lo, hãy làm theo các bước trên màn hình, khi cần tôi có thể hướng dẫn bạn từng bước.",
+            "id": "Jangan khawatir, ikuti langkah di layar, dan bila perlu saya bisa memandu Anda langkah demi langkah."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMP",
+      "icon": "💬",
+      "title": {
+        "zh": "客訴 / 意見",
+        "en": "Feedback",
+        "vi": "Khiếu nại / Góp ý",
+        "id": "Keluhan / Masukan"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我被亂扣錢",
+            "en": "I was charged unfairly",
+            "vi": "Tôi bị trừ tiền oan",
+            "id": "Saya dikenai biaya tidak semestinya"
+          },
+          "a": {
+            "zh": "不好意思造成困擾；目前現場無法直接處理扣款爭議，請先保留交易紀錄，線上退款申請即將開放。",
+            "en": "Sorry—charge disputes can't be handled on-site yet; keep your record, online refunds coming soon.",
+            "vi": "Xin lỗi vì sự bất tiện; hiện tại tranh chấp trừ tiền chưa thể xử lý tại chỗ, vui lòng giữ lại bản ghi giao dịch, đăng ký hoàn tiền trực tuyến sắp mở.",
+            "id": "Maaf atas ketidaknyamanannya; sengketa penagihan belum bisa ditangani di tempat, simpan catatan transaksi Anda, pengajuan pengembalian dana online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要退費",
+            "en": "I want a refund",
+            "vi": "Tôi muốn hoàn tiền",
+            "id": "Saya mau pengembalian dana"
+          },
+          "a": {
+            "zh": "不好意思，若付款後沒印出來，可<mark>改用旁邊另一台</mark>重印，不扣款；線上退款申請即將開放。",
+            "en": "Sorry—if a paid job didn't print, reprint on an<mark>other machine</mark> (no charge); online refunds coming soon.",
+            "vi": "Xin lỗi, nếu đã thanh toán mà không in ra, bạn có thể <mark>chuyển sang máy bên cạnh</mark> in lại, không bị trừ tiền; đăng ký hoàn tiền trực tuyến sắp mở.",
+            "id": "Maaf, jika sudah dibayar tapi tidak tercetak, silakan cetak ulang di <mark>mesin sebelah</mark>, tanpa biaya; pengajuan pengembalian dana online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "這台爛死了不能用",
+            "en": "This machine is terrible and won't work",
+            "vi": "Máy này tệ quá không dùng được",
+            "id": "Mesin ini buruk sekali, tidak bisa dipakai"
+          },
+          "a": {
+            "zh": "很抱歉造成不便，您可以直接<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。",
+            "en": "Sorry—please use one of the <mark>other machine</mark>s; unfinished jobs aren't charged.",
+            "vi": "Rất xin lỗi vì sự bất tiện, bạn có thể <mark>chuyển sang máy bên cạnh</mark>, chưa hoàn thành thì không bị trừ tiền.",
+            "id": "Maaf atas ketidaknyamanannya, silakan pakai <mark>mesin sebelah</mark>, pekerjaan yang belum selesai tidak dikenai biaya."
+          }
+        },
+        {
+          "q": {
+            "zh": "印壞了你要賠我",
+            "en": "It printed badly, you owe me",
+            "vi": "In hỏng rồi bạn phải bồi thường cho tôi",
+            "id": "Hasilnya rusak, kamu harus ganti rugi"
+          },
+          "a": {
+            "zh": "很抱歉，若付款後沒印好，可<mark>改用旁邊另一台</mark>重印，不扣款；線上退款申請即將開放。",
+            "en": "Sorry—if a paid job printed badly, reprint on an<mark>other machine</mark> (no charge); online refunds coming soon.",
+            "vi": "Rất xin lỗi, nếu đã thanh toán mà in không tốt, bạn có thể <mark>chuyển sang máy bên cạnh</mark> in lại, không bị trừ tiền; đăng ký hoàn tiền trực tuyến sắp mở.",
+            "id": "Maaf, jika sudah dibayar tapi hasil cetak buruk, silakan cetak ulang di <mark>mesin sebelah</mark>, tanpa biaya; pengajuan pengembalian dana online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "浪費我時間",
+            "en": "You're wasting my time",
+            "vi": "Làm mất thời gian của tôi",
+            "id": "Buang-buang waktu saya"
+          },
+          "a": {
+            "zh": "很抱歉耽誤您的時間，您可以直接<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。",
+            "en": "Sorry for the delay—use one of the <mark>other machine</mark>s; unfinished jobs aren't charged.",
+            "vi": "Rất xin lỗi đã làm mất thời gian của bạn, bạn có thể <mark>chuyển sang máy bên cạnh</mark>, chưa hoàn thành thì không bị trừ tiền.",
+            "id": "Maaf atas keterlambatannya, silakan pakai <mark>mesin sebelah</mark>, pekerjaan yang belum selesai tidak dikenai biaya."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要客訴 / 投訴",
+            "en": "I want to file a complaint",
+            "vi": "Tôi muốn khiếu nại / phản ánh",
+            "id": "Saya mau mengajukan keluhan"
+          },
+          "a": {
+            "zh": "了解，您的意見對我們很重要；線上意見回報功能即將開放，屆時可留下意見。",
+            "en": "Understood—your feedback matters; an online channel is coming soon.",
+            "vi": "Đã hiểu, ý kiến của bạn rất quan trọng với chúng tôi; chức năng phản hồi ý kiến trực tuyến sắp mở, khi đó bạn có thể để lại ý kiến.",
+            "id": "Mengerti, masukan Anda sangat berarti bagi kami; saluran masukan online segera hadir, nanti Anda bisa menyampaikan masukan."
+          }
+        },
+        {
+          "q": {
+            "zh": "我要找負責人",
+            "en": "I want to speak to a manager",
+            "vi": "Tôi muốn gặp người phụ trách",
+            "id": "Saya mau bicara dengan penanggung jawab"
+          },
+          "a": {
+            "zh": "這是無人門市現場沒有專人；線上聯絡功能即將開放，屆時可留下聯絡方式。",
+            "en": "This is unmanned with no staff; an online contact channel is coming soon.",
+            "vi": "Đây là cửa hàng không người nên tại chỗ không có nhân viên; chức năng liên hệ trực tuyến sắp mở, khi đó bạn có thể để lại thông tin liên hệ.",
+            "id": "Ini toko tanpa petugas di tempat; saluran kontak online segera hadir, nanti Anda bisa meninggalkan kontak."
+          }
+        },
+        {
+          "q": {
+            "zh": "你們服務很差",
+            "en": "Your service is poor",
+            "vi": "Dịch vụ của các bạn rất tệ",
+            "id": "Layanan kalian sangat buruk"
+          },
+          "a": {
+            "zh": "很抱歉讓您有不好的體驗，我們會持續改進；線上意見回報即將開放。",
+            "en": "Sorry for the poor experience—we'll improve; an online channel is coming soon.",
+            "vi": "Rất xin lỗi đã mang lại trải nghiệm không tốt, chúng tôi sẽ tiếp tục cải thiện; phản hồi ý kiến trực tuyến sắp mở.",
+            "id": "Maaf atas pengalaman yang kurang baik, kami akan terus memperbaiki; saluran masukan online segera hadir."
+          }
+        },
+        {
+          "q": {
+            "zh": "等很久很煩",
+            "en": "The long wait is annoying",
+            "vi": "Chờ lâu quá bực mình",
+            "id": "Menunggu lama bikin kesal"
+          },
+          "a": {
+            "zh": "很抱歉久候，您可以<mark>改用旁邊另一台</mark>機器，<mark>未完成不扣款</mark>。",
+            "en": "Sorry for the wait—use one of the <mark>other machine</mark>s; no charge for unfinished jobs.",
+            "vi": "Rất xin lỗi đã để bạn chờ lâu, bạn có thể <mark>chuyển sang máy bên cạnh</mark>, chưa hoàn thành thì không bị trừ tiền.",
+            "id": "Maaf atas penantiannya, silakan pakai <mark>mesin sebelah</mark>, pekerjaan yang belum selesai tidak dikenai biaya."
+          }
+        },
+        {
+          "q": {
+            "zh": "機器很難用",
+            "en": "The machine is hard to use",
+            "vi": "Máy khó dùng quá",
+            "id": "Mesinnya susah dipakai"
+          },
+          "a": {
+            "zh": "抱歉造成不便，告訴我您卡在哪，我帶您操作。",
+            "en": "Sorry—tell me where you're stuck and I'll guide you.",
+            "vi": "Xin lỗi vì sự bất tiện, hãy cho tôi biết bạn đang vướng ở đâu, tôi sẽ hướng dẫn bạn thao tác.",
+            "id": "Maaf atas ketidaknyamanannya, beri tahu di mana Anda tersangkut, saya akan memandu Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "我投訴都沒人理",
+            "en": "My complaints are ignored",
+            "vi": "Tôi phản ánh mà chẳng ai để ý",
+            "id": "Keluhan saya tidak digubris"
+          },
+          "a": {
+            "zh": "本店為無人門市；線上意見回報功能即將開放，屆時可留言反映。",
+            "en": "This is unmanned; an online feedback channel is coming soon.",
+            "vi": "Cửa hàng này không có người trực; chức năng phản hồi ý kiến trực tuyến sắp mở, khi đó bạn có thể để lại lời nhắn phản ánh.",
+            "id": "Toko ini tanpa petugas; saluran masukan online segera hadir, nanti Anda bisa meninggalkan pesan."
+          }
+        },
+        {
+          "q": {
+            "zh": "你們會偷看我檔案嗎",
+            "en": "Will you peek at my files?",
+            "vi": "Các bạn có lén xem tập tin của tôi không",
+            "id": "Apakah kalian mengintip file saya?"
+          },
+          "a": {
+            "zh": "不會，檔案只在店內主機處理，完成後自動清除，不會上雲。",
+            "en": "No—files are processed in-store, cleared after, and never uploaded.",
+            "vi": "Không, tập tin chỉ được xử lý trên máy chủ trong cửa hàng, tự động xóa sau khi hoàn thành, không tải lên đám mây.",
+            "id": "Tidak, file hanya diproses di mesin dalam toko, otomatis terhapus setelah selesai, tidak diunggah ke cloud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRIV",
+      "icon": "🔒",
+      "title": {
+        "zh": "隱私 / 資料",
+        "en": "Privacy",
+        "vi": "Quyền riêng tư / Dữ liệu",
+        "id": "Privasi / Data"
+      },
+      "items": [
+        {
+          "q": {
+            "zh": "我的檔案安全嗎",
+            "en": "Are my files safe?",
+            "vi": "Tệp của tôi có an toàn không?",
+            "id": "Apakah file saya aman?"
+          },
+          "a": {
+            "zh": "檔案只暫存店內主機，列印後自動清除，不會上雲。",
+            "en": "Files are processed in-store and cleared after printing—never uploaded.",
+            "vi": "Tệp chỉ lưu tạm trên máy tại cửa hàng, tự động xóa sau khi in, không tải lên đám mây.",
+            "id": "File hanya disimpan sementara di mesin toko, otomatis dihapus setelah dicetak, tidak diunggah ke cloud."
+          }
+        },
+        {
+          "q": {
+            "zh": "掃描的會被留嗎",
+            "en": "Are my scans kept?",
+            "vi": "Bản quét có bị giữ lại không?",
+            "id": "Apakah hasil scan saya disimpan?"
+          },
+          "a": {
+            "zh": "掃描檔完成寄送或存檔後即清除，不上雲。",
+            "en": "Scans are cleared after sending—never uploaded.",
+            "vi": "Tệp quét bị xóa sau khi gửi hoặc lưu xong, không tải lên đám mây.",
+            "id": "File scan dihapus setelah dikirim atau disimpan, tidak diunggah ke cloud."
+          }
+        },
+        {
+          "q": {
+            "zh": "會記錄我印什麼嗎",
+            "en": "Do you record what I print?",
+            "vi": "Có ghi lại những gì tôi in không?",
+            "id": "Apakah dicatat apa yang saya cetak?"
+          },
+          "a": {
+            "zh": "系統不保留您的檔案內容，列印後即清除。",
+            "en": "We don't keep your file content; it's cleared after printing.",
+            "vi": "Hệ thống không lưu nội dung tệp của bạn, xóa ngay sau khi in.",
+            "id": "Sistem tidak menyimpan isi file Anda, langsung dihapus setelah dicetak."
+          }
+        },
+        {
+          "q": {
+            "zh": "監視器會拍到我的檔案嗎",
+            "en": "Can cameras capture my files?",
+            "vi": "Camera giám sát có quay được tệp của tôi không?",
+            "id": "Apakah kamera bisa merekam file saya?"
+          },
+          "a": {
+            "zh": "監視僅作環境安全用途，不針對您的檔案內容。",
+            "en": "Monitoring is for safety only, not your file content.",
+            "vi": "Giám sát chỉ dùng cho an toàn môi trường, không nhắm vào nội dung tệp của bạn.",
+            "id": "Pemantauan hanya untuk keamanan lingkungan, bukan untuk isi file Anda."
+          }
+        },
+        {
+          "q": {
+            "zh": "證件影印安全嗎",
+            "en": "Is ID copying secure?",
+            "vi": "Sao chụp giấy tờ tùy thân có an toàn không?",
+            "id": "Apakah menyalin kartu identitas aman?"
+          },
+          "a": {
+            "zh": "證件影像只在店內處理，完成後清除，不上雲。",
+            "en": "ID images are processed in-store and cleared—never uploaded.",
+            "vi": "Ảnh giấy tờ chỉ xử lý tại cửa hàng, xóa sau khi xong, không tải lên đám mây.",
+            "id": "Gambar identitas hanya diproses di toko, dihapus setelah selesai, tidak diunggah ke cloud."
+          }
+        },
+        {
+          "q": {
+            "zh": "個資會外洩嗎",
+            "en": "Will my personal data leak?",
+            "vi": "Dữ liệu cá nhân của tôi có bị rò rỉ không?",
+            "id": "Apakah data pribadi saya akan bocor?"
+          },
+          "a": {
+            "zh": "您的檔案不上雲、完成即清除，請放心。",
+            "en": "Your files never go to the cloud and are cleared after use.",
+            "vi": "Tệp của bạn không tải lên đám mây, xóa ngay sau khi xong, xin yên tâm.",
+            "id": "File Anda tidak diunggah ke cloud dan langsung dihapus setelah selesai, jangan khawatir."
+          }
+        }
+      ]
+    }
+  ]
+}
